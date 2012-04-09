@@ -10,9 +10,6 @@ public class Rabbit extends Animal {
     private static ArrayList<String> prey;
     private static ArrayList<String> predators;
     
-    private int hunger;
-    private int age;
-    
     public Rabbit(){
         Debug.echo("Constructing a new Rabbit object");
         
@@ -24,5 +21,17 @@ public class Rabbit extends Animal {
     }
     public Image getImage(){
         return null;
+    }
+    protected int getMaxHunger(){
+        return maxHunger;
+    }
+    protected int getMaxAge(){
+        return maxAge;
+    }
+    protected int getSightDistance(){
+        return sightDistance;
+    }
+    protected int getMoveDistance(){
+        return moveDistance;
     }
 }
