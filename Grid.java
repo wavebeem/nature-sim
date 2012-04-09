@@ -6,7 +6,14 @@ public class Grid {
 
     public Grid(int gridSize) {
         Debug.echo("Making a grid from specified size");
+
         gridSquares = new GridSquare[gridSize][gridSize];
+
+        for (int i = 0; i < gridSize; i++) {
+            for (int j = 0; j < gridSize; j++) {
+                gridSquares[i][j] = new GridSquare();
+            }
+        }
     }
 
     public Grid(String filename) {
@@ -23,7 +30,8 @@ public class Grid {
     }
 
     public void removeAnimal(int row, int col) {
-        Debug.echo("Removing animal at " + row + ", " + col); 
+        Debug.echo("Removing animal at " + row + ", " + col);
+        gridSquares[row][col].setAnimal(null);
     }
 
     public List<GridSquare> getAdjacentLocations(int row, int col, int distance) {
