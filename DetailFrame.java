@@ -9,6 +9,8 @@ public class DetailFrame extends JFrame {
     private static final int PADDING = 3;
     private static final Color bg = new Color(32, 32, 32);
     public DetailFrame(GridSquare[][] g) {
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+
         widgets = new ArrayList<GridWidget>();
 
         if (g == null) {

@@ -7,5 +7,5 @@ clean:
 jar:
 	jar -cmf manifest.txt nature-sim.jar *.class
 
-run:
+run: jar
 	java -jar nature-sim.jar
