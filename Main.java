@@ -1,6 +1,18 @@
+import javax.swing.*;
+import javax.swing.UIManager.*;
+
 public class Main {
     public static void main(String[] args) {
-        Debug.echo("Hello", "world");
-        Debug.printf("pi=%f\n", Math.PI);
+        try {
+            for (LookAndFeelInfo info: UIManager.getInstalledLookAndFeels()) {
+                if (info.getName().equals("Nimbus")) {
+                    UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        }
+        catch (Exception e) {
+        }
+        new ControlFrame();
     }
 }
