@@ -28,14 +28,17 @@ public class Grid {
 
     public List<GridSquare> getAdjacentLocations(int row, int col, int distance) {
         Debug.echo("Get adjacent locations");
+        return null;
     }
 
     public List<GridSquare> getEmptyLocations(int row, int col, int distance) {
         Debug.echo("Get empty locations");
+        return null;
     }
 
     public List<GridSquare> getOccupiedLocations(int row, int col, int distance) {
         Debug.echo("Get occupied locations");
+        return null;
     }
 
     public GridSquare[][]  getGridSquares()   { return gridSquares;   }

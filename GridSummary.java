@@ -15,5 +15,6 @@ public class GridSummary {
 
     public ArrayList<Organism> getPrevalentOrganisms(int n) {
         Debug.echo("Getting n most prevalent organisms");
+        return null;
     }
 }
