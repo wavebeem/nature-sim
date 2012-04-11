@@ -8,21 +8,23 @@ public class Simulation {
         grid = new Grid(gridSize);
         stepNumber = 0;
     }
-    public Simulation(String gridFilename, String webFilename){ 
+    public Simulation(File animals, File terrain, File foodweb){ 
         Debug.echo("Constructing a new Simulation object");
         
-        grid = new Grid(gridFilename);
+        parseGrid(animals, terrain);
+        parseFoodWeb(foodweb);
         stepNumber = 0;
-        parseFoodWeb(webFilename);
     }
     
     public void step() {
-        
-    
         Debug.echo("Here is where the simulation would step through each organism in the grid.");
     }
-    public void parseFoodWeb(String filename) {
+    public void parseFoodWeb(File foodweb) {
         Debug.echo("Here is where I would parse the food web file");
+    }
+    public void parseGrid(File animals, File terrain) {
+        grid = new Grid(gridFilename);
+        Debug.echo("Parsing grid from file");
     }
     public Grid getGrid() {
         return grid;
