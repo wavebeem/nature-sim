@@ -68,12 +68,12 @@ public class Simulation {
                 }
 
                 for (String p : prey) {
-                    if      (predator.equals("Rabbit") Rabbit.addPrey(p);
-                    else if (predator.equals("Fox")    Fox.addPrey(p);
+                    if      (predator.equals("Rabbit")) Rabbit.addPrey(p);
+                    else if (predator.equals("Fox"))    Fox.addPrey(p);
 
                     // Note: Plants don't need to know their predators
-                    if      (p.equals("Rabbit") Rabbit.addPredator(p);
-                    else if (p.equals("Fox")    Fox.addPredator(p);
+                    if      (p.equals("Rabbit")) Rabbit.addPredator(p);
+                    else if (p.equals("Fox"))    Fox.addPredator(p);
                 }
             }
         } catch (FileNotFoundException e) {
