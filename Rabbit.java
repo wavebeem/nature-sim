@@ -16,8 +16,8 @@ public class Rabbit extends Animal {
         hunger = 0;
         age = 0;
     }
-    public void step(int row, int col, Grid grid){
-        Debug.echo("Here is where the Rabbit would step");
+    public void act(int row, int col, Grid grid){
+        Debug.echo("Here is where the Rabbit would act");
     }
     public Image getImage(){
         return null;

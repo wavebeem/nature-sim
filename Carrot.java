@@ -11,9 +11,6 @@ public class Carrot extends Plant {
         amount = maxAmount;
         stepsUntilEdible = 0;
     }
-    public void step(int row, int col, Grid grid){
-        Debug.echo("Here is where the Carrot would step");
-    }
     public Image getImage(){
         return null;
     }

@@ -7,7 +7,6 @@ public abstract class Plant implements Organism {
 
     protected abstract int getMaxAmount();
     protected abstract int getMaxStepsUntilEdible();
-    public abstract void step(int row, int col, Grid grid);
     public abstract Image getImage();
     
     public int getEaten(int amount){
@@ -21,6 +20,15 @@ public abstract class Plant implements Organism {
         } else {
             this.amount -= amount;
             return amount;
+        }
+    }
+    public void step(int row, int col, Grid grid){
+        if(!alive){
+            stepsUntilEdible--;
+            if(stepsUntilEdible <= 0){
+                amount = getMaxAmount();
+                alive = true;
+            }
         }
     }
 }

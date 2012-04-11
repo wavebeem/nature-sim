@@ -17,6 +17,8 @@ public class Simulation {
     }
     
     public void step() {
+        
+    
         Debug.echo("Here is where the simulation would step through each organism in the grid.");
     }
     public void parseFoodWeb(String filename) {

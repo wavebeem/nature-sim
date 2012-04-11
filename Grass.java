@@ -9,16 +9,13 @@ public class Grass extends Plant {
         
         alive = true;
         amount = maxAmount;
-        stepsUntilEdible = 0;
+        stepsUntilEdible = maxStepsUntilEdible;
     }
     protected int getMaxAmount(){
         return maxAmount;
     }
     protected int getMaxStepsUntilEdible(){
         return maxStepsUntilEdible;
-    }
-    public void step(int row, int col, Grid grid){
-        Debug.echo("Here is where the Grass would step");
     }
     public Image getImage(){
         return null;

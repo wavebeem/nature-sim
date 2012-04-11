@@ -16,8 +16,8 @@ public class Fox extends Animal {
         hunger = 0;
         age = 0;
     }
-    public void step(int row, int col, Grid grid){
-        Debug.echo("Here is where the Fox would step");
+    public void act(int row, int col, Grid grid){
+        Debug.echo("Here is where the Fox would act");
     }
     public Image getImage(){
         return null;
