@@ -10,6 +10,8 @@ public abstract class Animal implements Organism {
     protected abstract int getMoveDistance();
     public abstract void act(int row, int col, Grid grid);
     public abstract Image getImage();
+    public abstract void addPrey(String p);
+    public abstract void addPredator(String p);`
     
     public void step(int row, int col, Grid grid){
         age++;

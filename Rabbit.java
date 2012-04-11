@@ -16,21 +16,30 @@ public class Rabbit extends Animal {
         hunger = 0;
         age = 0;
     }
+
     public void act(int row, int col, Grid grid){
         Debug.echo("Here is where the Rabbit would act");
     }
+
     public Image getImage(){
         return null;
     }
+
+    public void addPrey(String p)     prey.add(p);
+    public void addPredator(String p) predators.add(p);
+
     protected int getMaxHunger(){
         return maxHunger;
     }
+
     protected int getMaxAge(){
         return maxAge;
     }
+
     protected int getSightDistance(){
         return sightDistance;
     }
+
     protected int getMoveDistance(){
         return moveDistance;
     }
