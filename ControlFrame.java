@@ -14,16 +14,27 @@ public class ControlFrame extends JFrame {
     private JButton runButton;
     private JButton stopButton;
     private JButton stepButton;
+    private JComboBox fileCombo;
 
     public ControlFrame() {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
+        setLocationByPlatform(true);
+
         toolbar = new JPanel();
 
-        runButton  = new RunButton();
+        runButton  = new RunButton(this);
         stepButton = new StepButton();
         stopButton = new StopButton();
+        fileCombo  = new JComboBox(new String[] {
+            "foobar",
+            "foobaz",
+            "quuxba"
+        });
 
+        fileCombo.setEditable(false);
+
+        toolbar.add(fileCombo);
         toolbar.add(runButton);
         toolbar.add(stepButton);
         toolbar.add(stopButton);
@@ -31,6 +42,10 @@ public class ControlFrame extends JFrame {
         add(toolbar);
 
         pack();
+        setMinimumSize(getSize());
+
+        theSim = new Simulation(DEFAULT_SIZE);
+        theDetails = new DetailFrame(this, null); // theSim.getGrid().getSummaries()
 
         setVisible(true);
     }
@@ -38,15 +53,17 @@ public class ControlFrame extends JFrame {
     private class RunButton
     extends JButton
     implements ActionListener {
-        public RunButton() {
+        private ControlFrame that;
+        public RunButton(ControlFrame that) {
             super("Run");
+            this.that = that;
             addActionListener(this);
         }
 
         public void actionPerformed(ActionEvent e) {
             if (theSim == null) {
                 theSim = new Simulation(DEFAULT_SIZE);
-                theDetails = new DetailFrame(null); // theSim.getGrid().getSummaries()
+                theDetails = new DetailFrame(that, null); // theSim.getGrid().getSummaries()
             }
         }
     }
@@ -60,9 +77,13 @@ public class ControlFrame extends JFrame {
         }
 
         public void actionPerformed(ActionEvent e) {
-            theDetails.dispose();
-            theSim = null;
+            stop();
         }
+    }
+
+    protected void stop() {
+        theDetails.dispose();
+        theSim = null;
     }
 
     private class StepButton

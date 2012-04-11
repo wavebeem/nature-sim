@@ -1,15 +1,24 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 import java.util.*;
 
-public class DetailFrame extends JFrame {
+public class DetailFrame
+extends JFrame
+implements WindowListener {
     private ArrayList<GridWidget> widgets;
     private static final int DEFAULT_SIZE = 16;
     private JPanel grid;
     private static final int PADDING = 6;
     private static final Color bg = new Color(32, 32, 32);
-    public DetailFrame(GridSquare[][] g) {
+    private ControlFrame controlFrame;
+    public DetailFrame(ControlFrame controlFrame, GridSquare[][] g) {
+        this.controlFrame = controlFrame;
+
+        setLocationByPlatform(true);
+
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        addWindowListener(this);
 
         widgets = new ArrayList<GridWidget>();
 
@@ -44,4 +53,15 @@ public class DetailFrame extends JFrame {
     }
 
     private class GridSquare {}
+
+    public void windowClosing(WindowEvent e) {
+        controlFrame.stop();
+    }
+
+    public void windowDeactivated (WindowEvent e) {}
+    public void windowActivated   (WindowEvent e) {}
+    public void windowDeiconified (WindowEvent e) {}
+    public void windowIconified   (WindowEvent e) {}
+    public void windowClosed      (WindowEvent e) {}
+    public void windowOpened      (WindowEvent e) {}
 }
