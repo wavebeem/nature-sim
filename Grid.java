@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.ArrayList;
 
 public class Grid {
     private GridSquare[][]  gridSquares;
@@ -48,15 +49,18 @@ public class Grid {
         if (inBounds(r, c)) locs.add(get(r, c));
 
         // look at right
-        r = row, c = col + 1;
+        r = row;
+        c = col + 1;
         if (inBounds(r, c)) locs.add(get(r, c));
 
         // look up
-        r = row - 1, c = col;
+        r = row - 1;
+        c = col;
         if (inBounds(r, c)) locs.add(get(r, c));
 
         // look down
-        r = row + 1, c = col;
+        r = row + 1;
+        c = col;
         if (inBounds(r, c)) locs.add(get(r, c));
 
         distance--;
@@ -73,11 +77,11 @@ public class Grid {
     public List<GridSquare> getEmptyLocations(int row, int col, int distance) {
         Debug.echo("Get empty locations");
 
-        ArrayList<GridSquare> locs = getAdjacentLocations(row, col, distance);
+        List<GridSquare> locs = getAdjacentLocations(row, col, distance);
         ArrayList<GridSquare> ret  = new ArrayList<GridSquare>();
 
         for (GridSquare l : locs) {
-            if (GridSquare.getAnimal() == null) ret.add(l);
+            if (l.getAnimal() == null) ret.add(l);
         }
 
         return ret;
@@ -86,11 +90,11 @@ public class Grid {
     public List<GridSquare> getOccupiedLocations(int row, int col, int distance) {
         Debug.echo("Get occupied locations");
 
-        ArrayList<GridSquare> locs = getAdjacentLocations(row, col, distance);
+        List<GridSquare> locs = getAdjacentLocations(row, col, distance);
         ArrayList<GridSquare> ret  = new ArrayList<GridSquare>();
 
         for (GridSquare l : locs) {
-            if (GridSquare.getAnimal() != null) ret.add(l);
+            if (l.getAnimal() != null) ret.add(l);
         }
 
         return ret;

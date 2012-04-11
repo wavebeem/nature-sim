@@ -2,6 +2,7 @@ import java.util.Scanner;
 import java.io.File;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.ArrayList;
 import java.io.FileNotFoundException;
 
 public class Simulation {
@@ -29,7 +30,7 @@ public class Simulation {
     public void step() {
         Debug.echo("Here is where the simulation would step through each organism in the grid.");
     }
-    public void parseSymbolMap()
+    public void parseSymbolMap() {
         symbolMap = new HashMap<String, String>();
         try {
             Scanner scanner = new Scanner(new File("resources/symbols.dat"));
@@ -47,7 +48,6 @@ public class Simulation {
         } catch (Exception e) {
             Debug.echo("SymbolMap: Invalid file format!");
         }
-        
     }
     public void parseFoodWeb(File file) {
         Debug.echo("Here is where I would parse the food web file");
@@ -62,7 +62,7 @@ public class Simulation {
                 String predator = contents[0].trim();
 
                 // get names of prey
-                ArrayList<String> prey = new ArrayList<String>;
+                ArrayList<String> prey = new ArrayList<String>();
                 for (int i = 1; i < contents.length; i++) {
                     prey.add(contents[i].trim());
                 }
@@ -77,6 +77,7 @@ public class Simulation {
                 }
             }
         } catch (FileNotFoundException e) {
+        
         }
     }
     public void parseGrid(File animals, File terrain) {

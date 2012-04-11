@@ -25,8 +25,8 @@ public class Fox extends Animal {
         return null;
     }
 
-    public void addPrey(String p)     prey.add(p);
-    public void addPredator(String p) predators.add(p);
+    public static void addPrey(String p)     { prey.add(p);      }
+    public static void addPredator(String p) { predators.add(p); }
 
     protected int getMaxHunger(){
         return maxHunger;
