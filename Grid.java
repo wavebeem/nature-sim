@@ -34,6 +34,11 @@ public class Grid {
         gridSquares[row][col].setAnimal(null);
     }
 
+    private boolean inBounds(int row, int col) {
+        return row >= 0 && row < getGridSize()
+            && col >= 0 && col < getGridSize();
+    }
+
     public List<GridSquare> getAdjacentLocations(int row, int col, int distance) {
         Debug.echo("Get adjacent locations");
         return null;
@@ -51,4 +56,5 @@ public class Grid {
 
     public GridSquare[][]  getGridSquares()   { return gridSquares;   }
     public GridSummary[][] getGridSummaries() { return gridSummaries; }
+    public int getGridSize() { return gridSquares.length; }
 }
