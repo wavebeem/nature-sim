@@ -16,15 +16,6 @@ public class Grid {
         }
     }
 
-    public Grid(String filename) {
-        Debug.echo("Making a grid from specified filename");
-        parseGrid(filename);
-    }
-
-    public void parseGrid(String filename) {
-        Debug.echo("Parsing grid from file");
-    }
-
     public GridSquare get(int row, int col) {
         return gridSquares[row][col];
     }
