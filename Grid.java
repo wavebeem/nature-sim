@@ -29,6 +29,14 @@ public class Grid {
         return gridSquares[row][col];
     }
 
+    public void addAnimal(Animal animal, int row, int col) {
+        gridSquares[row][col].setAnimal(animal);
+    }
+
+    public void addPlant(Plant plant, int row, int col) {
+        gridSquares[row][col].setPlant(plant);
+    }
+
     public void removeAnimal(int row, int col) {
         Debug.echo("Removing animal at " + row + ", " + col);
         gridSquares[row][col].setAnimal(null);
