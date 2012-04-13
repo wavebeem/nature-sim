@@ -21,6 +21,10 @@ public class Grid {
         return gridSquares[row][col];
     }
 
+    public GridSquare get(Location loc) {
+        return gridSquares[loc.row][loc.col];
+    }
+
     public void addAnimal(Animal animal, int row, int col) {
         if (animal == null) return;
         gridSquares[row][col].setAnimal(animal);
@@ -41,35 +45,36 @@ public class Grid {
             && col >= 0 && col < getGridSize();
     }
 
-    public List<GridSquare> getAdjacentLocations(int row, int col, int distance) {
+    private int distance(int x, int y, int i, int j) {
+        return Math.abs(x - i) + Math.abs(y - j);
+    }
+
+    public List<GridSquare> getAdjacentGridSquares(Location loc, int dist) {
+        Debug.echo("Get adjacent gridSquares");
+
+        List<Location> locs = getAdjacentLocations(loc, dist);
+        ArrayList<GridSquare> ret = new ArrayList();
+
+        for (Location l : locs) {
+            ret.add(get(l));
+        }
+
+        return ret;
+    }
+
+    private List<Location> getAdjacentLocations(Location loc, int dist) {
         Debug.echo("Get adjacent locations");
 
-        ArrayList<GridSquare> locs = new ArrayList<GridSquare>();
+        ArrayList<Location> locs = new ArrayList<Location>();
 
-        // look at left
-        int r = row, c = col - 1;
-        if (inBounds(r, c)) locs.add(get(r, c));
+        int row = loc.row;
+        int col = loc.col;
 
-        // look at right
-        r = row;
-        c = col + 1;
-        if (inBounds(r, c)) locs.add(get(r, c));
-
-        // look up
-        r = row - 1;
-        c = col;
-        if (inBounds(r, c)) locs.add(get(r, c));
-
-        // look down
-        r = row + 1;
-        c = col;
-        if (inBounds(r, c)) locs.add(get(r, c));
-
-        distance--;
-
-        if (distance > 0) {
-            for (GridSquare l : locs) {
-                locs.addAll(getAdjacentLocations(row, col, distance));
+        for (int i = row - dist; i < row + dist; i++) {
+            for (int j = col - dist; j < col + dist; j++) {
+                if (inBounds(i, j) && distance(row, col, i, j) <= dist) {
+                    locs.add(new Location(i, j));
+                }
             }
         }
 
@@ -79,7 +84,7 @@ public class Grid {
     public List<GridSquare> getEmptyLocations(int row, int col, int distance) {
         Debug.echo("Get empty locations");
 
-        List<GridSquare> locs = getAdjacentLocations(row, col, distance);
+        List<GridSquare> locs = getAdjacentGridSquares(new Location(row, col), distance);
         ArrayList<GridSquare> ret  = new ArrayList<GridSquare>();
 
         for (GridSquare l : locs) {
@@ -92,7 +97,7 @@ public class Grid {
     public List<GridSquare> getOccupiedLocations(int row, int col, int distance) {
         Debug.echo("Get occupied locations");
 
-        List<GridSquare> locs = getAdjacentLocations(row, col, distance);
+        List<GridSquare> locs = getAdjacentGridSquares(new Location(row, col), distance);
         ArrayList<GridSquare> ret  = new ArrayList<GridSquare>();
 
         for (GridSquare l : locs) {
