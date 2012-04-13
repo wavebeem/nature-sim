@@ -1,8 +1,8 @@
-public class Location {
-    public int row;
-    public int col;
+public class Location implements Comparable{
+    public Integer row;
+    public Integer col;
     
-    public Location(int row, int col){
+    public Location(Integer row, Integer col){
         this.row = row;
         this.col = col;
     }
@@ -13,5 +13,14 @@ public class Location {
     }
     public String toString(){
         return "("+row+","+col+")";
+    }
+    public int compareTo(Object o){
+        Location that = (Location)o;
+        int returnVal = this.row.compareTo(that.row);
+        if(returnVal == 0){
+            return this.col.compareTo(that.col);
+        } else {
+            return returnVal;
+        }
     }
 }
