@@ -22,10 +22,12 @@ public class Grid {
     }
 
     public void addAnimal(Animal animal, int row, int col) {
+        if (animal == null) return;
         gridSquares[row][col].setAnimal(animal);
     }
 
     public void addPlant(Plant plant, int row, int col) {
+        if (plant == null) return;
         gridSquares[row][col].setPlant(plant);
     }
 
