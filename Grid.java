@@ -4,15 +4,17 @@ import java.util.ArrayList;
 public class Grid {
     private GridSquare[][]  gridSquares;
     private GridSummary[][] gridSummaries;
+    private Location[] locations;
 
     public Grid(int gridSize) {
         Debug.echo("Making a grid from specified size");
 
         gridSquares = new GridSquare[gridSize][gridSize];
-
+        locations = new Location[gridSize*gridSize];
         for (int i = 0; i < gridSize; i++) {
             for (int j = 0; j < gridSize; j++) {
                 gridSquares[i][j] = new GridSquare();
+                locations[i*gridSize+j] = new Location(i, j);
             }
         }
     }
@@ -105,6 +107,7 @@ public class Grid {
     public GridSquare[][]  getGridSquares()   { return gridSquares;   }
     public GridSummary[][] getGridSummaries() { return gridSummaries; }
     public int getGridSize() { return gridSquares.length; }
+    public Location[] getLocations() { return locations; }
 
     public String toString() {
         String terrain = "";
