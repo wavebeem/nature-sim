@@ -7,8 +7,8 @@ public class Rabbit extends Animal {
     private static final int maxHunger = 100;
     private static final int maxAge = 100;
     
-    private static ArrayList<String> prey;
-    private static ArrayList<String> predators;
+    private static ArrayList<String> prey = new ArrayList<String>();
+    private static ArrayList<String> predators = new ArrayList<String>();
     
     public Rabbit(){
         Debug.echo("Constructing a new Rabbit object");
