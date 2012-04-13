@@ -14,7 +14,7 @@ public class ControlFrame extends JFrame {
     private JButton runButton;
     private JButton stopButton;
     private JButton stepButton;
-    private JComboBox<String> fileCombo;
+    private JComboBox fileCombo;
 
     public ControlFrame() {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -26,7 +26,7 @@ public class ControlFrame extends JFrame {
         runButton  = new RunButton(this);
         stepButton = new StepButton();
         stopButton = new StopButton();
-        fileCombo  = new JComboBox<String>(new String[] {
+        fileCombo  = new JComboBox(new Object[] {
             "foobar",
             "foobaz",
             "quuxba"
