@@ -105,4 +105,29 @@ public class Grid {
     public GridSquare[][]  getGridSquares()   { return gridSquares;   }
     public GridSummary[][] getGridSummaries() { return gridSummaries; }
     public int getGridSize() { return gridSquares.length; }
+
+    public String toString() {
+        String terrain = "";
+        String animals = "";
+
+        for (int i = 0; i < getGridSize(); i++) {
+            for (GridSquare s : gridSquares[i]) {
+                if (s.getPlant() != null) {
+                    terrain += Simulation.classnameToSymbol(s.getPlant().toString());
+                } else {
+                    terrain += "_";
+                }
+
+                if (s.getAnimal() != null) {
+                    animals += Simulation.classnameToSymbol(s.getAnimal().toString());
+                } else {
+                    animals += "_";
+                }
+            }
+            terrain += "\n";
+            animals += "\n";
+        }
+
+        return terrain + "\n" + animals;
+    }
 }
