@@ -8,7 +8,7 @@ public class Util {
 
     public static Image loadImage(String filename) {
         try {
-            return ImageIO.read(new File(filename));
+            return ImageIO.read(new File("resources/img/" + filename));
         }
         catch (Exception e) {
             System.err.println(e);
