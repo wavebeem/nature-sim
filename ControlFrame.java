@@ -50,10 +50,6 @@ public class ControlFrame extends JFrame {
         pack();
         setMinimumSize(getSize());
 
-        theSim = new Simulation(DEFAULT_SIZE);
-        theDetails = new DetailFrame(this,
-            theSim.getGrid().getGridSquares());
-
         setVisible(true);
     }
 
@@ -70,7 +66,8 @@ public class ControlFrame extends JFrame {
         public void actionPerformed(ActionEvent e) {
             if (theSim == null) {
                 theSim = new Simulation(DEFAULT_SIZE);
-                theDetails = new DetailFrame(that, null); // theSim.getGrid().getSummaries()
+                theDetails = new DetailFrame(that,
+                    theSim.getGrid().getGridSquares());
             }
         }
     }
