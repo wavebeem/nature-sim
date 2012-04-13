@@ -63,8 +63,9 @@ public class Simulation {
 
                 // get names of prey
                 ArrayList<String> prey = new ArrayList<String>();
-                for (int i = 1; i < contents.length; i++) {
-                    prey.add(contents[i].trim());
+                String[] preys = contents[1].split("\s+");
+                for (int i = 0; i < preys.length; i++) {
+                    prey.add(preys[i]);
                 }
 
                 for (String p : prey) {
