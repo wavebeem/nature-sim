@@ -2,6 +2,7 @@ import java.awt.event.*;
 import java.awt.*;
 import javax.swing.*;
 import java.util.*;
+import java.io.*;
 
 public class ControlFrame extends JFrame {
     private static final int DEFAULT_SIZE = 6;
@@ -9,43 +10,49 @@ public class ControlFrame extends JFrame {
     private Simulation  theSim;
     private DetailFrame theDetails;
 
+    private JPanel mapBar;
     private JPanel toolbar;
 
     private JButton runButton;
     private JButton stopButton;
     private JButton stepButton;
     private JComboBox fileCombo;
+    private JLabel fileLabel;
 
     public ControlFrame() {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         setLocationByPlatform(true);
 
+        setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+
         toolbar = new JPanel();
+        mapBar  = new JPanel();
 
         runButton  = new RunButton(this);
         stepButton = new StepButton();
         stopButton = new StopButton();
-        fileCombo  = new JComboBox(new Object[] {
-            "foobar",
-            "foobaz",
-            "quuxba"
-        });
+        fileCombo  = new JComboBox(Util.ls("resources/maps"));
+        fileLabel  = new JLabel("Map:");
 
         fileCombo.setEditable(false);
 
-        toolbar.add(fileCombo);
+        mapBar.add(fileLabel);
+        mapBar.add(fileCombo);
+
         toolbar.add(runButton);
         toolbar.add(stepButton);
         toolbar.add(stopButton);
 
+        add(mapBar);
         add(toolbar);
 
         pack();
         setMinimumSize(getSize());
 
         theSim = new Simulation(DEFAULT_SIZE);
-        theDetails = new DetailFrame(this, null); // theSim.getGrid().getSummaries()
+        theDetails = new DetailFrame(this,
+            theSim.getGrid().getGridSquares());
 
         setVisible(true);
     }

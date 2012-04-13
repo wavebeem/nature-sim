@@ -11,6 +11,7 @@ implements WindowListener {
     private JPanel grid;
     private static final int PADDING = 6;
     private static final Color bg = new Color(32, 32, 32);
+    //private static final Color bg = new Color(48, 48, 48);
     private ControlFrame controlFrame;
     public DetailFrame(ControlFrame controlFrame, GridSquare[][] g) {
         this.controlFrame = controlFrame;
@@ -23,20 +24,24 @@ implements WindowListener {
         widgets = new ArrayList<GridWidget>();
 
         if (g == null) {
+            for (GridSquare[] row: g) {
+                for (GridSquare gs: row) {
+                    widgets.add(new GridWidget(gs));
+                }
+            }
+        }
+        else {
             int i = DEFAULT_SIZE * DEFAULT_SIZE;
             while (i --> 0) {
                 widgets.add(new GridWidget(null));
             }
-        }
-        else {
-            throw new RuntimeException("IMPLEMENT ME");
+            System.out.println("IMPLEMENT ME");
         }
 
         setBackground(bg);
 
         grid = new JPanel();
         grid.setLayout(new GridLayout(DEFAULT_SIZE, DEFAULT_SIZE, 1, 1));
-            //PADDING, PADDING));
 
         grid.setBorder(BorderFactory.createLineBorder(bg, PADDING));
         grid.setBackground(bg);
@@ -51,8 +56,6 @@ implements WindowListener {
 
         setVisible(true);
     }
-
-    private class GridSquare {}
 
     public void windowClosing(WindowEvent e) {
         controlFrame.stop();
