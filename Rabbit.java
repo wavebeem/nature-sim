@@ -17,7 +17,7 @@ public class Rabbit extends Animal {
         age = 0;
     }
 
-    public void act(int row, int col, Grid grid){
+    public void act(Location loc, Grid grid){
         Debug.echo("Here is where the Rabbit would act");
     }
 

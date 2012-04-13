@@ -22,7 +22,7 @@ public abstract class Plant implements Organism {
             return amount;
         }
     }
-    public void step(int row, int col, Grid grid){
+    public void step(Location loc, Grid grid){
         if(!alive){
             stepsUntilEdible--;
             if(stepsUntilEdible <= 0){
