@@ -66,18 +66,15 @@ public class Simulation {
 
                 // get name of predator
                 String predator = contents[0].trim();
-
                 // get names of prey
                 ArrayList<String> prey = new ArrayList<String>();
-                String[] preys = contents[1].split("\s+");
+                String[] preys = contents[1].trim().split("\\s+");
                 for (int i = 0; i < preys.length; i++) {
                     prey.add(preys[i]);
                 }
-
                 for (String p : prey) {
                     if      (predator.equals("Rabbit")) Rabbit.addPrey(p);
                     else if (predator.equals("Fox"))    Fox.addPrey(p);
-
                     // Note: Plants don't need to know their predators
                     if      (p.equals("Rabbit")) Rabbit.addPredator(p);
                     else if (p.equals("Fox"))    Fox.addPredator(p);
