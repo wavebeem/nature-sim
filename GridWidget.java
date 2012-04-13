@@ -29,6 +29,4 @@ public class GridWidget extends JComponent {
         //g.fillOval(0, 0, w, h);
         g.drawImage(Resources.gridSquareOverlayImage, 0, 0, w, h, null);
     }
-
-    private class GridSquare {}
 }

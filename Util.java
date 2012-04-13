@@ -2,6 +2,7 @@ import java.awt.*;
 import javax.imageio.*;
 import java.io.*;
 import java.util.*;
+import java.util.List;
 
 public class Util {
     public static final Random random = new Random();
@@ -18,5 +19,23 @@ public class Util {
 
     public static Color randomColor() {
         return Color.getHSBColor(random.nextInt(360) / 360.0f, 0.75f, 0.50f);
+    }
+
+    public static String[] ls(String dirname) {
+        try {
+            File dir = new File(dirname);
+            File[] files = dir.listFiles();
+
+            String[] strings = new String[files.length];
+            for (int i = 0; i < files.length; i++) {
+                strings[i] = files[i].getName();
+            }
+
+            return strings;
+        }
+        catch (Exception e) {
+            System.out.println("Something nasty happened: " + e);
+            return null;
+        }
     }
 }
