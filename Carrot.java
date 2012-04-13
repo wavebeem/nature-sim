@@ -11,13 +11,20 @@ public class Carrot extends Plant {
         amount = maxAmount;
         stepsUntilEdible = 0;
     }
+
     public Image getImage(){
         return null;
     }
+
     protected int getMaxAmount(){
         return maxAmount;
     }
+
     protected int getMaxStepsUntilEdible(){
         return maxStepsUntilEdible;
+    }
+
+    public String toString() {
+        return "Carrot";
     }
 }

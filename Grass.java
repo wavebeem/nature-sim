@@ -11,13 +11,20 @@ public class Grass extends Plant {
         amount = maxAmount;
         stepsUntilEdible = maxStepsUntilEdible;
     }
+
     protected int getMaxAmount(){
         return maxAmount;
     }
+    
     protected int getMaxStepsUntilEdible(){
         return maxStepsUntilEdible;
     }
+
     public Image getImage(){
         return null;
+    }
+
+    public String toString() {
+        return "Grass";
     }
 }
