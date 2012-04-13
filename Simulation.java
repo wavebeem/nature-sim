@@ -1,5 +1,7 @@
 import java.util.Scanner;
 import java.io.File;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.ArrayList;
@@ -32,6 +34,16 @@ public class Simulation {
 
     public void step() {
         Debug.echo("Here is where the simulation would step through each organism in the grid.");
+        
+        Location[] locations = grid.getLocations();
+        Collections.shuffle(Arrays.asList(locations));
+        GridSquare current;
+        Location loc;
+        for (int idx = 0; idx < locations.length; idx++){
+            loc = locations[idx];
+            current = grid.get(loc);
+            current.step(loc, grid);
+        }
     }
     public void parseSymbolMap() {
         symbolToClassnameMap = new HashMap<Character, String>();
