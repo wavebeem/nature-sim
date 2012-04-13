@@ -13,8 +13,12 @@ public class GridSquare {
     }
     
     public void step(Location loc, Grid g){
-        plant.step(loc, g);
-        animal.step(loc, g);
+        if(plant != null) {
+            plant.step(loc, g);
+        }
+        if(animal != null) {
+            animal.step(loc, g);
+        }
     }
 
     public Plant getPlant()   { return plant;  }
