@@ -11,6 +11,11 @@ public class GridSquare {
         plant  = p;
         animal = a;
     }
+    
+    public void step(Location loc, Grid g){
+        plant.step(loc, g);
+        animal.step(loc, g);
+    }
 
     public Plant getPlant()   { return plant;  }
     public Animal getAnimal() { return animal; }
