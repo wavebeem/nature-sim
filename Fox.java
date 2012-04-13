@@ -43,4 +43,8 @@ public class Fox extends Animal {
     protected int getMoveDistance(){
         return moveDistance;
     }
+    
+    public String toString(){
+        return "Fox";
+    }
 }

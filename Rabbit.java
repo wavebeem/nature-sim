@@ -43,4 +43,8 @@ public class Rabbit extends Animal {
     protected int getMoveDistance(){
         return moveDistance;
     }
+    
+    public String toString(){
+        return "Rabbit";
+    }
 }
