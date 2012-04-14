@@ -31,4 +31,7 @@ public abstract class Plant implements Organism {
             }
         }
     }
+    public boolean isAlive() {
+        return alive;
+    }
 }

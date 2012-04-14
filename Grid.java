@@ -1,5 +1,6 @@
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Grid {
     private GridSquare[][]  gridSquares;
@@ -51,6 +52,7 @@ public class Grid {
         return Math.abs(x - i) + Math.abs(y - j);
     }
 
+    @SuppressWarnings("unchecked")
     public List<DistanceSquarePair> getAdjacentSquares(Location loc, int dist) {
         Debug.echo("Get adjacent gridSquares");
 
@@ -67,8 +69,8 @@ public class Grid {
                 }
             }
         }
-
-        return Collections.sort(ret);
+        Collections.sort(ret);
+        return ret;
     }
 
     public List<DistanceSquarePair> getEmptySquares(int row, int col, int distance) {
