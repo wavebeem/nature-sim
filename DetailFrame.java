@@ -9,7 +9,7 @@ implements WindowListener {
     private ArrayList<GridWidget> widgets;
     private static final int DEFAULT_SIZE = 16;
     private JPanel grid;
-    private static final int INNER_PADDING = 3;
+    private static final int INNER_PADDING = 1;
     private static final int OUTER_PADDING = 9;
     private static final Color bg = new Color(32, 32, 32);
     private ControlFrame controlFrame;

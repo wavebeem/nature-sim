@@ -66,7 +66,12 @@ public class ControlFrame extends JFrame {
 
         public void actionPerformed(ActionEvent e) {
             if (theSim == null) {
-                theSim = new Simulation(DEFAULT_SIZE);
+                String dirname = (String)fileCombo.getSelectedItem();
+                dirname = "resources/maps/" + dirname;
+                System.out.println(new File(dirname, "animals.dat"));
+                theSim = new Simulation(
+                    new File(dirname, "animals.dat"),
+                    new File(dirname, "terrain.dat"));
                 theDetails = new DetailFrame(that,
                     theSim.getGrid().getGridSquares());
             }
