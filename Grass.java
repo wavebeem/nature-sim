@@ -21,7 +21,7 @@ public class Grass extends Plant {
     }
 
     public Image getImage(){
-        return null;
+        return Resources.imageByName("Grass");
     }
 
     public String toString() {

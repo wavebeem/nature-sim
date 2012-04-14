@@ -18,11 +18,23 @@ public class Rabbit extends Animal {
     }
 
     public void act(Location loc, Grid grid){
+        /*
+        GridSquare mySquare = grid.get(loc);
+        ArrayList<GridSquarePair> adjacentSquares = grid.getAdjacentSquares(loc);
+        ArrayList<GridSquarePair> emptySquares = grid.getEmptySquares(adjacentSquares);
+        ArrayList<GridSquarePair> predatorSquares = grid.getAdjacentSquares(adjacentSquares, predators);
+        ArrayList<GridSquarePair> preySquares = grid.getAdjacentSquares(adjacentSquares, prey);
+        
+        if(predatorSquares.size() > 0) {
+            Debug.echo("OH SHIT RUN?");
+        } else if (!mySquare.getPlant().isAlive()){
+            
+        } */
         Debug.echo("Here is where the Rabbit would act");
     }
 
     public Image getImage(){
-        return null;
+        return Resources.imageByName("Rabbit");
     }
 
     public static void addPrey(String p)     { prey.add(p);      }

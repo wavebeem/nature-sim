@@ -22,7 +22,7 @@ public class Fox extends Animal {
     }
 
     public Image getImage(){
-        return null;
+        return Resources.imageByName("Fox");
     }
 
     public static void addPrey(String p)     { prey.add(p);      }
