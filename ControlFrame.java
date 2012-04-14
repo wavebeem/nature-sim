@@ -1,7 +1,8 @@
+import javax.swing.event.*;
 import java.awt.event.*;
-import java.awt.*;
 import javax.swing.*;
 import java.util.*;
+import java.awt.*;
 import java.io.*;
 
 public class ControlFrame extends JFrame {
@@ -13,11 +14,12 @@ public class ControlFrame extends JFrame {
     private JPanel mapBar;
     private JPanel toolbar;
 
+    private JLabel fileLabel;
     private JButton runButton;
     private JButton stopButton;
     private JButton stepButton;
     private JComboBox fileCombo;
-    private JLabel fileLabel;
+    private JCheckBox shouldGrid;
 
     public ControlFrame() {
         super("Nature Sim Control Frame");
@@ -35,11 +37,15 @@ public class ControlFrame extends JFrame {
         stopButton = new StopButton();
         fileCombo  = new JComboBox(Util.ls("resources/maps"));
         fileLabel  = new JLabel("Map:");
+        shouldGrid = new GridLinesCheckBox();
+
+        shouldGrid.setSelected(true);
 
         fileCombo.setEditable(false);
 
         mapBar.add(fileLabel);
         mapBar.add(fileCombo);
+        mapBar.add(shouldGrid);
 
         toolbar.add(runButton);
         toolbar.add(stepButton);
@@ -105,9 +111,34 @@ public class ControlFrame extends JFrame {
         }
 
         public void actionPerformed(ActionEvent e) {
-            if (theSim != null) {
-                theSim.step();
-            }
+            step();
+        }
+    }
+
+    private void step() {
+        if (theSim != null && theDetails != null) {
+            theSim.step();
+            theDetails.repaint();
+        }
+    }
+
+    private class GridLinesCheckBox
+    extends JCheckBox
+    implements ChangeListener {
+        public GridLinesCheckBox() {
+            super("Grid lines?");
+            addChangeListener(this);
+        }
+
+        public void stateChanged(ChangeEvent e) {
+            setGridLines();
+        }
+    }
+
+    private void setGridLines() {
+        if (theDetails != null) {
+            theDetails.setGridLinesAreEnabled(shouldGrid.isSelected());
+            theDetails.repaint();
         }
     }
 }

@@ -13,6 +13,7 @@ implements WindowListener {
     private static final int OUTER_PADDING = 9;
     private static final Color bg = new Color(64, 64, 64);
     private ControlFrame controlFrame;
+    private boolean gridLines = true;
     public DetailFrame(ControlFrame controlFrame, GridSquare[][] g) {
         super("Nature Sim Detail View");
         this.controlFrame = controlFrame;
@@ -31,7 +32,7 @@ implements WindowListener {
                 INNER_PADDING, INNER_PADDING));
             for (GridSquare[] row: g) {
                 for (GridSquare gs: row) {
-                    widgets.add(new GridWidget(gs));
+                    widgets.add(new GridWidget(gs, this));
                 }
             }
         }
@@ -40,7 +41,7 @@ implements WindowListener {
             grid.setLayout(new GridLayout(DEFAULT_SIZE, DEFAULT_SIZE,
                 INNER_PADDING, INNER_PADDING));
             while (i --> 0) {
-                widgets.add(new GridWidget(null));
+                widgets.add(new GridWidget(null, this));
             }
             System.out.println("IMPLEMENT ME");
         }
@@ -59,9 +60,18 @@ implements WindowListener {
         pack();
 
         final int size = Math.min(getWidth(), getHeight());
-        setMinimumSize(new Dimension(size, size));
+        //setMinimumSize(new Dimension(size, size));
 
         setVisible(true);
+    }
+
+    public void setGridLinesAreEnabled(boolean truth) {
+        gridLines = truth;
+        repaint();
+    }
+
+    public boolean gridLinesAreEnabled() {
+        return gridLines;
     }
 
     public void windowClosing(WindowEvent e) {

@@ -3,7 +3,8 @@ import javax.swing.*;
 import java.util.*;
 
 public class GridWidget extends JComponent {
-    private GridSquare gridSquare;
+    private GridSquare  gridSquare;
+    private DetailFrame detailFrame;
     //private static final Color bg = new Color(64, 64, 16);
     private Color bg = new Color(64, 64, 16);
     private static final Color fg = new Color(64, 64, 64);
@@ -11,8 +12,9 @@ public class GridWidget extends JComponent {
     public Dimension getMinimumSize()   { return new Dimension(24, 24); }
     public Dimension getPreferredSize() { return new Dimension(24, 24); }
 
-    public GridWidget(GridSquare gridSquare) {
-        this.gridSquare = gridSquare;
+    public GridWidget(GridSquare gridSquare, DetailFrame detailFrame) {
+        this.gridSquare  = gridSquare;
+        this.detailFrame = detailFrame;
         bg = Util.randomColor();
     }
 
@@ -40,7 +42,9 @@ public class GridWidget extends JComponent {
         g.drawImage(animal == null? null: animal.getImage(),
             w/2 - aw/2, h/2 - ah/2,
             aw, ah, null);
-        g.drawImage(Resources.imageByName("overlay"),
-            0, 0, w, h, null);
+        if (detailFrame.gridLinesAreEnabled()) {
+            g.drawImage(Resources.imageByName("overlay"),
+                0, 0, w, h, null);
+        }
     }
 }
