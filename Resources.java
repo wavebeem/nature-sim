@@ -6,7 +6,7 @@ public class Resources {
     public static Image dirtImage;
 
     public static void load() {
-        gridSquareOverlayImage = Util.loadImage("Dirt.png");
+        dirtImage = Util.loadImage("Dirt.png");
         imageMap = new HashMap<String, Image>();
 
         for (File pathname: new File("resources/img/").listFiles()) {
