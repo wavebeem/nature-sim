@@ -43,6 +43,11 @@ public class Grid {
         gridSquares[row][col].setAnimal(null);
     }
 
+    public void removeAnimal(Location loc) {
+        Debug.echo("Removing animal at " + loc);
+        gridSquares[loc.row][loc.col].setAnimal(null);
+    }
+
     private boolean inBounds(int row, int col) {
         return row >= 0 && row < getGridSize()
             && col >= 0 && col < getGridSize();
