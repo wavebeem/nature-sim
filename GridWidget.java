@@ -40,7 +40,7 @@ public class GridWidget extends JComponent {
         g.drawImage(animal == null? null: animal.getImage(),
             w/2 - aw/2, h/2 - ah/2,
             aw, ah, null);
-        //g.drawImage(Resources.gridSquareOverlayImage,
-            //0, 0, w, h, null);
+        g.drawImage(Resources.imageByName("overlay"),
+            0, 0, w, h, null);
     }
 }

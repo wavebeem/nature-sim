@@ -4,9 +4,11 @@ import java.io.*;
 
 public class Resources {
     public static Image dirtImage;
+    public static Image overlay;
 
     public static void load() {
         dirtImage = Util.loadImage("Dirt.png");
+        overlay   = Util.loadImage("overlay.png");
         imageMap = new HashMap<String, Image>();
 
         for (File pathname: new File("resources/img/").listFiles()) {
