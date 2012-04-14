@@ -9,9 +9,9 @@ implements WindowListener {
     private ArrayList<GridWidget> widgets;
     private static final int DEFAULT_SIZE = 16;
     private JPanel grid;
-    private static final int INNER_PADDING = 1;
+    private static final int INNER_PADDING = 0;
     private static final int OUTER_PADDING = 9;
-    private static final Color bg = new Color(32, 32, 32);
+    private static final Color bg = new Color(64, 64, 64);
     private ControlFrame controlFrame;
     public DetailFrame(ControlFrame controlFrame, GridSquare[][] g) {
         super("Nature Sim Detail View");
