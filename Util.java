@@ -43,4 +43,13 @@ public class Util {
             return null;
         }
     }
+
+    public static void sleep() {
+        try {
+            Thread.sleep(50);
+        }
+        catch (InterruptedException e) {
+            System.err.println("INTERRUPTED WHILE SLEEPING");
+        }
+    }
 }

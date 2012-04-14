@@ -15,11 +15,15 @@ public class ControlFrame extends JFrame {
     private JPanel toolbar;
 
     private JLabel fileLabel;
-    private JButton runButton;
     private JButton stopButton;
     private JButton stepButton;
+    private JButton loadButton;
     private JComboBox fileCombo;
     private JCheckBox shouldGrid;
+    private JButton runButton;
+
+    private boolean threadShouldRun = false;
+    private Thread runThread;
 
     public ControlFrame() {
         super("Nature Sim Control Frame");
@@ -32,12 +36,13 @@ public class ControlFrame extends JFrame {
         toolbar = new JPanel();
         mapBar  = new JPanel();
 
-        runButton  = new RunButton(this);
+        loadButton = new LoadButton(this);
         stepButton = new StepButton();
         stopButton = new StopButton();
         fileCombo  = new JComboBox(Util.ls("resources/maps"));
         fileLabel  = new JLabel("Map:");
         shouldGrid = new GridLinesCheckBox();
+        runButton = new RunButton();
 
         shouldGrid.setSelected(true);
 
@@ -47,6 +52,7 @@ public class ControlFrame extends JFrame {
         mapBar.add(fileCombo);
         mapBar.add(shouldGrid);
 
+        toolbar.add(loadButton);
         toolbar.add(runButton);
         toolbar.add(stepButton);
         toolbar.add(stopButton);
@@ -60,12 +66,12 @@ public class ControlFrame extends JFrame {
         setVisible(true);
     }
 
-    private class RunButton
+    private class LoadButton
     extends JButton
     implements ActionListener {
         private ControlFrame that;
-        public RunButton(ControlFrame that) {
-            super("Run");
+        public LoadButton(ControlFrame that) {
+            super("Load");
             this.that = that;
             addActionListener(this);
         }
@@ -84,6 +90,55 @@ public class ControlFrame extends JFrame {
         }
     }
 
+    private class RunButton
+    extends JButton
+    implements ActionListener {
+        public RunButton() {
+            super("Run/Pause");
+            addActionListener(this);
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            Debug.echo("RUN?!?!");
+            if (theSim != null && theDetails != null && !isRunning()) {
+                startRun();
+            }
+            else if (isRunning()) {
+                tellRunThreadToFinish();
+            }
+        }
+    }
+
+    private void startRun() {
+        Debug.echo("START RUN!!!!");
+        threadShouldRun = true;
+        runThread = new Thread() {
+            public void run() {
+                while (isRunning()) {
+                    step();
+                    Util.sleep();
+                }
+            }
+        };
+        runThread.start();
+    }
+
+    private boolean isRunning() {
+        return threadShouldRun;
+    }
+
+    private void tellRunThreadToFinish() {
+        threadShouldRun = false;
+        try {
+            if (runThread != null) {
+                runThread.join();
+            }
+        }
+        catch (InterruptedException e) {
+        }
+        runThread = null;
+    }
+
     private class StopButton
     extends JButton
     implements ActionListener {
@@ -98,8 +153,10 @@ public class ControlFrame extends JFrame {
     }
 
     protected void stop() {
-        theDetails.dispose();
+        if (theDetails != null)
+            theDetails.dispose();
         theSim = null;
+        tellRunThreadToFinish();
     }
 
     private class StepButton
@@ -117,6 +174,7 @@ public class ControlFrame extends JFrame {
 
     private void step() {
         if (theSim != null && theDetails != null) {
+            Debug.echo(">>> ControlFrame: STEPPING");
             theSim.step();
             theDetails.repaint();
         }
