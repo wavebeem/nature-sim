@@ -8,8 +8,8 @@ public class GridWidget extends JComponent {
     private Color bg = new Color(64, 64, 16);
     private static final Color fg = new Color(64, 64, 64);
 
-    public Dimension getMinimumSize()   { return new Dimension(16, 16); }
-    public Dimension getPreferredSize() { return new Dimension(16, 16); }
+    public Dimension getMinimumSize()   { return new Dimension(24, 24); }
+    public Dimension getPreferredSize() { return new Dimension(24, 24); }
 
     public GridWidget(GridSquare gridSquare) {
         this.gridSquare = gridSquare;
@@ -23,10 +23,22 @@ public class GridWidget extends JComponent {
     public void paintComponent(Graphics2D g) {
         final int w = getWidth();
         final int h = getHeight();
-        g.setBackground(bg);
-        g.clearRect(0, 0, w, h);
+        final int q = Math.min(w, h);
+        //g.setBackground(bg);
+        //g.clearRect(0, 0, w, h);
         //g.setColor(fg);
         //g.fillOval(0, 0, w, h);
-        g.drawImage(Resources.gridSquareOverlayImage, 0, 0, w, h, null);
+
+        // The animal takes up 16px when the plant is 24px,
+        // but it also scales nicely.
+        final int aw = (int)Math.ceil(q*0.66);
+        final int ah = (int)Math.ceil(q*0.66);
+        g.drawImage(Resources.imageByName("dirt"),
+            0, 0, w, h, null);
+        g.drawImage(Resources.imageByName("fox"),
+            w/2 - aw/2, h/2 - ah/2,
+            aw, ah, null);
+        //g.drawImage(Resources.gridSquareOverlayImage,
+            //0, 0, w, h, null);
     }
 }

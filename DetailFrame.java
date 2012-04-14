@@ -9,10 +9,12 @@ implements WindowListener {
     private ArrayList<GridWidget> widgets;
     private static final int DEFAULT_SIZE = 16;
     private JPanel grid;
-    private static final int PADDING = 6;
+    private static final int INNER_PADDING = 3;
+    private static final int OUTER_PADDING = 9;
     private static final Color bg = new Color(32, 32, 32);
     private ControlFrame controlFrame;
     public DetailFrame(ControlFrame controlFrame, GridSquare[][] g) {
+        super("Nature Sim Detail View");
         this.controlFrame = controlFrame;
 
         setLocationByPlatform(true);
@@ -25,7 +27,8 @@ implements WindowListener {
         grid = new JPanel();
 
         if (g != null) {
-            grid.setLayout(new GridLayout(g.length, g[0].length, 1, 1));
+            grid.setLayout(new GridLayout(g.length, g[0].length,
+                INNER_PADDING, INNER_PADDING));
             for (GridSquare[] row: g) {
                 for (GridSquare gs: row) {
                     widgets.add(new GridWidget(gs));
@@ -34,7 +37,8 @@ implements WindowListener {
         }
         else {
             int i = DEFAULT_SIZE * DEFAULT_SIZE;
-            grid.setLayout(new GridLayout(DEFAULT_SIZE, DEFAULT_SIZE, 1, 1));
+            grid.setLayout(new GridLayout(DEFAULT_SIZE, DEFAULT_SIZE,
+                INNER_PADDING, INNER_PADDING));
             while (i --> 0) {
                 widgets.add(new GridWidget(null));
             }
@@ -43,7 +47,7 @@ implements WindowListener {
 
         setBackground(bg);
 
-        grid.setBorder(BorderFactory.createLineBorder(bg, PADDING));
+        grid.setBorder(BorderFactory.createLineBorder(bg, OUTER_PADDING));
         grid.setBackground(bg);
 
         for (GridWidget widget: widgets) {
@@ -53,7 +57,9 @@ implements WindowListener {
         add(grid);
 
         pack();
-        setMinimumSize(grid.getSize());
+
+        final int size = Math.min(getWidth(), getHeight());
+        setMinimumSize(new Dimension(size, size));
 
         setVisible(true);
     }
