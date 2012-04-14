@@ -3,10 +3,10 @@ import java.awt.*;
 import java.io.*;
 
 public class Resources {
-    public static Image gridSquareOverlayImage;
+    public static Image dirtImage;
 
     public static void load() {
-        gridSquareOverlayImage = Util.loadImage("overlay.png");
+        gridSquareOverlayImage = Util.loadImage("Dirt.png");
         imageMap = new HashMap<String, Image>();
 
         for (File pathname: new File("resources/img/").listFiles()) {
