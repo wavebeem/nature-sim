@@ -26,4 +26,9 @@ public class GridSquare {
 
     public void setPlant(Plant p)   { plant = p;  }
     public void setAnimal(Animal a) { animal = a; }
+    
+    public boolean equals(Object o){
+        GridSquare that = (GridSquare)o;
+        return this.plant == that.plant && this.animal == that.animal;
+    }
 }
