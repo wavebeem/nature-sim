@@ -9,7 +9,7 @@ public class DistanceSquarePair implements Comparable{
     
     public boolean equals(Object o) {
         DistanceSquarePair that = (DistanceSquarePair)o;
-        return (this.distance == that.distance);
+        return (this.distance == that.distance && this.gridSquare.equals(that.gridSquare));
     }
     public int compareTo(Object o){
         DistanceSquarePair that = (DistanceSquarePair)o;
