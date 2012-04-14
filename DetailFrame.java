@@ -53,6 +53,7 @@ implements WindowListener {
         add(grid);
 
         pack();
+        setMinimumSize(grid.getSize());
 
         setVisible(true);
     }
