@@ -1,6 +1,6 @@
 public class Location implements Comparable{
-    public Integer row;
-    public Integer col;
+    public final Integer row;
+    public final Integer col;
     
     public Location(Integer row, Integer col){
         this.row = row;
