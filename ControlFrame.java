@@ -20,6 +20,7 @@ public class ControlFrame extends JFrame {
     private JLabel fileLabel;
 
     public ControlFrame() {
+        super("Nature Sim Control Frame");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         setLocationByPlatform(true);
