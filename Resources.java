@@ -23,6 +23,11 @@ public class Resources {
 
     private static Map<String, Image> imageMap;
     public static Image imageByName(String name) {
-        return imageMap.get(name);
+        if (imageMap.containsKey(name)) {
+            return imageMap.get(name);
+        }
+        else {
+            return imageMap.get("ERROR");
+        }
     }
 }

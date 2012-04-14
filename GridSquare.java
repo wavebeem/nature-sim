@@ -11,7 +11,7 @@ public class GridSquare {
         plant  = p;
         animal = a;
     }
-    
+
     public void step(Location loc, Grid g){
         if(plant != null) {
             plant.step(loc, g);
