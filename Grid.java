@@ -84,10 +84,30 @@ public class Grid {
         return ret;
     }
 
+    public List<DistanceSquarePair> getEmptySquares(List<DistanceSquarePair> squares) {
+        ArrayList<DistanceSquarePair> ret  = new ArrayList<DistanceSquarePair>();
+
+        for (DistanceSquarePair s : squares) {
+            if (s.gridSquare.getAnimal() == null) ret.add(s);
+        }
+
+        return ret;
+    }
+
     public List<DistanceSquarePair> getOccupiedSquares(int row, int col, int distance) {
         Debug.echo("Get occupied locations");
 
         List<DistanceSquarePair> squares = getAdjacentSquares(new Location(row, col), distance);
+        ArrayList<DistanceSquarePair> ret  = new ArrayList<DistanceSquarePair>();
+
+        for (DistanceSquarePair s : squares) {
+            if (s.gridSquare.getAnimal() != null) ret.add(s);
+        }
+
+        return ret;
+    }
+
+    public List<DistanceSquarePair> getOccupiedSquares(List<DistanceSquarePair> squares) {
         ArrayList<DistanceSquarePair> ret  = new ArrayList<DistanceSquarePair>();
 
         for (DistanceSquarePair s : squares) {
