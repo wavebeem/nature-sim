@@ -51,23 +51,10 @@ public class Grid {
         return Math.abs(x - i) + Math.abs(y - j);
     }
 
-    public List<GridSquare> getAdjacentGridSquares(Location loc, int dist) {
+    public List<GridSquare> getAdjacentSquares(Location loc, int dist) {
         Debug.echo("Get adjacent gridSquares");
 
-        List<Location> locs = getAdjacentLocations(loc, dist);
-        ArrayList<GridSquare> ret = new ArrayList();
-
-        for (Location l : locs) {
-            ret.add(get(l));
-        }
-
-        return ret;
-    }
-
-    private List<Location> getAdjacentLocations(Location loc, int dist) {
-        Debug.echo("Get adjacent locations");
-
-        ArrayList<Location> locs = new ArrayList<Location>();
+        ArrayList<GridSquare> ret = new ArrayList<GridSquare>();
 
         int row = loc.row;
         int col = loc.col;
@@ -75,18 +62,18 @@ public class Grid {
         for (int i = row - dist; i < row + dist; i++) {
             for (int j = col - dist; j < col + dist; j++) {
                 if (inBounds(i, j) && distance(row, col, i, j) <= dist) {
-                    locs.add(new Location(i, j));
+                    ret.add(get(i, j));
                 }
             }
         }
 
-        return locs;
+        return ret;
     }
 
-    public List<GridSquare> getEmptyLocations(int row, int col, int distance) {
+    public List<GridSquare> getEmptySquares(int row, int col, int distance) {
         Debug.echo("Get empty locations");
 
-        List<GridSquare> locs = getAdjacentGridSquares(new Location(row, col), distance);
+        List<GridSquare> locs = getAdjacentSquares(new Location(row, col), distance);
         ArrayList<GridSquare> ret  = new ArrayList<GridSquare>();
 
         for (GridSquare l : locs) {
@@ -96,10 +83,10 @@ public class Grid {
         return ret;
     }
 
-    public List<GridSquare> getOccupiedLocations(int row, int col, int distance) {
+    public List<GridSquare> getOccupiedSquares(int row, int col, int distance) {
         Debug.echo("Get occupied locations");
 
-        List<GridSquare> locs = getAdjacentGridSquares(new Location(row, col), distance);
+        List<GridSquare> locs = getAdjacentSquares(new Location(row, col), distance);
         ArrayList<GridSquare> ret  = new ArrayList<GridSquare>();
 
         for (GridSquare l : locs) {
@@ -109,12 +96,12 @@ public class Grid {
         return ret;
     }
 
-    public List<GridSquare> getPredatorLocations(List<GridSquare> squares, List<String> predators) {
+    public List<GridSquare> getOrganismSquares(List<GridSquare> squares, List<String> organismNames) {
         ArrayList<GridSquare> ret = new ArrayList<GridSquare>();
 
         for (GridSquare s : squares) {
             String name = s.getAnimal().getClass().getName();
-            if (s.getAnimal() != null && predators.contains(name)) {
+            if (s.getAnimal() != null && organismNames.contains(name)) {
                 ret.add(s);
             }
         }
