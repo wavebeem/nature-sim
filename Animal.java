@@ -13,13 +13,29 @@ public abstract class Animal implements Organism {
     
     public void step(Location loc, Grid grid){
         age++;
-        if(isOld()) {
-            grid.removeAnimal(loc.row, loc.col);
+        hunger+= 5;
+        if(isOld() || isStarving()) {
+            System.out.print("Animal at "+loc+" died due to ");
+            if(isOld()){
+                System.out.println("old age");
+            } else {
+                System.out.println("hunger");
+            }
+            grid.removeAnimal(loc);
         } else {
             act(loc, grid);
         }
     }
     public boolean isOld(){
         return age >= getMaxAge();
+    }
+    public boolean isStarving(){
+        return hunger >= getMaxHunger();
+    }
+    protected void eat(int amount){
+        hunger -= amount;
+        if(hunger < 0) {
+            hunger = 0;
+        }
     }
 }
