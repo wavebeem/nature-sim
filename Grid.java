@@ -142,13 +142,13 @@ public class Grid {
         for (int i = 0; i < getGridSize(); i++) {
             for (GridSquare s : gridSquares[i]) {
                 if (s.getPlant() != null) {
-                    terrain += Simulation.classnameToSymbol(s.getPlant().toString());
+                    terrain += Simulation.classnameToSymbol(s.getPlant().getClass().getName());
                 } else {
                     terrain += "_";
                 }
 
                 if (s.getAnimal() != null) {
-                    animals += Simulation.classnameToSymbol(s.getAnimal().toString());
+                    animals += Simulation.classnameToSymbol(s.getAnimal().getClass().getName());
                 } else {
                     animals += "_";
                 }
