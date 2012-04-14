@@ -109,6 +109,19 @@ public class Grid {
         return ret;
     }
 
+    public List<GridSquare> getPredatorLocations(List<GridSquare> squares, List<String> predators) {
+        ArrayList<GridSquare> ret = new ArrayList<GridSquare>();
+
+        for (GridSquare s : squares) {
+            String name = s.getAnimal().getClass().getName();
+            if (s.getAnimal() != null && predators.contains(name)) {
+                ret.add(s);
+            }
+        }
+
+        return ret;
+    }
+
     public GridSquare[][]  getGridSquares()   { return gridSquares;   }
     public GridSummary[][] getGridSummaries() { return gridSummaries; }
     public int getGridSize() { return gridSquares.length; }
