@@ -10,14 +10,14 @@ public class Fox extends Animal {
     private static ArrayList<String> prey = new ArrayList<String>();
     private static ArrayList<String> predators = new ArrayList<String>();
     
-    public Fox(){
+    public Fox(Location loc){
         Debug.echo("Constructing a new Fox object");
-        
+        setLocation(loc);
         hunger = 0;
         age = 0;
     }
 
-    public void act(Location loc, Grid grid){
+    public void act(Grid grid){
         Debug.echo("Here is where the Fox would act");
     }
 

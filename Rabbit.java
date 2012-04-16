@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.awt.Image;
 
 public class Rabbit extends Animal {
@@ -14,19 +13,19 @@ public class Rabbit extends Animal {
     private static ArrayList<String> prey = new ArrayList<String>();
     private static ArrayList<String> predators = new ArrayList<String>();
     
-    public Rabbit(){
+    public Rabbit(Location loc){
         Debug.echo("Constructing a new Rabbit object");
-        
+        setLocation(loc);
         hunger = 0;
         age = 0;
     }
 
-    public void act(Location loc, Grid grid){
+    public void act(Grid grid){
         stepNumber++;
-        System.out.println("Rabbit at loc="+loc+" is making its "+stepNumber+" step");
+        System.out.println("Rabbit at loc="+getLocation()+" is making its "+stepNumber+" step");
     
-        GridSquare mySquare = grid.get(loc);
-        List<DistanceSquarePair> visibleSquares = grid.getAdjacentSquares(loc, sightDistance);
+        GridSquare mySquare = grid.get(getLocation());
+        List<DistanceSquarePair> visibleSquares = grid.getAdjacentSquares(getLocation(), sightDistance);
         List<DistanceSquarePair> predatorSquares = grid.getOrganismSquares(visibleSquares, predators);
         List<DistanceSquarePair> preySquares = grid.getOrganismSquares(visibleSquares, prey);
         List<DistanceSquarePair> emptySquares = grid.getEmptySquares(visibleSquares);
@@ -40,13 +39,12 @@ public class Rabbit extends Animal {
             eat(10);
             return;
         } else {
-            List<DistanceSquarePair> reachableSquares = grid.getAdjacentSquares(loc, moveDistance);
+            List<DistanceSquarePair> reachableSquares = grid.getAdjacentSquares(getLocation(), moveDistance);
             for(DistanceSquarePair pair: reachableSquares){
                 if(emptySquares.contains(pair) && preySquares.contains(pair) && pair.gridSquare.getPlant().isAlive()){
-                    grid.removeAnimal(loc);
-                    pair.gridSquare.setAnimal(this);
+                    move(grid, pair.gridSquare);
                     
-                    mySquare = grid.get(loc);
+                    mySquare = grid.get(getLocation());
                     myPlant = mySquare.getPlant();
                     myPlant.getEaten(10);
                     eat(10);
@@ -55,9 +53,7 @@ public class Rabbit extends Animal {
             }
             List<DistanceSquarePair> emptyReachableSquares = emptySquares;
             emptyReachableSquares.retainAll(reachableSquares);
-            grid.removeAnimal(loc);
-            Random random = new Random();
-            emptyReachableSquares.get(random.nextInt(emptyReachableSquares.size())).gridSquare.setAnimal(this);
+            move(grid, emptyReachableSquares.get(Util.randInt(emptyReachableSquares.size())).gridSquare);
         }
         
         Debug.echo("Here is where the Rabbit would act");

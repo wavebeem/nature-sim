@@ -1,6 +1,6 @@
 import java.awt.Image;
 
-public abstract class Plant implements Organism {
+public abstract class Plant extends Organism {
     protected boolean alive;
     protected int amount;
     protected int stepsUntilEdible;
@@ -22,7 +22,7 @@ public abstract class Plant implements Organism {
             return amount;
         }
     }
-    public void step(Location loc, Grid grid){
+    public void step(Grid grid){
         if(!alive){
             stepsUntilEdible--;
             if(stepsUntilEdible <= 0){

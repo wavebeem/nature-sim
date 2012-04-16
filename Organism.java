@@ -1,6 +1,15 @@
 import java.awt.Image;
 
-public interface Organism {
-    public Image getImage();
-    public void step(Location loc, Grid grid);
+public abstract class Organism {
+    private Location location;
+
+    protected void setLocation(Location newLocation){
+        location = newLocation;
+    }
+    
+    public Location getLocation(){
+        return location;
+    }
+    public abstract Image getImage();
+    public abstract void step(Grid grid);
 }
