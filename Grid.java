@@ -128,9 +128,11 @@ public class Grid {
         ArrayList<DistanceSquarePair> ret = new ArrayList<DistanceSquarePair>();
 
         for (DistanceSquarePair s : squares) {
-            String name = s.gridSquare.getAnimal().getClass().getName();
-            if (s.gridSquare.getAnimal() != null && organismNames.contains(name)) {
-                ret.add(s);
+            if (s.gridSquare.getAnimal() != null) {
+                String name = s.gridSquare.getAnimal().getClass().getName();
+                if (organismNames.contains(name)) {
+                    ret.add(s);
+                }
             }
         }
 

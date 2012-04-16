@@ -18,9 +18,7 @@ public class Simulation {
 
         parseSymbolMap();
         parseFoodWeb();
-        parseGrid(new File("resources/maps/testMap/animals.dat"), new File("resources/maps/testMap/terrain.dat"));
-        System.out.println(toString());
-        //grid = new Grid(gridSize);
+        grid = new Grid(gridSize);
         stepNumber = 0;
     }
     public Simulation(File animals, File terrain){ 
@@ -33,17 +31,26 @@ public class Simulation {
     }
 
     public void step() {
-        Debug.echo("Here is where the simulation would step through each organism in the grid.");
+        stepNumber++;
+        Debug.echo("Step:"+stepNumber);
         
         Location[] locations = grid.getLocations();
         Collections.shuffle(Arrays.asList(locations));
         GridSquare current;
         Location loc;
+        ArrayList<Organism> organisms = new ArrayList<Organism>();
         for (int idx = 0; idx < locations.length; idx++){
             loc = locations[idx];
             current = grid.get(loc);
-            current.step(loc, grid);
-        }
+            
+            //Also add in the location?!?!?
+            if(current.getPlant() != null) {
+                organisms.add(current.getPlant());
+            }
+            if(current.getAnimal() != null) {
+                organisms.add(current.getAnimal());
+            }
+        }      
     }
     public void parseSymbolMap() {
         symbolToClassnameMap = new HashMap<Character, String>();
