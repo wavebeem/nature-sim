@@ -51,7 +51,9 @@ public class Rabbit extends Animal {
             }
             List<DistanceSquarePair> emptyReachableSquares = emptySquares;
             emptyReachableSquares.retainAll(reachableSquares);
-            move(grid, emptyReachableSquares.get(Util.randInt(emptyReachableSquares.size())).gridSquare);
+            if (emptyReachableSquares.size() > 0) {
+                move(grid, emptyReachableSquares.get(Util.randInt(emptyReachableSquares.size())).gridSquare);
+            }
         }
     }
 
