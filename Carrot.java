@@ -13,7 +13,11 @@ public class Carrot extends Plant {
     }
 
     public Image getImage(){
-        return Resources.imageByName("Carrot");
+        if(isAlive()){
+            return Resources.imageByName("Carrot");
+        } else {
+            return null;
+        }
     }
 
     protected int getMaxAmount(){

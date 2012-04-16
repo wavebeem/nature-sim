@@ -21,7 +21,11 @@ public class Grass extends Plant {
     }
 
     public Image getImage(){
-        return Resources.imageByName("Grass");
+        if(isAlive()){
+            return Resources.imageByName("Grass");
+        } else {
+            return null;
+        }
     }
 
     public String toString() {
