@@ -1,14 +1,13 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.Image;
+import java.util.Collections;
 
 public class Rabbit extends Animal {
     private static final int sightDistance = 10;
     private static final int moveDistance = 2;
     private static final int maxHunger = 100;
     private static final int maxAge = 100;
-    
-    private int stepNumber = 0;
     
     private static ArrayList<String> prey = new ArrayList<String>();
     private static ArrayList<String> predators = new ArrayList<String>();
@@ -21,9 +20,8 @@ public class Rabbit extends Animal {
     }
 
     public void act(Grid grid){
-        stepNumber++;
-        System.out.println("Rabbit at loc="+getLocation()+" is making its "+stepNumber+" step");
-    
+        Debug.echo("Here is where the Rabbit would act");
+        
         GridSquare mySquare = grid.get(getLocation());
         List<DistanceSquarePair> visibleSquares = grid.getAdjacentSquares(getLocation(), sightDistance);
         List<DistanceSquarePair> predatorSquares = grid.getOrganismSquares(visibleSquares, predators);
@@ -40,8 +38,9 @@ public class Rabbit extends Animal {
             return;
         } else {
             List<DistanceSquarePair> reachableSquares = grid.getAdjacentSquares(getLocation(), moveDistance);
+            Collections.shuffle(reachableSquares);
             for(DistanceSquarePair pair: reachableSquares){
-                if(emptySquares.contains(pair) && preySquares.contains(pair) && pair.gridSquare.getPlant().isAlive()){
+                if(emptySquares.contains(pair) && preySquares.contains(pair)){
                     move(grid, pair.gridSquare);
                     
                     mySquare = grid.get(getLocation());
@@ -55,8 +54,6 @@ public class Rabbit extends Animal {
             emptyReachableSquares.retainAll(reachableSquares);
             move(grid, emptyReachableSquares.get(Util.randInt(emptyReachableSquares.size())).gridSquare);
         }
-        
-        Debug.echo("Here is where the Rabbit would act");
     }
 
     public Image getImage(){
