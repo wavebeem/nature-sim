@@ -1,28 +1,23 @@
 public class GridSquare {
     private Plant plant;
     private Animal animal;
+    private Location location;
 
-    public GridSquare() {
+    public GridSquare(Location loc) {
         Debug.echo("Making a GridSquare");
+        location = loc;
     }
 
-    public GridSquare(Plant p, Animal a) {
+    public GridSquare(Location loc, Plant p, Animal a) {
         Debug.echo("Making a GridSquare with arguments");
         plant  = p;
         animal = a;
-    }
-
-    public void step(Location loc, Grid g){
-        if(plant != null) {
-            plant.step(loc, g);
-        }
-        if(animal != null) {
-            animal.step(loc, g);
-        }
+        location = loc;
     }
 
     public Plant getPlant()   { return plant;  }
     public Animal getAnimal() { return animal; }
+    public Location getLocation() { return location; }
 
     public void setPlant(Plant p)   { plant = p;  }
     public void setAnimal(Animal a) { animal = a; }
