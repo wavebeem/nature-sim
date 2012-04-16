@@ -116,13 +116,24 @@ public class Grid {
 
     public List<DistanceSquarePair> getOrganismSquares(List<DistanceSquarePair> squares, List<String> organismNames) {
         ArrayList<DistanceSquarePair> ret = new ArrayList<DistanceSquarePair>();
-
+        boolean correctSquare;
         for (DistanceSquarePair s : squares) {
+            correctSquare = false;
             if (s.gridSquare.getAnimal() != null) {
                 String name = s.gridSquare.getAnimal().getClass().getName();
                 if (organismNames.contains(name)) {
-                    ret.add(s);
+                    correctSquare = true;
                 }
+            }
+            if (!correctSquare && s.gridSquare.getPlant() != null && s.gridSquare.getPlant().isAlive()) {
+                String name = s.gridSquare.getPlant().getClass().getName();
+                if (organismNames.contains(name)) {
+                    correctSquare = true;
+                }
+            }
+            
+            if(correctSquare){
+                ret.add(s);
             }
         }
 
