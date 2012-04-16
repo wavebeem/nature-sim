@@ -45,7 +45,7 @@ public class Rabbit extends Animal {
                     
                     mySquare = grid.get(getLocation());
                     myPlant = mySquare.getPlant();
-                    eat(myPlant.getEaten(10););
+                    eat(myPlant.getEaten(10));
                     return;
                 }
             }
