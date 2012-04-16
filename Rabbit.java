@@ -32,7 +32,7 @@ public class Rabbit extends Animal {
         if(predatorSquares.size() > 0) {
             Debug.echo("OH SHIT RUN?");
         }
-        if (myPlant != null && myPlant.isAlive()){
+        if (myPlant != null && myPlant.isAlive() && prey.contains(myPlant.getClass().getName())){
             myPlant.getEaten(10);
             eat(10);
             return;
