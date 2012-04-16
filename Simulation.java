@@ -50,7 +50,10 @@ public class Simulation {
             if(current.getAnimal() != null) {
                 organisms.add(current.getAnimal());
             }
-        }      
+        }
+        for (Organism o: organisms) {
+            o.step(grid);
+        }
     }
     public void parseSymbolMap() {
         symbolToClassnameMap = new HashMap<Character, String>();
@@ -121,6 +124,7 @@ public class Simulation {
             int row = 0;
             int col = 0;
             Animal current;
+            Location loc;
             while (scanner.hasNext()) {
                 col = 0;
                 line = scanner.nextLine();
@@ -128,15 +132,16 @@ public class Simulation {
                 for (char symbol : line.toCharArray()){
                     className = symbolToClassnameMap.get(symbol);
                     if (className != null) {
+                        loc = new Location(row, col);
                         // IF MORE ANIMALS ARE ADDED, ADD THEM HERE (IN AN ELSE IF)
                         if (className.equals("Rabbit")) {
-                            current = new Rabbit();
+                            current = new Rabbit(loc);
                         } else if (className.equals("Fox")) {
-                            current = new Fox();
+                            current = new Fox(loc);
                         } else {
                             current = null;
                         }
-                        grid.addAnimal(current, row, col);
+                        grid.addAnimal(current, loc);
                     }
                     col++;
                 }
@@ -157,6 +162,7 @@ public class Simulation {
             int row = 0;
             int col = 0;
             Plant current;
+            Location loc;
             while (scanner.hasNext()) {
                 col = 0;
                 line = scanner.nextLine();
@@ -164,15 +170,16 @@ public class Simulation {
                 for (char symbol : line.toCharArray()){
                     className = symbolToClassnameMap.get(symbol);
                     if (className != null) {
+                        loc = new Location(row, col);
                         // IF MORE PLANTS ARE ADDED, ADD THEM HERE (IN AN ELSE IF)
                         if (className.equals("Grass")) {
-                            current = new Grass();
+                            current = new Grass(loc);
                         } else if (className.equals("Carrot")) {
-                            current = new Carrot();
+                            current = new Carrot(loc);
                         } else {
                             current = null;
                         }
-                        grid.addPlant(current, row, col);
+                        grid.addPlant(current, loc);
                     }
                     col++;
                 }
