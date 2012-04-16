@@ -14,7 +14,7 @@ public class Grid {
         locations = new Location[gridSize*gridSize];
         for (int i = 0; i < gridSize; i++) {
             for (int j = 0; j < gridSize; j++) {
-                gridSquares[i][j] = new GridSquare();
+                gridSquares[i][j] = new GridSquare(new Location(i, j));
                 locations[i*gridSize+j] = new Location(i, j);
             }
         }
@@ -32,20 +32,24 @@ public class Grid {
         if (animal == null) return;
         gridSquares[row][col].setAnimal(animal);
     }
+    public void addAnimal(Animal animal, Location loc) {
+        addAnimal(animal, loc.row, loc.col);
+    }
 
     public void addPlant(Plant plant, int row, int col) {
         if (plant == null) return;
         gridSquares[row][col].setPlant(plant);
+    }
+    public void addPlant(Plant plant, Location loc) {
+        addPlant(plant, loc.row, loc.col);
     }
 
     public void removeAnimal(int row, int col) {
         Debug.echo("Removing animal at " + row + ", " + col);
         gridSquares[row][col].setAnimal(null);
     }
-
     public void removeAnimal(Location loc) {
-        Debug.echo("Removing animal at " + loc);
-        gridSquares[loc.row][loc.col].setAnimal(null);
+        removeAnimal(loc.row, loc.col);
     }
 
     private boolean inBounds(int row, int col) {
@@ -82,15 +86,8 @@ public class Grid {
         Debug.echo("Get empty locations");
 
         List<DistanceSquarePair> squares = getAdjacentSquares(new Location(row, col), distance);
-        ArrayList<DistanceSquarePair> ret  = new ArrayList<DistanceSquarePair>();
-
-        for (DistanceSquarePair s : squares) {
-            if (s.gridSquare.getAnimal() == null) ret.add(s);
-        }
-
-        return ret;
+        return getEmptySquares(squares);
     }
-
     public List<DistanceSquarePair> getEmptySquares(List<DistanceSquarePair> squares) {
         ArrayList<DistanceSquarePair> ret  = new ArrayList<DistanceSquarePair>();
 
@@ -105,15 +102,8 @@ public class Grid {
         Debug.echo("Get occupied locations");
 
         List<DistanceSquarePair> squares = getAdjacentSquares(new Location(row, col), distance);
-        ArrayList<DistanceSquarePair> ret  = new ArrayList<DistanceSquarePair>();
-
-        for (DistanceSquarePair s : squares) {
-            if (s.gridSquare.getAnimal() != null) ret.add(s);
-        }
-
-        return ret;
+        return getOccupiedSquares(squares);
     }
-
     public List<DistanceSquarePair> getOccupiedSquares(List<DistanceSquarePair> squares) {
         ArrayList<DistanceSquarePair> ret  = new ArrayList<DistanceSquarePair>();
 
