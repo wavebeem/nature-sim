@@ -37,7 +37,9 @@ public class GridWidget extends JComponent {
         final int ah = (int)Math.ceil(q*0.66);
         final Plant  plant  = gridSquare.getPlant();
         final Animal animal = gridSquare.getAnimal();
-        g.drawImage(plant == null? Resources.dirtImage: plant.getImage(),
+        g.drawImage((plant == null || plant.getImage() == null)
+            ? Resources.dirtImage
+            : plant.getImage(),
             0, 0, w, h, null);
         g.drawImage(animal == null? null: animal.getImage(),
             w/2 - aw/2, h/2 - ah/2,
