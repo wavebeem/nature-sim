@@ -20,6 +20,9 @@ public class Util {
     public static Color randomColor() {
         return Color.getHSBColor(random.nextInt(360) / 360.0f, 0.75f, 0.50f);
     }
+    public static int randInt(int maxExclusive){
+        return random.nextInt(maxExclusive);
+    }
 
     public static String[] ls(String dirname) {
         try {
