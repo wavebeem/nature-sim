@@ -28,25 +28,34 @@ public class Grid {
         return gridSquares[loc.row][loc.col];
     }
 
-    public void addAnimal(Animal animal, int row, int col) {
+    public void addAnimal(Animal animal, GridSquare gridSquare){
         if (animal == null) return;
-        gridSquares[row][col].setAnimal(animal);
+        gridSquare.setAnimal(animal);
+    }
+    public void addAnimal(Animal animal, int row, int col) {
+        addAnimal(animal, gridSquares[row][col]);
     }
     public void addAnimal(Animal animal, Location loc) {
         addAnimal(animal, loc.row, loc.col);
     }
 
-    public void addPlant(Plant plant, int row, int col) {
+    public void addPlant(Plant plant, GridSquare gridSquare){
         if (plant == null) return;
-        gridSquares[row][col].setPlant(plant);
+        gridSquare.setPlant(plant);
+    }
+    public void addPlant(Plant plant, int row, int col) {
+        addPlant(plant, gridSquares[row][col]);
     }
     public void addPlant(Plant plant, Location loc) {
         addPlant(plant, loc.row, loc.col);
     }
 
+    public void removeAnimal(GridSquare gridSquare) {
+        Debug.echo("Removing animal at " + gridSquare.getLocation());
+        gridSquare.setAnimal(null);
+    }
     public void removeAnimal(int row, int col) {
-        Debug.echo("Removing animal at " + row + ", " + col);
-        gridSquares[row][col].setAnimal(null);
+        removeAnimal(gridSquares[row][col]);
     }
     public void removeAnimal(Location loc) {
         removeAnimal(loc.row, loc.col);
