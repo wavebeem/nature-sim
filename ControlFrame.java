@@ -77,7 +77,10 @@ public class ControlFrame extends JFrame {
         }
 
         public void actionPerformed(ActionEvent e) {
-            if (theSim == null) {
+            if (true || theSim == null) {
+                if (theDetails != null) {
+                    stop();
+                }
                 String dirname = (String)fileCombo.getSelectedItem();
                 dirname = "resources/maps/" + dirname;
                 System.out.println(new File(dirname, "animals.dat"));
