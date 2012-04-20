@@ -80,7 +80,7 @@ public class Rabbit extends Animal {
     public static void addPredator(String p) { predators.add(p); }
     public static void setCalories(double c)    { 
         calories = c;
-        maxHunger = c * 10;
+        maxHunger = c * 50;
         healthyHunger = maxHunger / 2;
     }
     

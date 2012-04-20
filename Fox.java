@@ -27,41 +27,14 @@ public class Fox extends Animal {
         GridSquare mySquare = grid.get(getLocation());
         List<DistanceSquarePair> visibleSquares = grid.getAdjacentSquares(getLocation(), sightDistance);
         List<DistanceSquarePair> predatorSquares = grid.getOrganismSquares(visibleSquares, predators);
-        List<DistanceSquarePair> preySquares = grid.getOrganismSquares(visibleSquares, prey);
-        List<DistanceSquarePair> emptySquares = grid.getEmptySquares(visibleSquares);
-        
-        
         
         if(predatorSquares.size() > 0) {
             Debug.echo("OH SHIT RUN?");
         }
         
-        Plant myPlant = null;
-        if (mySquare.getPlant() != null && mySquare.getPlant().isAlive() && prey.contains(mySquare.getPlant().getClass().getName())){
-            myPlant = mySquare.getPlant();
-        }
-        Organism bestAdjacentPrey = null;
-        Organism temp;
+        Organism bestAdjacentPrey = bestPreyInDistance(grid, prey, moveDistance);
+        Organism bestVisiblePrey = bestPreyInDistance(grid, prey, sightDistance);
         
-        List<DistanceSquarePair> reachableSquares = grid.getAdjacentSquares(getLocation(), moveDistance);
-        Collections.shuffle(reachableSquares);
-        for(DistanceSquarePair pair: reachableSquares){
-            if(preySquares.contains(pair)){
-                if(emptySquares.contains(pair)){
-                    temp = pair.gridSquare.getPlant();
-                    if (bestAdjacentPrey == null || bestAdjacentPrey.getCalories() < temp.getCalories()){
-                        bestAdjacentPrey = temp;
-                    }
-                } else {
-                    temp = pair.gridSquare.getAnimal();
-                    if (prey.contains(temp.getClass().getName())) {
-                         if (bestAdjacentPrey == null || bestAdjacentPrey.getCalories() < temp.getCalories()){
-                            bestAdjacentPrey = temp;
-                        }
-                    }
-                }
-            }
-        }
         if(bestAdjacentPrey != null) {
             if(bestAdjacentPrey instanceof Plant){
                 move(grid, bestAdjacentPrey.getLocation());
@@ -73,13 +46,11 @@ public class Fox extends Animal {
                 move(grid, bestAdjacentPrey.getLocation());
             }
             return;
-        } else if (myPlant != null) {
-            ((Plant)bestAdjacentPrey).getEaten();
-            eat(myPlant.getCalories());
+        } else {
+            //Move toward bestVisiblePrey?
         }
         
-        List<DistanceSquarePair> emptyReachableSquares = emptySquares;
-        emptyReachableSquares.retainAll(reachableSquares);
+        List<DistanceSquarePair> emptyReachableSquares = grid.getEmptySquares(getLocation(), moveDistance);
         if (emptyReachableSquares.size() > 0) {
             move(grid, emptyReachableSquares.get(Util.randInt(emptyReachableSquares.size())).gridSquare);
         }
@@ -89,7 +60,7 @@ public class Fox extends Animal {
     public static void addPredator(String p) { predators.add(p); }
     public static void setCalories(double c)    { 
         calories = c;     
-        maxHunger = c * 10;
+        maxHunger = c * 50;
     }
 
     protected double getMaxHunger()    { return maxHunger;                     }
