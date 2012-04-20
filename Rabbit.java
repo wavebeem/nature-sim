@@ -5,7 +5,7 @@ import java.util.Collections;
 
 public class Rabbit extends Animal {
     private static double calories;
-    private static final int maxBreedingTime = 15; // max timesteps before it breeds
+    private static final int maxBreedingTime = 10; // max timesteps before it breeds
 
     private static final int sightDistance = 6;
     private static final int moveDistance = 2;
@@ -17,10 +17,7 @@ public class Rabbit extends Animal {
     
     public Rabbit(Location loc){
         Debug.echo("Constructing a new Rabbit object");
-        setLocation(loc);
-        hunger = maxHunger / 4;
-        age = 0;
-        breedingTime = maxBreedingTime;
+        init(loc);
     }
 
     public void act(Grid grid){
@@ -29,36 +26,25 @@ public class Rabbit extends Animal {
         GridSquare mySquare = grid.get(getLocation());
         List<DistanceSquarePair> visibleSquares = grid.getAdjacentSquares(getLocation(), sightDistance);
         List<DistanceSquarePair> predatorSquares = grid.getOrganismSquares(visibleSquares, predators);
-        List<DistanceSquarePair> preySquares = grid.getOrganismSquares(visibleSquares, prey);
-        List<DistanceSquarePair> emptySquares = grid.getEmptySquares(visibleSquares);
-
-        breed(grid);
         
-        Plant myPlant = mySquare.getPlant();
         if(predatorSquares.size() > 0) {
             Debug.echo("OH SHIT RUN?");
         }
-        if (myPlant != null && myPlant.isAlive() && prey.contains(myPlant.getClass().getName())){
-            eat(myPlant.getCalories());
+        
+        Organism bestAdjacentPrey = bestPreyInDistance(grid, prey, moveDistance);
+        Organism bestVisiblePrey = bestPreyInDistance(grid, prey, sightDistance);
+        
+        if(bestAdjacentPrey != null) {
+            eat(bestAdjacentPrey, grid);
             return;
         } else {
-            List<DistanceSquarePair> reachableSquares = grid.getAdjacentSquares(getLocation(), moveDistance);
-            Collections.shuffle(reachableSquares);
-            for(DistanceSquarePair pair: reachableSquares){
-                if(emptySquares.contains(pair) && preySquares.contains(pair)){
-                    move(grid, pair.gridSquare);
-                    
-                    mySquare = grid.get(getLocation());
-                    myPlant = mySquare.getPlant();
-                    eat(myPlant.getCalories());
-                    return;
-                }
-            }
-            List<DistanceSquarePair> emptyReachableSquares = emptySquares;
-            emptyReachableSquares.retainAll(reachableSquares);
-            if (emptyReachableSquares.size() > 0) {
-                move(grid, emptyReachableSquares.get(Util.randInt(emptyReachableSquares.size())).gridSquare);
-            }
+            //Move toward bestVisiblePrey?
+        }
+        
+        //No prey in sight. Wander?
+        List<DistanceSquarePair> emptyReachableSquares = grid.getEmptySquares(getLocation(), moveDistance);
+        if (emptyReachableSquares.size() > 0) {
+            move(grid, emptyReachableSquares.get(Util.randInt(emptyReachableSquares.size())).gridSquare);
         }
     }
 
