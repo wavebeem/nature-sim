@@ -40,33 +40,36 @@ public class Fox extends Animal {
         if (mySquare.getPlant() != null && mySquare.getPlant().isAlive() && prey.contains(mySquare.getPlant().getClass().getName())){
             myPlant = mySquare.getPlant();
         }
-        GridSquare bestPreySquare = null;
+        Organism bestAdjacentPrey = null;
+        Organism temp;
+        
         List<DistanceSquarePair> reachableSquares = grid.getAdjacentSquares(getLocation(), moveDistance);
         Collections.shuffle(reachableSquares);
         for(DistanceSquarePair pair: reachableSquares){
             if(preySquares.contains(pair)){
                 if(emptySquares.contains(pair)){
-                    move(grid, pair.gridSquare);
-            
-                    myPlant = grid.get(getLocation()).getPlant();
-                    eat(myPlant.getEaten());
-                    return;
+                    temp = pair.gridSquare.getPlant();
+                    if (bestAdjacentPrey == null || bestAdjacentPrey.getCalories() < temp.getCalories()){
+                        bestAdjacentPrey = temp;
+                    }
                 } else {
-                    eat(pair.gridSquare.getAnimal().getCalories());
-                    grid.removeAnimal(pair.gridSquare);
-                    move(grid, pair.gridSquare);
-                    return;
+                    temp = pair.gridSquare.getAnimal();
+                    if (prey.contains(temp.getClass().getName())) {
+                         if (bestAdjacentPrey == null || bestAdjacentPrey.getCalories() < temp.getCalories()){
+                            bestAdjacentPrey = temp;
+                        }
+                    }
                 }
             }
         }
-        if(bestPreySquare != null) {
-            if(bestPreySquare.getAnimal() == null){
-                move(grid, bestPreySquare);
-                eat(bestPreySquare.getPlant().getEaten());
+        if(bestAdjacentPrey != null) {
+            if(bestAdjacentPrey instanceof Plant){
+                move(grid, bestAdjacentPrey.getLocation());
+                eat(((Plant)bestAdjacentPrey).getEaten());
             } else {
-                eat(bestPreySquare.getAnimal().getCalories());
-                grid.removeAnimal(bestPreySquare);
-                move(grid, bestPreySquare);
+                eat(bestAdjacentPrey.getCalories());
+                grid.removeAnimal(bestAdjacentPrey.getLocation());
+                move(grid, bestAdjacentPrey.getLocation());
             }
             return;
         } else if (myPlant != null) {

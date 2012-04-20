@@ -11,7 +11,6 @@ public abstract class Plant extends Organism {
     public abstract Image getImage();
     
     public int getEaten(){
-        System.out.println("Eating "+getCalories()+" from plant with amount "+amount+" at loc "+getLocation()+".");
         if(amount < getCalories()){
             int eatenAmount = amount;
             
