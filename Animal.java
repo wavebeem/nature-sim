@@ -102,19 +102,25 @@ public abstract class Animal extends Organism {
     
         List<DistanceSquarePair> reachableSquares = grid.getAdjacentSquares(getLocation(), distance);
         List<DistanceSquarePair> preySquares = grid.getOrganismSquares(reachableSquares, prey);
-        List<DistanceSquarePair> emptySquares = grid.getEmptySquares(reachableSquares);
+        List<DistanceSquarePair> emptySquares = grid.getEmptySquares(preySquares);
         
         Organism temp;
         for(DistanceSquarePair pair: preySquares){
             if(emptySquares.contains(pair)){
                 temp = pair.gridSquare.getPlant();
-                if (bestAdjacentPrey == null || temp.getCalories() > bestAdjacentPrey.getCalories() || (!closest && temp.getCalories() == bestAdjacentPrey.getCalories())){
+                if (bestAdjacentPrey == null ||
+                    temp.getCalories() > bestAdjacentPrey.getCalories() ||
+                    (!closest && temp.getCalories() == bestAdjacentPrey.getCalories())){
+
                     bestAdjacentPrey = temp;
                 }
             } else {
                 temp = pair.gridSquare.getAnimal();
                 if (prey.contains(temp.getClass().getName())) {
-                    if (bestAdjacentPrey == null || temp.getCalories() > bestAdjacentPrey.getCalories() || (!closest && temp.getCalories() == bestAdjacentPrey.getCalories())){
+                    if (bestAdjacentPrey == null ||
+                        temp.getCalories() > bestAdjacentPrey.getCalories() ||
+                        (!closest && temp.getCalories() == bestAdjacentPrey.getCalories())){
+
                         bestAdjacentPrey = temp;
                     }
                 } else {
