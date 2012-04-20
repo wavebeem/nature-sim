@@ -170,12 +170,12 @@ public class Grid {
         for (DistanceSquarePair pair : adjacentSquares) {
             int dist = distance(pair.gridSquare.getLocation(), target);
             if (closest) {
-                if (dist < bestDist) {
+                if (dist < bestDist && pair.gridSquare.getAnimal() != null) {
                     bestDist = dist;
                     bestSquare = pair.gridSquare;
                 }
             } else {
-                if (dist > bestDist) {
+                if (dist > bestDist && pair.gridSquare.getAnimal() != null) {
                     bestDist = dist;
                     bestSquare = pair.gridSquare;
                 }
