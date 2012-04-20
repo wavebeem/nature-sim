@@ -65,11 +65,11 @@ public class Grid {
             && col >= 0 && col < getGridSize();
     }
 
-    private int distance(int x, int y, int i, int j) {
+    public int distance(int x, int y, int i, int j) {
         return Math.abs(x - i) + Math.abs(y - j);
     }
 
-    private int distance(Location loc1, Location loc2) {
+    public int distance(Location loc1, Location loc2) {
         return distance(loc1.row, loc1.col, loc2.row, loc2.col);
     }
 
