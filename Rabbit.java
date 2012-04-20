@@ -5,6 +5,8 @@ import java.util.Collections;
 
 public class Rabbit extends Animal {
     private static int calories;
+    private static final int maxBreedingTime = 5;
+    private int breedingTime;
 
     private static final int sightDistance = 10;
     private static final int moveDistance = 2;
@@ -19,6 +21,7 @@ public class Rabbit extends Animal {
         setLocation(loc);
         hunger = 0;
         age = 0;
+        breedingTime = maxBreedingTime;
     }
 
     public void act(Grid grid){
@@ -29,6 +32,18 @@ public class Rabbit extends Animal {
         List<DistanceSquarePair> predatorSquares = grid.getOrganismSquares(visibleSquares, predators);
         List<DistanceSquarePair> preySquares = grid.getOrganismSquares(visibleSquares, prey);
         List<DistanceSquarePair> emptySquares = grid.getEmptySquares(visibleSquares);
+        List<DistanceSquarePair> reachableSquares = grid.getAdjacentSquares(getLocation(), moveDistance);
+
+        breedingTime--;
+        if (breedingTime == 0) {
+            breedingTime = maxBreedingTime;
+            for (DistanceSquarePair pair : reachableSquares) {
+                if (pair.gridsquare.getAnimal() == null) {
+                    grid.addAnimal(new Rabbit(), pair.gridsquare);
+                    break;
+                }
+            }
+        }
         
         Plant myPlant = mySquare.getPlant();
         if(predatorSquares.size() > 0) {
@@ -39,7 +54,6 @@ public class Rabbit extends Animal {
             eat(10);
             return;
         } else {
-            List<DistanceSquarePair> reachableSquares = grid.getAdjacentSquares(getLocation(), moveDistance);
             Collections.shuffle(reachableSquares);
             for(DistanceSquarePair pair: reachableSquares){
                 if(emptySquares.contains(pair) && preySquares.contains(pair)){
@@ -59,16 +73,30 @@ public class Rabbit extends Animal {
         }
     }
 
+    public Image getImage(){
+        return Resources.imageByName("Rabbit");
+    }
+
     public static void addPrey(String p)     { prey.add(p);      }
     public static void addPredator(String p) { predators.add(p); }
-    public static void setCalories(int c)    { calories = c;     }
-    public static int getCalories()          { return calories;  }
 
-    protected int getMaxHunger()    { return maxHunger;                         }
-    protected int getMaxAge()       { return maxAge;                            }
-    protected int getSightDistance(){ return sightDistance;                     }
-    protected int getMoveDistance() { return moveDistance;                      }
+    protected int getMaxHunger(){
+        return maxHunger;
+    }
+
+    protected int getMaxAge(){
+        return maxAge;
+    }
+
+    protected int getSightDistance(){
+        return sightDistance;
+    }
+
+    protected int getMoveDistance(){
+        return moveDistance;
+    }
     
-    public String toString()        { return "Rabbit";                          }
-    public Image getImage()         { return Resources.imageByName("Rabbit");   }
+    public String toString(){
+        return "Rabbit";
+    }
 }
