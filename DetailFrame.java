@@ -66,6 +66,7 @@ implements WindowListener {
 
         pack();
         setSize(new Dimension(512, 512));
+        setMinimumSize(new Dimension(6 * 24, 6 * 24));
 
         setVisible(true);
     }
