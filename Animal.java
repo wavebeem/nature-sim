@@ -12,8 +12,9 @@ public abstract class Animal extends Organism {
     protected abstract int getMaxAge();
     protected abstract int getSightDistance();
     protected abstract int getMoveDistance();
+    protected abstract ArrayList<String> getPredators();
+    protected abstract ArrayList<String> getPrey();
     public abstract double getCalories();
-    public abstract void act(Grid grid);
     public abstract Image getImage();
     public abstract int getMaxBreedingTime();
     public abstract void addMyType(Grid grid, GridSquare square);
@@ -34,7 +35,44 @@ public abstract class Animal extends Organism {
             }
         }
     }
-
+    //Can override for non-default behavior
+    public void act(Grid grid){
+        GridSquare mySquare = grid.get(getLocation());
+        List<DistanceSquarePair> visibleSquares = grid.getAdjacentSquares(getLocation(), getSightDistance());
+        List<DistanceSquarePair> predatorSquares = grid.getOrganismSquares(visibleSquares, getPredators());
+        
+        if(predatorSquares.size() > 0) {
+            GridSquare predatorSquare = predatorSquares.get(0).gridSquare;
+            GridSquare moveSquare = grid.getOptimalMoveSquare(getLocation(), predatorSquare.getLocation(), getMoveDistance()*2, false);
+            if(moveSquare != null){
+                System.out.println("Running");
+                move(grid, moveSquare);
+                return;
+            }
+        }
+        
+        Organism bestAdjacentPrey = bestPreyInDistance(grid, getPrey(), getMoveDistance(), false);
+        Organism bestVisiblePrey = bestPreyInDistance(grid, getPrey(), getSightDistance(), true);
+        
+        if(bestAdjacentPrey != null && bestAdjacentPrey.getCalories() == bestVisiblePrey.getCalories()) {
+            eat(bestAdjacentPrey, grid);
+            return;
+        } else if (bestVisiblePrey != null) {
+            //Move toward bestVisiblePrey?
+            GridSquare moveSquare = grid.getOptimalMoveSquare(getLocation(), bestVisiblePrey.getLocation(), getMoveDistance()*2, true);
+            if(moveSquare != null){
+                System.out.println("Chasing");
+                move(grid, moveSquare);
+                return;
+            }
+        }
+        
+        //No prey in sight. Wander?
+        List<DistanceSquarePair> emptyReachableSquares = grid.getEmptySquares(getLocation(), getMoveDistance());
+        if (emptyReachableSquares.size() > 0) {
+            move(grid, emptyReachableSquares.get(Util.randInt(emptyReachableSquares.size())).gridSquare);
+        }
+    }
     public boolean breed(Grid grid) {
         List<DistanceSquarePair> reachableSquares = grid.getAdjacentSquares(getLocation(), getMoveDistance());
         Collections.shuffle(reachableSquares);
