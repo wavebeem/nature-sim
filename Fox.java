@@ -15,13 +15,10 @@ public class Fox extends Animal {
     private static ArrayList<String> predators = new ArrayList<String>();
     
     public Fox(Location loc){
-        Debug.echo("Constructing a new Fox object");
         init(loc);
     }
 
     public void act(Grid grid){
-        Debug.echo("Here is where the Fox would act");
-        
         GridSquare mySquare = grid.get(getLocation());
         List<DistanceSquarePair> visibleSquares = grid.getAdjacentSquares(getLocation(), sightDistance);
         List<DistanceSquarePair> predatorSquares = grid.getOrganismSquares(visibleSquares, predators);
@@ -29,13 +26,15 @@ public class Fox extends Animal {
         if(predatorSquares.size() > 0) {
             GridSquare predatorSquare = predatorSquares.get(0).gridSquare;
             GridSquare moveSquare = grid.getOptimalMoveSquare(getLocation(), predatorSquare.getLocation(), moveDistance*2, false);
-            move(grid, moveSquare);
-            System.out.println("Fox predators: " + predators);
-            return;
+            if(moveSquare != null){
+                System.out.println("Running");
+                move(grid, moveSquare);
+                return;
+            }
         }
         
-        Organism bestAdjacentPrey = bestPreyInDistance(grid, prey, moveDistance);
-        Organism bestVisiblePrey = bestPreyInDistance(grid, prey, sightDistance);
+        Organism bestAdjacentPrey = bestPreyInDistance(grid, prey, moveDistance, false);
+        Organism bestVisiblePrey = bestPreyInDistance(grid, prey, sightDistance, true);
         
         if(bestAdjacentPrey != null && bestAdjacentPrey.getCalories() == bestVisiblePrey.getCalories()) {
             eat(bestAdjacentPrey, grid);
@@ -43,9 +42,11 @@ public class Fox extends Animal {
         } else if (bestVisiblePrey != null) {
             //Move toward bestVisiblePrey?
             GridSquare moveSquare = grid.getOptimalMoveSquare(getLocation(), bestVisiblePrey.getLocation(), moveDistance*2, true);
-            move(grid, moveSquare);
-            System.out.println("Fox prey: " + prey);
-            return;
+            if(moveSquare != null){
+                System.out.println("Chasing");
+                move(grid, moveSquare);
+                return;
+            }
         }
         
         //No prey in sight. Wander?
