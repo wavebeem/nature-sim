@@ -6,6 +6,8 @@ import java.util.Collections;
 public class Fox extends Animal {
     private static double calories;
 
+    private static final int maxBreedingTime = 25; 
+
     private static final int sightDistance = 10;
     private static final int moveDistance = 2;
     private static double maxHunger;
@@ -85,11 +87,19 @@ public class Fox extends Animal {
         }
     }
 
+    public void addMyType(Grid grid, GridSquare square) {
+        grid.addAnimal(new Fox(square.getLocation()), square);
+    }
+
     public static void addPrey(String p)     { prey.add(p);      }
     public static void addPredator(String p) { predators.add(p); }
     public static void setCalories(double c)    { 
         calories = c;     
         maxHunger = c * 10;
+    }
+
+    public int getMaxBreedingTime() {
+        return maxBreedingTime;
     }
 
     protected double getMaxHunger()    { return maxHunger;                     }
