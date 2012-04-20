@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 public class Simulation {
     private Grid grid;
@@ -22,7 +23,7 @@ public class Simulation {
         stepNumber = 0;
     }
 
-    public Simulation(File animals, File terrain){ 
+    public Simulation(InputStream animals, InputStream terrain){ 
         Debug.echo("Constructing a new Simulation object");
         
         parseSymbolMap();
@@ -125,12 +126,12 @@ public class Simulation {
             Debug.echo("FoodWeb: Invalid file format! "+e);
         }
     }
-    public void parseGrid(File animals, File terrain) {
+    public void parseGrid(InputStream animals, InputStream terrain) {
         parseTerrain(terrain);
         parseAnimals(animals);
         Debug.echo("Parsing grid from file");
     }
-    private void parseAnimals(File animals){
+    private void parseAnimals(InputStream animals){
         try {
             Scanner scanner = new Scanner(animals);
             int gridSize = new Integer(scanner.nextLine());
@@ -164,13 +165,11 @@ public class Simulation {
                 }
                 row++;
             }
-        } catch (FileNotFoundException e) {
-            Debug.echo("Animals: File not found!");
         } catch (Exception e) {
             Debug.echo("Animals: Invalid file format! "+e);
         }
     }
-    private void parseTerrain(File terrain){
+    private void parseTerrain(InputStream terrain){
         try {
             Scanner scanner = new Scanner(terrain);
             int gridSize = new Integer(scanner.nextLine());
@@ -202,8 +201,6 @@ public class Simulation {
                 }
                 row++;
             }
-        } catch (FileNotFoundException e) {
-            Debug.echo("Terrain: File not found!");
         } catch (Exception e) {
             Debug.echo("Terrain: Invalid file format! "+e);
         }
