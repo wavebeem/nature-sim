@@ -12,12 +12,15 @@ public class Simulation {
     private int stepNumber;
     private static Map<Character, String> symbolToClassnameMap;
     private static Map<String, Character> classnameToSymbolMap;
+    private static boolean filesParsed = false;
     
     public Simulation(int gridSize) {
         Debug.echo("Constructing a new Simulation object");
-
-        parseSymbolMap();
-        parseFoodWeb();
+        if(!filesParsed){
+            parseSymbolMap();
+            parseFoodWeb();
+            filesParsed = true;
+        }
         grid = new Grid(gridSize);
         stepNumber = 0;
     }
@@ -25,8 +28,11 @@ public class Simulation {
     public Simulation(File animals, File terrain){ 
         Debug.echo("Constructing a new Simulation object");
         
-        parseSymbolMap();
-        parseFoodWeb();
+        if(!filesParsed){
+            parseSymbolMap();
+            parseFoodWeb();
+            filesParsed = true;
+        }
         parseGrid(animals, terrain);
         stepNumber = 0;
     }

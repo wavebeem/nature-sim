@@ -7,7 +7,6 @@ public class Carrot extends Plant {
     private static final int maxStepsUntilEdible = 50;
     
     public Carrot(Location loc){
-        Debug.echo("Constructing a new Carrot object");
         setLocation(loc);
         alive = true;
         amount = maxAmount;

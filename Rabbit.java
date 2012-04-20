@@ -16,13 +16,10 @@ public class Rabbit extends Animal {
     private static ArrayList<String> predators = new ArrayList<String>();
     
     public Rabbit(Location loc){
-        Debug.echo("Constructing a new Rabbit object");
         init(loc);
     }
 
     public void act(Grid grid){
-        Debug.echo("Here is where the Rabbit would act");
-        
         GridSquare mySquare = grid.get(getLocation());
         List<DistanceSquarePair> visibleSquares = grid.getAdjacentSquares(getLocation(), sightDistance);
         List<DistanceSquarePair> predatorSquares = grid.getOrganismSquares(visibleSquares, predators);
@@ -30,10 +27,11 @@ public class Rabbit extends Animal {
         if(predatorSquares.size() > 0) {
             GridSquare predatorSquare = predatorSquares.get(0).gridSquare;
             GridSquare moveSquare = grid.getOptimalMoveSquare(getLocation(), predatorSquare.getLocation(), moveDistance*2, false);
-            move(grid, moveSquare);
-
-            System.out.println("Rabbit predators: " + predators);
-            return;
+            if(moveSquare != null){
+                System.out.println("Running");
+                move(grid, moveSquare);
+                return;
+            }
         }
         
         Organism bestAdjacentPrey = bestPreyInDistance(grid, prey, moveDistance, false);
@@ -44,6 +42,7 @@ public class Rabbit extends Animal {
             return;
         } else {
             //Move toward bestVisiblePrey?
+            
         }
         
         //No prey in sight. Wander?
