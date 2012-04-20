@@ -18,44 +18,6 @@ public class Fox extends Animal {
         init(loc);
     }
 
-    public void act(Grid grid){
-        GridSquare mySquare = grid.get(getLocation());
-        List<DistanceSquarePair> visibleSquares = grid.getAdjacentSquares(getLocation(), sightDistance);
-        List<DistanceSquarePair> predatorSquares = grid.getOrganismSquares(visibleSquares, predators);
-        
-        if(predatorSquares.size() > 0) {
-            GridSquare predatorSquare = predatorSquares.get(0).gridSquare;
-            GridSquare moveSquare = grid.getOptimalMoveSquare(getLocation(), predatorSquare.getLocation(), moveDistance*2, false);
-            if(moveSquare != null){
-                System.out.println("Running");
-                move(grid, moveSquare);
-                return;
-            }
-        }
-        
-        Organism bestAdjacentPrey = bestPreyInDistance(grid, prey, moveDistance, false);
-        Organism bestVisiblePrey = bestPreyInDistance(grid, prey, sightDistance, true);
-        
-        if(bestAdjacentPrey != null && bestAdjacentPrey.getCalories() == bestVisiblePrey.getCalories()) {
-            eat(bestAdjacentPrey, grid);
-            return;
-        } else if (bestVisiblePrey != null) {
-            //Move toward bestVisiblePrey?
-            GridSquare moveSquare = grid.getOptimalMoveSquare(getLocation(), bestVisiblePrey.getLocation(), moveDistance*2, true);
-            if(moveSquare != null){
-                System.out.println("Chasing");
-                move(grid, moveSquare);
-                return;
-            }
-        }
-        
-        //No prey in sight. Wander?
-        List<DistanceSquarePair> emptyReachableSquares = grid.getEmptySquares(getLocation(), moveDistance);
-        if (emptyReachableSquares.size() > 0) {
-            move(grid, emptyReachableSquares.get(Util.randInt(emptyReachableSquares.size())).gridSquare);
-        }
-    }
-
     public void addMyType(Grid grid, GridSquare square) {
         grid.addAnimal(new Fox(square.getLocation()), square);
     }
@@ -75,6 +37,9 @@ public class Fox extends Animal {
     protected int getMaxAge()       { return maxAge;                        }
     protected int getSightDistance(){ return sightDistance;                 }
     protected int getMoveDistance() { return moveDistance;                  }
+    
+    protected ArrayList<String> getPredators() { return predators; }
+    protected ArrayList<String> getPrey() { return prey; }
     
     public double getCalories()        { return calories;                      }
     public String toString()        { return "Fox";                         }
