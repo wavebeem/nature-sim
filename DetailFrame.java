@@ -14,6 +14,7 @@ implements WindowListener {
     private static final Color bg = new Color(64, 64, 64);
     private ControlFrame controlFrame;
     private boolean gridLines = true;
+    private JScrollPane scroll;
     public DetailFrame(ControlFrame controlFrame, GridSquare[][] g) {
         super("Nature Sim Detail View");
         this.controlFrame = controlFrame;
@@ -25,7 +26,8 @@ implements WindowListener {
 
         widgets = new ArrayList<GridWidget>();
 
-        grid = new JPanel();
+        grid   = new JPanel();
+        scroll = new JScrollPane(grid);
 
         if (g != null) {
             grid.setLayout(new GridLayout(g.length, g[0].length,
@@ -48,6 +50,7 @@ implements WindowListener {
 
         setBackground(bg);
 
+        scroll.setBorder(BorderFactory.createLineBorder(bg, 0));
         grid.setBorder(BorderFactory.createLineBorder(bg, OUTER_PADDING));
         grid.setBackground(bg);
 
@@ -55,12 +58,9 @@ implements WindowListener {
             grid.add(widget);
         }
 
-        add(grid);
+        add(scroll);
 
         pack();
-
-        final int size = Math.min(getWidth(), getHeight());
-        //setMinimumSize(new Dimension(size, size));
 
         setVisible(true);
     }
