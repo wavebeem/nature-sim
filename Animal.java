@@ -8,12 +8,13 @@ public abstract class Animal extends Organism {
     protected abstract int getMaxAge();
     protected abstract int getSightDistance();
     protected abstract int getMoveDistance();
+    public abstract int getCalories();
     public abstract void act(Grid grid);
     public abstract Image getImage();
     
     public void step(Grid grid){
         age++;
-        hunger+= 5;
+        hunger+= getMaxHunger()/14;
         if(isOld() || isStarving()) {
             System.out.print("Animal at "+getLocation()+" died due to ");
             if(isOld()){

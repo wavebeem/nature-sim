@@ -26,8 +26,8 @@ public class Simulation {
         Debug.echo("Constructing a new Simulation object");
         
         parseSymbolMap();
-        parseGrid(animals, terrain);
         parseFoodWeb();
+        parseGrid(animals, terrain);
         stepNumber = 0;
     }
 
