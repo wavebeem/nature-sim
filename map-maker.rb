@@ -24,7 +24,7 @@ help if ARGV.any?{|x| x =~ HELP}
 
 opts = {}
 until ARGV.length == 0
-    opt = ARGV.shift.sub("--", "").to_sym
+    opt = ARGV.shift.sub(/^--?/, "").to_sym
     val = ARGV.shift
 
     opts[opt] = val
@@ -33,6 +33,8 @@ end
 needed = [:name, :plants, :animals, :size]
 help if needed.any?{|k| not opts.key? k}
 
+COMMA  = /\s*,\s*/
+EQUALS = /\s*=\s*/
 SIZE = opts[:size].to_i
 NAME = opts[:name]
 PLANTS  = {}
@@ -43,8 +45,8 @@ plants  = []
 animals = []
 
 tot = 0
-opts[:plants].split(",").each do |pair|
-    k, v = pair.split("=")
+opts[:plants].split(COMMA).each do |pair|
+    k, v = pair.split(EQUALS)
     num = [0, v.to_i].max
     tot += num
 
@@ -55,8 +57,8 @@ end
 PLANTS["_"] = 100 - tot
 
 tot = 0
-opts[:animals].split(",").each do |pair|
-    k, v = pair.split("=")
+opts[:animals].split(COMMA).each do |pair|
+    k, v = pair.split(EQUALS)
     num = [0, v.to_i].max
     tot += num
 
