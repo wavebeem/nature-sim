@@ -6,7 +6,7 @@ import java.util.Collections;
 public class Fox extends Animal {
     private static double calories;
 
-    private static final int sightDistance = 10;
+    private static final int sightDistance = 6;
     private static final int moveDistance = 2;
     private static double maxHunger;
     private static final int maxAge = 100;
@@ -36,20 +36,13 @@ public class Fox extends Animal {
         Organism bestVisiblePrey = bestPreyInDistance(grid, prey, sightDistance);
         
         if(bestAdjacentPrey != null) {
-            if(bestAdjacentPrey instanceof Plant){
-                move(grid, bestAdjacentPrey.getLocation());
-                ((Plant)bestAdjacentPrey).getEaten();
-                eat(bestAdjacentPrey.getCalories());
-            } else {
-                eat(bestAdjacentPrey.getCalories());
-                grid.removeAnimal(bestAdjacentPrey.getLocation());
-                move(grid, bestAdjacentPrey.getLocation());
-            }
+            eat(bestAdjacentPrey, grid);
             return;
         } else {
             //Move toward bestVisiblePrey?
         }
         
+        //No prey in sight. Wander?
         List<DistanceSquarePair> emptyReachableSquares = grid.getEmptySquares(getLocation(), moveDistance);
         if (emptyReachableSquares.size() > 0) {
             move(grid, emptyReachableSquares.get(Util.randInt(emptyReachableSquares.size())).gridSquare);
