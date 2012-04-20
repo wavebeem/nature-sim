@@ -29,24 +29,27 @@ public abstract class Animal extends Organism {
             }
             grid.removeAnimal(getLocation());
         } else {
-            act(grid);
+            if (!breed(grid)){
+                act(grid);
+            }
         }
     }
 
-    public void breed(Grid grid) {
+    public boolean breed(Grid grid) {
         List<DistanceSquarePair> reachableSquares = grid.getAdjacentSquares(getLocation(), getMoveDistance());
         Collections.shuffle(reachableSquares);
 
         if (breedingTime > 0) breedingTime--;
-        if (breedingTime == 0 && hunger >= getMaxHunger()/2) {
-            breedingTime = getMaxBreedingTime();
+        if (breedingTime == 0 && hunger <= getMaxHunger()/2) {
             for (DistanceSquarePair pair : reachableSquares) {
                 if (pair.gridSquare.getAnimal() == null) {
                     addMyType(grid, pair.gridSquare);
-                    break;
+                    breedingTime = getMaxBreedingTime();
+                    return true;
                 }
             }
         }
+        return false;
     }
 
     public boolean isOld(){
@@ -113,5 +116,12 @@ public abstract class Animal extends Organism {
             }
         }
         return bestAdjacentPrey;
+    }
+    
+    protected void init(Location loc) {
+        setLocation(loc);
+        hunger = getMaxHunger() * 0.75;
+        age = 0;
+        breedingTime = getMaxBreedingTime();
     }
 }
