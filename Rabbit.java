@@ -57,30 +57,15 @@ public class Rabbit extends Animal {
         }
     }
 
-    public Image getImage(){
-        return Resources.imageByName("Rabbit");
-    }
-
     public static void addPrey(String p)     { prey.add(p);      }
     public static void addPredator(String p) { predators.add(p); }
+    public static void setCalories(int c)    { calories = c; }
+    public static int getCalories()          { return c; }
 
-    protected int getMaxHunger(){
-        return maxHunger;
-    }
-
-    protected int getMaxAge(){
-        return maxAge;
-    }
-
-    protected int getSightDistance(){
-        return sightDistance;
-    }
-
-    protected int getMoveDistance(){
-        return moveDistance;
-    }
-    
-    public String toString(){
-        return "Rabbit";
-    }
+    protected int getMaxHunger()    { return maxHunger; }
+    protected int getMaxAge()       { return maxAge; }
+    protected int getSightDistance(){ return sightDistance; }
+    protected int getMoveDistance() { return moveDistance; }
+    public String toString()        { return "Rabbit"; }
+    public Image getImage()         { return Resources.imageByName("Rabbit"); }
 }

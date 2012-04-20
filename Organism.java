@@ -6,10 +6,10 @@ public abstract class Organism {
     protected void setLocation(Location newLocation){
         location = newLocation;
     }
-    
     public Location getLocation(){
         return location;
     }
+    
     public abstract Image getImage();
     public abstract void step(Grid grid);
 }

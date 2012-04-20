@@ -65,30 +65,15 @@ public class Fox extends Animal {
         }
     }
 
-    public Image getImage(){
-        return Resources.imageByName("Fox");
-    }
-
     public static void addPrey(String p)     { prey.add(p);      }
     public static void addPredator(String p) { predators.add(p); }
+    public static void setCalories(int c)    { calories = c;     }
+    public static int getCalories()          { return c;         }
 
-    protected int getMaxHunger(){
-        return maxHunger;
-    }
-
-    protected int getMaxAge(){
-        return maxAge;
-    }
-
-    protected int getSightDistance(){
-        return sightDistance;
-    }
-
-    protected int getMoveDistance(){
-        return moveDistance;
-    }
-    
-    public String toString(){
-        return "Fox";
-    }
+    protected int getMaxHunger()    { return maxHunger;                     }
+    protected int getMaxAge()       { return maxAge;                        }
+    protected int getSightDistance(){ return sightDistance;                 }
+    protected int getMoveDistance() { return moveDistance;                  }
+    public String toString()        { return "Fox";                         }
+    public Image getImage()         { return Resources.imageByName("Fox");  }
 }
