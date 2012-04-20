@@ -1,2 +1,4 @@
-Fox: Rabbit
-Rabbit: Grass Carrot
+Fox (10): Rabbit Grass
+Rabbit (5): Carrot Grass
+Carrot (2)
+Grass (1)

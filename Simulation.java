@@ -21,6 +21,7 @@ public class Simulation {
         grid = new Grid(gridSize);
         stepNumber = 0;
     }
+
     public Simulation(File animals, File terrain){ 
         Debug.echo("Constructing a new Simulation object");
         

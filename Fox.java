@@ -4,6 +4,8 @@ import java.awt.Image;
 import java.util.Collections;
 
 public class Fox extends Animal {
+    private static int calories;
+
     private static final int sightDistance = 10;
     private static final int moveDistance = 2;
     private static final int maxHunger = 100;
@@ -68,12 +70,13 @@ public class Fox extends Animal {
     public static void addPrey(String p)     { prey.add(p);      }
     public static void addPredator(String p) { predators.add(p); }
     public static void setCalories(int c)    { calories = c;     }
-    public static int getCalories()          { return c;         }
+    public static int getCalories()          { return calories;  }
 
     protected int getMaxHunger()    { return maxHunger;                     }
     protected int getMaxAge()       { return maxAge;                        }
     protected int getSightDistance(){ return sightDistance;                 }
     protected int getMoveDistance() { return moveDistance;                  }
+    
     public String toString()        { return "Fox";                         }
     public Image getImage()         { return Resources.imageByName("Fox");  }
 }
