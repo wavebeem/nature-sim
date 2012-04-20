@@ -4,6 +4,8 @@ import java.awt.Image;
 import java.util.Collections;
 
 public class Fox extends Animal {
+    private static int calories;
+
     private static final int sightDistance = 10;
     private static final int moveDistance = 2;
     private static final int maxHunger = 100;

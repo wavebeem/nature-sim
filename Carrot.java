@@ -1,6 +1,8 @@
 import java.awt.Image;
 
 public class Carrot extends Plant {
+    private static int calories;
+
     private static final int maxAmount = 100;
     private static final int maxStepsUntilEdible = 50;
     
@@ -12,6 +14,10 @@ public class Carrot extends Plant {
         stepsUntilEdible = 0;
     }
 
+    protected int getMaxAmount()           { return maxAmount;           }
+    protected int getMaxStepsUntilEdible() { return maxStepsUntilEdible; }
+    public static int getCalories()        { return calories;            }
+
     public Image getImage(){
         if(isAlive()){
             return Resources.imageByName("Carrot");
@@ -20,12 +26,8 @@ public class Carrot extends Plant {
         }
     }
 
-    protected int getMaxAmount(){
-        return maxAmount;
-    }
-
-    protected int getMaxStepsUntilEdible(){
-        return maxStepsUntilEdible;
+    public static void setCalories(int c) {
+        calories = c;
     }
 
     public String toString() {

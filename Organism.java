@@ -6,7 +6,7 @@ public abstract class Organism {
     protected void setLocation(Location newLocation){
         location = newLocation;
     }
-    
+
     public Location getLocation(){
         return location;
     }
