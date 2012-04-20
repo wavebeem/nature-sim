@@ -3,7 +3,7 @@ import java.awt.Image;
 public class Grass extends Plant {
     private static int calories;
 
-    private static final int maxAmount = 100;
+    private static int maxAmount;
     private static final int maxStepsUntilEdible = 50;
     
     public Grass(Location loc) {
@@ -14,12 +14,15 @@ public class Grass extends Plant {
         stepsUntilEdible = maxStepsUntilEdible;
     }
     
-    public static int getCalories()        { return calories;            }
-    public static void setCalories(int c)  { calories = c;               }
+    
+    public static void setCalories(int c)  { 
+        calories = c;
+        maxAmount = calories*10;
+    }
     
     protected int getMaxAmount()           { return maxAmount;           }
     protected int getMaxStepsUntilEdible() { return maxStepsUntilEdible; }
-
+    public int getCalories()               { return calories;            }
     public String toString() { return "Grass"; }
     public Image getImage(){
         if(isAlive()){

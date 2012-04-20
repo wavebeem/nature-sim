@@ -10,6 +10,7 @@ public abstract class Organism {
         return location;
     }
     
+    public abstract int getCalories();
     public abstract Image getImage();
     public abstract void step(Grid grid);
 }
