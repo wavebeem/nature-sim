@@ -41,6 +41,17 @@ public abstract class Animal extends Organism {
             hunger = 0;
         }
     }
+    protected void eat(Organism o, Grid grid){
+        if(o instanceof Plant){
+            move(grid, o.getLocation());
+            ((Plant)o).getEaten();
+            eat(o.getCalories());
+        } else {
+            eat(o.getCalories());
+            grid.removeAnimal(o.getLocation());
+            move(grid, o.getLocation());
+        }
+    }
     protected void move(Grid grid, Location newLocation){
         grid.removeAnimal(getLocation());
         grid.addAnimal(this, newLocation);
