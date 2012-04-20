@@ -60,7 +60,7 @@ public class Simulation {
         symbolToClassnameMap = new HashMap<Character, String>();
         classnameToSymbolMap = new HashMap<String, Character>();
         try {
-            Scanner scanner = new Scanner(new File("resources/symbols.dat"));
+            Scanner scanner = new Scanner(Util.stream("resources/symbols.dat"));
             Character symbol;
             String className, line;
             String[] words;
@@ -72,8 +72,6 @@ public class Simulation {
                 symbolToClassnameMap.put(symbol, className);
                 classnameToSymbolMap.put(className, symbol);
             }
-        } catch (FileNotFoundException e) {
-            Debug.echo("SymbolMap: File not found!");
         } catch (Exception e) {
             Debug.echo("SymbolMap: Invalid file format! "+e);
         }
@@ -82,7 +80,7 @@ public class Simulation {
         Debug.echo("Here is where I would parse the food web file");
 
         try {
-            Scanner scanner = new Scanner(new File("resources/foodWeb.dat"));
+            Scanner scanner = new Scanner(Util.stream("resources/foodWeb.dat"));
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine().trim();
                 String[] contents = line.split(":");
@@ -123,8 +121,6 @@ public class Simulation {
                     }
                 }
             }
-        } catch (FileNotFoundException e) {
-            Debug.echo("FoodWeb: File not found!");
         } catch (Exception e) {
             Debug.echo("FoodWeb: Invalid file format! "+e);
         }

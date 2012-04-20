@@ -3,7 +3,7 @@ for arg; do
     all)   javac -Xlint:unchecked *.java ;;
     go)    java Main ;;
     clean) rm -f *.class ;;
-    jar)   jar -cmf manifest.txt nature-sim.jar *.class ;;
+    jar)   jar -cmf manifest.txt nature-sim.jar *.class resources/ ;;
     run)   java -jar nature-sim.jar ;;
     esac
 done

@@ -13,6 +13,7 @@ public class Main {
         }
         catch (Exception e) {
         }
+
         Resources.load();
         new ControlFrame();
     }
