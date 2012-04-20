@@ -16,11 +16,10 @@ public abstract class Animal extends Organism {
         age++;
         hunger+= getMaxHunger()/14;
         if(isOld() || isStarving()) {
-            System.out.print("Animal at "+getLocation()+" died due to ");
             if(isOld()){
-                System.out.println("old age");
+                Debug.echo("Animal at "+getLocation()+" died due to old age");
             } else {
-                System.out.println("hunger");
+                Debug.echo("Animal at "+getLocation()+" died due to hunger");
             }
             grid.removeAnimal(getLocation());
         } else {
