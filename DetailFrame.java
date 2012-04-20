@@ -45,7 +45,6 @@ implements WindowListener {
             while (i --> 0) {
                 widgets.add(new GridWidget(null, this));
             }
-            System.out.println("IMPLEMENT ME");
         }
 
         setBackground(bg);
