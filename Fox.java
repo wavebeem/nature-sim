@@ -16,9 +16,7 @@ public class Fox extends Animal {
     
     public Fox(Location loc){
         Debug.echo("Constructing a new Fox object");
-        setLocation(loc);
-        hunger = 0;
-        age = 0;
+        init(loc);
     }
 
     public void act(Grid grid){
