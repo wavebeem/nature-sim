@@ -5,8 +5,8 @@ import java.util.Collections;
 
 public class Fox extends Animal {
     private static double calories;
-    private static final int maxBreedingTime = 25; 
-    private static final int sightDistance = 6;
+    private static final int maxBreedingTime = 10; 
+    private static final int sightDistance = 10;
     private static final int moveDistance = 2;
     private static double maxHunger;
     private static final int maxAge = 100;
@@ -26,7 +26,7 @@ public class Fox extends Animal {
     public static void addPredator(String p) { predators.add(p); }
     public static void setCalories(double c)    { 
         calories = c;     
-        maxHunger = c * 50;
+        maxHunger = c * 10;
     }
 
     public int getMaxBreedingTime() {

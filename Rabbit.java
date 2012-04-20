@@ -27,7 +27,7 @@ public class Rabbit extends Animal {
     public static void addPredator(String p) { predators.add(p); }
     public static void setCalories(double c)    { 
         calories = c;
-        maxHunger = c * 50;
+        maxHunger = c * 10;
     }
     
     protected double getMaxHunger(){

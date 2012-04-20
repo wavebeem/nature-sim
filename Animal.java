@@ -47,46 +47,46 @@ public abstract class Animal extends Organism {
             GridSquare predatorSquare = predatorSquares.get(0).gridSquare;
             GridSquare moveSquare = grid.getOptimalMoveSquare(getLocation(), predatorSquare.getLocation(), getMoveDistance()*2, false);
             if(moveSquare != null){
-                System.out.println("Running");
+                Debug.echo("Running");
                 move(grid, moveSquare);
                 return;
             }
         }
         
-        Organism bestAdjacentPrey = bestPreyInDistance(grid, getPrey(), getMoveDistance(), false);
-        Organism bestVisiblePrey = bestPreyInDistance(grid, getPrey(), getSightDistance(), true);
-        
-        if(bestAdjacentPrey != null && bestAdjacentPrey.getCalories() == bestVisiblePrey.getCalories()) {
-            eat(bestAdjacentPrey, grid);
-            return;
-        } else if (bestVisiblePrey != null) {
-            //Move toward bestVisiblePrey?
-            GridSquare moveSquare = grid.getOptimalMoveSquare(getLocation(), bestVisiblePrey.getLocation(), getMoveDistance()*2, true);
-            if(moveSquare != null){
-                System.out.println("Chasing");
-                move(grid, moveSquare);
+        if (hunger > getMaxHunger()/4) {
+            Organism bestAdjacentPrey = bestPreyInDistance(grid, getPrey(), getMoveDistance(), true);
+            Organism bestVisiblePrey = bestPreyInDistance(grid, getPrey(), getSightDistance(), true);
+            
+            if(bestAdjacentPrey != null && bestAdjacentPrey.getCalories() == bestVisiblePrey.getCalories()) {
+                eat(bestAdjacentPrey, grid);
                 return;
+            } else if (bestVisiblePrey != null) {
+                //Move toward bestVisiblePrey?
+                GridSquare moveSquare = grid.getOptimalMoveSquare(getLocation(), bestVisiblePrey.getLocation(), getMoveDistance()*2, true);
+                if(moveSquare != null){
+                    Debug.echo("Chasing");
+                    move(grid, moveSquare);
+                    return;
+                }
             }
         }
         
-        //No prey in sight. Wander?
+        //No prey in sight or not hungry. Wander?
         List<DistanceSquarePair> emptyReachableSquares = grid.getEmptySquares(getLocation(), getMoveDistance());
         if (emptyReachableSquares.size() > 0) {
             move(grid, emptyReachableSquares.get(Util.randInt(emptyReachableSquares.size())).gridSquare);
         }
     }
     public boolean breed(Grid grid) {
-        List<DistanceSquarePair> reachableSquares = grid.getAdjacentSquares(getLocation(), getMoveDistance());
-        Collections.shuffle(reachableSquares);
-
+        List<DistanceSquarePair> emptySquares = grid.getEmptySquares(getLocation(), getMoveDistance());
+        Collections.shuffle(emptySquares);
         if (breedingTime > 0) breedingTime--;
         if (breedingTime == 0 && hunger <= getMaxHunger()/2) {
-            for (DistanceSquarePair pair : reachableSquares) {
-                if (pair.gridSquare.getAnimal() == null) {
-                    addMyType(grid, pair.gridSquare);
-                    breedingTime = getMaxBreedingTime();
-                    return true;
-                }
+            if (emptySquares.size() > 0){
+                Debug.echo("Breeding!");
+                addMyType(grid, emptySquares.get(0).gridSquare);
+                breedingTime = getMaxBreedingTime();
+                return true;
             }
         }
         return false;
@@ -98,6 +98,10 @@ public abstract class Animal extends Organism {
     public boolean isStarving(){
         return hunger >= getMaxHunger();
     }
+    
+    private void addHungerFromMovement(int distance){
+        hunger += (getCalories()/50)*distance;
+    }
     protected void eat(double amount){
         hunger -= amount;
         if(hunger < 0) {
@@ -108,7 +112,6 @@ public abstract class Animal extends Organism {
         if (!((o instanceof Grass) || (o instanceof Carrot))) {
             System.out.print(toString()+" at location "+getLocation()+" is eating "+o+" at location "+o.getLocation()+" ");
         }
-        
         if(o instanceof Plant){
             move(grid, o.getLocation());
             ((Plant)o).getEaten();
@@ -124,6 +127,7 @@ public abstract class Animal extends Organism {
         }
     }
     protected void move(Grid grid, Location newLocation){
+        addHungerFromMovement(grid.distance(getLocation(), newLocation));
         grid.removeAnimal(getLocation());
         grid.addAnimal(this, newLocation);
         setLocation(newLocation);
