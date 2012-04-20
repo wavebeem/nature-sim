@@ -27,17 +27,23 @@ public class Fox extends Animal {
         List<DistanceSquarePair> predatorSquares = grid.getOrganismSquares(visibleSquares, predators);
         
         if(predatorSquares.size() > 0) {
-            Debug.echo("OH SHIT RUN?");
+            GridSquare predatorSquare = predatorSquares.get(0).gridSquare;
+            GridSquare moveSquare = grid.getOptimalMoveSquare(getLocation(), predatorSquare.getLocation(), moveDistance*2, false);
+            move(grid, moveSquare);
+            return;
         }
         
         Organism bestAdjacentPrey = bestPreyInDistance(grid, prey, moveDistance);
         Organism bestVisiblePrey = bestPreyInDistance(grid, prey, sightDistance);
         
-        if(bestAdjacentPrey != null) {
+        if(bestAdjacentPrey != null && bestAdjacentPrey.getCalories() == bestVisiblePrey.getCalories()) {
             eat(bestAdjacentPrey, grid);
             return;
-        } else {
+        } else if (bestVisiblePrey != null) {
             //Move toward bestVisiblePrey?
+            GridSquare moveSquare = grid.getOptimalMoveSquare(getLocation(), bestVisiblePrey.getLocation(), moveDistance*2, true);
+            move(grid, moveSquare);
+            return;
         }
         
         //No prey in sight. Wander?
