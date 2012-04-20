@@ -92,7 +92,7 @@ public class Simulation {
                 // get name of predator
                 String predator = predatorInfo[0].trim();
                 // get calories value
-                Integer calories = new Integer(predatorInfo[1].trim().replaceAll("\\s*\\)", ""));
+                Double calories = new Double(predatorInfo[1].trim().replaceAll("\\s*\\)", ""));
 
                 // plant info goes here
                 if (predator.equals("Grass")) {

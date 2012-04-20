@@ -2,19 +2,19 @@ import java.awt.Image;
 
 public abstract class Animal extends Organism {
     protected int age;
-    protected int hunger;
+    protected double hunger;
     
-    protected abstract int getMaxHunger();
+    protected abstract double getMaxHunger();
     protected abstract int getMaxAge();
     protected abstract int getSightDistance();
     protected abstract int getMoveDistance();
-    public abstract int getCalories();
+    public abstract double getCalories();
     public abstract void act(Grid grid);
     public abstract Image getImage();
     
     public void step(Grid grid){
         age++;
-        hunger+= getMaxHunger()/14;
+        hunger+= getMaxHunger()/50;
         if(isOld() || isStarving()) {
             if(isOld()){
                 Debug.echo("Animal at "+getLocation()+" died due to old age");
@@ -32,7 +32,7 @@ public abstract class Animal extends Organism {
     public boolean isStarving(){
         return hunger >= getMaxHunger();
     }
-    protected void eat(int amount){
+    protected void eat(double amount){
         hunger -= amount;
         if(hunger < 0) {
             hunger = 0;

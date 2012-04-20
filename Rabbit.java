@@ -4,15 +4,15 @@ import java.awt.Image;
 import java.util.Collections;
 
 public class Rabbit extends Animal {
-    private static int calories;
-    private static final int maxBreedingTime = 15; // max timesteps before it breeds
+    private static double calories;
+    private static final int maxBreedingTime = 25; // max timesteps before it breeds
     private int breedingTime;
 
-    private static int healthyHunger;
+    private static double healthyHunger;
 
     private static final int sightDistance = 10;
     private static final int moveDistance = 2;
-    private static int maxHunger;
+    private static double maxHunger;
     private static final int maxAge = 100;
     
     private static ArrayList<String> prey = new ArrayList<String>();
@@ -21,7 +21,7 @@ public class Rabbit extends Animal {
     public Rabbit(Location loc){
         Debug.echo("Constructing a new Rabbit object");
         setLocation(loc);
-        hunger = maxHunger / 4;
+        hunger = maxHunger * 0.75;
         age = 0;
         breedingTime = maxBreedingTime;
     }
@@ -38,7 +38,7 @@ public class Rabbit extends Animal {
         Collections.shuffle(reachableSquares);
 
         if (breedingTime > 0) breedingTime--;
-        if (breedingTime == 0 && hunger >= healthyHunger) {
+        if (breedingTime == 0 && hunger <= healthyHunger) {
             breedingTime = maxBreedingTime;
             for (DistanceSquarePair pair : reachableSquares) {
                 if (pair.gridSquare.getAnimal() == null) {
@@ -53,7 +53,8 @@ public class Rabbit extends Animal {
             Debug.echo("OH SHIT RUN?");
         }
         if (myPlant != null && myPlant.isAlive() && prey.contains(myPlant.getClass().getName())){
-            eat(myPlant.getEaten());
+            myPlant.getEaten();
+            eat(myPlant.getCalories());
             return;
         } else {
             for(DistanceSquarePair pair: reachableSquares){
@@ -62,7 +63,8 @@ public class Rabbit extends Animal {
                     
                     mySquare = grid.get(getLocation());
                     myPlant = mySquare.getPlant();
-                    eat(myPlant.getEaten());
+                    myPlant.getEaten();
+                    eat(myPlant.getCalories());
                     return;
                 }
             }
@@ -76,13 +78,13 @@ public class Rabbit extends Animal {
 
     public static void addPrey(String p)     { prey.add(p);      }
     public static void addPredator(String p) { predators.add(p); }
-    public static void setCalories(int c)    { 
+    public static void setCalories(double c)    { 
         calories = c;
         maxHunger = c * 10;
         healthyHunger = maxHunger / 2;
     }
     
-    protected int getMaxHunger(){
+    protected double getMaxHunger(){
         return maxHunger;
     }
 
@@ -98,7 +100,7 @@ public class Rabbit extends Animal {
         return moveDistance;
     }
     
-    public int getCalories()        { return calories;                          }
+    public double getCalories()        { return calories;                          }
     public String toString()        { return "Rabbit";                          }
     public Image getImage()         { return Resources.imageByName("Rabbit");   }
 }

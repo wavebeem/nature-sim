@@ -7,20 +7,15 @@ public abstract class Plant extends Organism {
 
     protected abstract int getMaxAmount();
     protected abstract int getMaxStepsUntilEdible();
-    public abstract int getCalories();
+    public abstract double getCalories();
     public abstract Image getImage();
     
-    public int getEaten(){
-        if(amount < getCalories()){
-            int eatenAmount = amount;
-            
+    public void getEaten(){
+        amount--;
+        if(amount <= 0){
             amount = 0;
             alive = false;
             stepsUntilEdible = getMaxStepsUntilEdible();
-            return eatenAmount;
-        } else {
-            this.amount -= getCalories();
-            return amount;
         }
     }
     public void step(Grid grid){

@@ -4,11 +4,11 @@ import java.awt.Image;
 import java.util.Collections;
 
 public class Fox extends Animal {
-    private static int calories;
+    private static double calories;
 
     private static final int sightDistance = 10;
     private static final int moveDistance = 2;
-    private static int maxHunger;
+    private static double maxHunger;
     private static final int maxAge = 100;
     
     private static ArrayList<String> prey = new ArrayList<String>();
@@ -65,7 +65,8 @@ public class Fox extends Animal {
         if(bestAdjacentPrey != null) {
             if(bestAdjacentPrey instanceof Plant){
                 move(grid, bestAdjacentPrey.getLocation());
-                eat(((Plant)bestAdjacentPrey).getEaten());
+                ((Plant)bestAdjacentPrey).getEaten();
+                eat(bestAdjacentPrey.getCalories());
             } else {
                 eat(bestAdjacentPrey.getCalories());
                 grid.removeAnimal(bestAdjacentPrey.getLocation());
@@ -73,7 +74,8 @@ public class Fox extends Animal {
             }
             return;
         } else if (myPlant != null) {
-            eat(myPlant.getEaten());
+            ((Plant)bestAdjacentPrey).getEaten();
+            eat(myPlant.getCalories());
         }
         
         List<DistanceSquarePair> emptyReachableSquares = emptySquares;
@@ -85,17 +87,17 @@ public class Fox extends Animal {
 
     public static void addPrey(String p)     { prey.add(p);      }
     public static void addPredator(String p) { predators.add(p); }
-    public static void setCalories(int c)    { 
+    public static void setCalories(double c)    { 
         calories = c;     
         maxHunger = c * 10;
     }
 
-    protected int getMaxHunger()    { return maxHunger;                     }
+    protected double getMaxHunger()    { return maxHunger;                     }
     protected int getMaxAge()       { return maxAge;                        }
     protected int getSightDistance(){ return sightDistance;                 }
     protected int getMoveDistance() { return moveDistance;                  }
     
-    public int getCalories()        { return calories;                      }
+    public double getCalories()        { return calories;                      }
     public String toString()        { return "Fox";                         }
     public Image getImage()         { return Resources.imageByName("Fox");  }
 }
