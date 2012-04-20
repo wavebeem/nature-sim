@@ -20,18 +20,20 @@ public abstract class Animal extends Organism {
     public abstract void addMyType(Grid grid, GridSquare square);
     
     public void step(Grid grid){
-        age++;
-        hunger+= getCalories()/4;
-        if(isOld() || isStarving()) {
-            if(isOld()){
-                System.out.println("Animal at "+getLocation()+" died due to old age");
+        if(getLocation() != null) {
+            age++;
+            hunger+= getCalories()/4;
+            if(isOld() || isStarving()) {
+                if(isOld()){
+                    System.out.println("Animal at "+getLocation()+" died due to old age");
+                } else {
+                    System.out.println("Animal at "+getLocation()+" died due to hunger");
+                }
+                grid.removeAnimal(getLocation());
             } else {
-                System.out.println("Animal at "+getLocation()+" died due to hunger");
-            }
-            grid.removeAnimal(getLocation());
-        } else {
-            if (!breed(grid)){
-                act(grid);
+                if (!breed(grid)){
+                    act(grid);
+                }
             }
         }
     }
@@ -113,8 +115,9 @@ public abstract class Animal extends Organism {
             eat(o.getCalories());
         } else {
             eat(o.getCalories());
-            grid.removeAnimal(o.getLocation());
-            move(grid, o.getLocation());
+            Location newLoc = o.getLocation();
+            grid.removeAnimal(newLoc);
+            move(grid, newLoc);
         }
         if (!((o instanceof Grass) || (o instanceof Carrot))) {
             System.out.print("Now at location "+getLocation()+".");
