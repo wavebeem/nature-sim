@@ -1,5 +1,6 @@
 import java.awt.Image;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Collections;
 
 public abstract class Animal extends Organism {
@@ -19,7 +20,7 @@ public abstract class Animal extends Organism {
     
     public void step(Grid grid){
         age++;
-        hunger+= getMaxHunger()/50;
+        hunger+= getCalories()/4;
         if(isOld() || isStarving()) {
             if(isOld()){
                 Debug.echo("Animal at "+getLocation()+" died due to old age");
@@ -67,5 +68,39 @@ public abstract class Animal extends Organism {
     }
     protected void move(Grid grid, GridSquare newGridSquare){
         move(grid, newGridSquare.getLocation());
+    }
+    
+    protected Organism bestPreyInDistance(Grid grid, ArrayList<String> prey, int distance){
+        GridSquare mySquare = grid.get(getLocation());
+
+        Organism bestAdjacentPrey = null;
+        
+        if (mySquare.getPlant() != null && mySquare.getPlant().isAlive() && prey.contains(mySquare.getPlant().getClass().getName())){
+            bestAdjacentPrey = mySquare.getPlant();
+        }
+    
+        List<DistanceSquarePair> reachableSquares = grid.getAdjacentSquares(getLocation(), distance);
+        List<DistanceSquarePair> preySquares = grid.getOrganismSquares(reachableSquares, prey);
+        List<DistanceSquarePair> emptySquares = grid.getEmptySquares(reachableSquares);
+        
+        Organism temp;
+        for(DistanceSquarePair pair: preySquares){
+            if(emptySquares.contains(pair)){
+                temp = pair.gridSquare.getPlant();
+                if (bestAdjacentPrey == null || bestAdjacentPrey.getCalories() < temp.getCalories()){
+                    bestAdjacentPrey = temp;
+                }
+            } else {
+                temp = pair.gridSquare.getAnimal();
+                if (prey.contains(temp.getClass().getName())) {
+                     if (bestAdjacentPrey == null || bestAdjacentPrey.getCalories() < temp.getCalories()){
+                        bestAdjacentPrey = temp;
+                    }
+                } else {
+                    //I want to eat the plant, but the square is occupied... Oh well.
+                }
+            }
+        }
+        return bestAdjacentPrey;
     }
 }

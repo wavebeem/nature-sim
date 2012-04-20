@@ -91,6 +91,12 @@ public class Grid {
         return ret;
     }
 
+    public List<DistanceSquarePair> getEmptySquares(Location loc, int distance) {
+        Debug.echo("Get empty locations");
+
+        List<DistanceSquarePair> squares = getAdjacentSquares(loc, distance);
+        return getEmptySquares(squares);
+    }
     public List<DistanceSquarePair> getEmptySquares(int row, int col, int distance) {
         Debug.echo("Get empty locations");
 
