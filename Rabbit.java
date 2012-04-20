@@ -34,8 +34,8 @@ public class Rabbit extends Animal {
             return;
         }
         
-        Organism bestAdjacentPrey = bestPreyInDistance(grid, prey, moveDistance);
-        Organism bestVisiblePrey = bestPreyInDistance(grid, prey, sightDistance);
+        Organism bestAdjacentPrey = bestPreyInDistance(grid, prey, moveDistance, false);
+        Organism bestVisiblePrey = bestPreyInDistance(grid, prey, sightDistance, true);
         
         if(bestAdjacentPrey != null) {
             eat(bestAdjacentPrey, grid);

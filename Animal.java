@@ -84,7 +84,7 @@ public abstract class Animal extends Organism {
         move(grid, newGridSquare.getLocation());
     }
     
-    protected Organism bestPreyInDistance(Grid grid, ArrayList<String> prey, int distance){
+    protected Organism bestPreyInDistance(Grid grid, ArrayList<String> prey, int distance, boolean closest){
         GridSquare mySquare = grid.get(getLocation());
 
         Organism bestAdjacentPrey = null;
@@ -101,13 +101,13 @@ public abstract class Animal extends Organism {
         for(DistanceSquarePair pair: preySquares){
             if(emptySquares.contains(pair)){
                 temp = pair.gridSquare.getPlant();
-                if (bestAdjacentPrey == null || bestAdjacentPrey.getCalories() <= temp.getCalories()){
+                if (bestAdjacentPrey == null || temp.getCalories() > bestAdjacentPrey.getCalories() || (!closest && temp.getCalories() == bestAdjacentPrey.getCalories())){
                     bestAdjacentPrey = temp;
                 }
             } else {
                 temp = pair.gridSquare.getAnimal();
                 if (prey.contains(temp.getClass().getName())) {
-                     if (bestAdjacentPrey == null || bestAdjacentPrey.getCalories() <= temp.getCalories()){
+                    if (bestAdjacentPrey == null || temp.getCalories() > bestAdjacentPrey.getCalories() || (!closest && temp.getCalories() == bestAdjacentPrey.getCalories())){
                         bestAdjacentPrey = temp;
                     }
                 } else {
