@@ -10,7 +10,7 @@ public class Rabbit extends Animal {
 
     private static final int sightDistance = 10;
     private static final int moveDistance = 2;
-    private static final int maxHunger = 100;
+    private static int maxHunger;
     private static final int maxAge = 100;
     
     private static ArrayList<String> prey = new ArrayList<String>();
@@ -50,8 +50,7 @@ public class Rabbit extends Animal {
             Debug.echo("OH SHIT RUN?");
         }
         if (myPlant != null && myPlant.isAlive() && prey.contains(myPlant.getClass().getName())){
-            myPlant.getEaten(10);
-            eat(10);
+            eat(myPlant.getEaten());
             return;
         } else {
             Collections.shuffle(reachableSquares);
@@ -61,7 +60,7 @@ public class Rabbit extends Animal {
                     
                     mySquare = grid.get(getLocation());
                     myPlant = mySquare.getPlant();
-                    eat(myPlant.getEaten(10));
+                    eat(myPlant.getEaten());
                     return;
                 }
             }
@@ -73,13 +72,13 @@ public class Rabbit extends Animal {
         }
     }
 
-    public Image getImage(){
-        return Resources.imageByName("Rabbit");
-    }
-
     public static void addPrey(String p)     { prey.add(p);      }
     public static void addPredator(String p) { predators.add(p); }
-
+    public static void setCalories(int c)    { 
+        calories = c;     
+        maxHunger = c * 10;
+    }
+    
     protected int getMaxHunger(){
         return maxHunger;
     }
@@ -96,7 +95,7 @@ public class Rabbit extends Animal {
         return moveDistance;
     }
     
-    public String toString(){
-        return "Rabbit";
-    }
+    public int getCalories()        { return calories;                          }
+    public String toString()        { return "Rabbit";                          }
+    public Image getImage()         { return Resources.imageByName("Rabbit");   }
 }
