@@ -5,10 +5,7 @@ import java.util.Collections;
 
 public class Rabbit extends Animal {
     private static double calories;
-    private static final int maxBreedingTime = 25; // max timesteps before it breeds
-    private int breedingTime;
-
-    private static double healthyHunger;
+    private static final int maxBreedingTime = 15; // max timesteps before it breeds
 
     private static final int sightDistance = 6;
     private static final int moveDistance = 2;
@@ -21,7 +18,7 @@ public class Rabbit extends Animal {
     public Rabbit(Location loc){
         Debug.echo("Constructing a new Rabbit object");
         setLocation(loc);
-        hunger = maxHunger * 0.75;
+        hunger = maxHunger / 4;
         age = 0;
         breedingTime = maxBreedingTime;
     }
@@ -34,36 +31,25 @@ public class Rabbit extends Animal {
         List<DistanceSquarePair> predatorSquares = grid.getOrganismSquares(visibleSquares, predators);
         List<DistanceSquarePair> preySquares = grid.getOrganismSquares(visibleSquares, prey);
         List<DistanceSquarePair> emptySquares = grid.getEmptySquares(visibleSquares);
-        List<DistanceSquarePair> reachableSquares = grid.getAdjacentSquares(getLocation(), moveDistance);
-        Collections.shuffle(reachableSquares);
 
-        if (breedingTime > 0) breedingTime--;
-        if (breedingTime == 0 && hunger <= healthyHunger) {
-            breedingTime = maxBreedingTime;
-            for (DistanceSquarePair pair : reachableSquares) {
-                if (pair.gridSquare.getAnimal() == null) {
-                    grid.addAnimal(new Rabbit(pair.gridSquare.getLocation()), pair.gridSquare);
-                    break;
-                }
-            }
-        }
+        breed(grid);
         
         Plant myPlant = mySquare.getPlant();
         if(predatorSquares.size() > 0) {
             Debug.echo("OH SHIT RUN?");
         }
         if (myPlant != null && myPlant.isAlive() && prey.contains(myPlant.getClass().getName())){
-            myPlant.getEaten();
             eat(myPlant.getCalories());
             return;
         } else {
+            List<DistanceSquarePair> reachableSquares = grid.getAdjacentSquares(getLocation(), moveDistance);
+            Collections.shuffle(reachableSquares);
             for(DistanceSquarePair pair: reachableSquares){
                 if(emptySquares.contains(pair) && preySquares.contains(pair)){
                     move(grid, pair.gridSquare);
                     
                     mySquare = grid.get(getLocation());
                     myPlant = mySquare.getPlant();
-                    myPlant.getEaten();
                     eat(myPlant.getCalories());
                     return;
                 }
@@ -76,12 +62,15 @@ public class Rabbit extends Animal {
         }
     }
 
+    public void addMyType(Grid grid, GridSquare square) {
+        grid.addAnimal(new Rabbit(square.getLocation()), square);
+    }
+
     public static void addPrey(String p)     { prey.add(p);      }
     public static void addPredator(String p) { predators.add(p); }
     public static void setCalories(double c)    { 
         calories = c;
         maxHunger = c * 50;
-        healthyHunger = maxHunger / 2;
     }
     
     protected double getMaxHunger(){
@@ -99,8 +88,12 @@ public class Rabbit extends Animal {
     protected int getMoveDistance(){
         return moveDistance;
     }
+
+    public int getMaxBreedingTime() {
+        return maxBreedingTime;
+    }
     
-    public double getCalories()        { return calories;                          }
+    public double getCalories()     { return calories;                          }
     public String toString()        { return "Rabbit";                          }
     public Image getImage()         { return Resources.imageByName("Rabbit");   }
 }

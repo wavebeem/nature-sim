@@ -6,6 +6,7 @@ import java.util.Collections;
 public abstract class Animal extends Organism {
     protected int age;
     protected double hunger;
+    protected int breedingTime;
     
     protected abstract double getMaxHunger();
     protected abstract int getMaxAge();
@@ -14,6 +15,8 @@ public abstract class Animal extends Organism {
     public abstract double getCalories();
     public abstract void act(Grid grid);
     public abstract Image getImage();
+    public abstract int getMaxBreedingTime();
+    public abstract void addMyType(Grid grid, GridSquare square);
     
     public void step(Grid grid){
         age++;
@@ -29,6 +32,23 @@ public abstract class Animal extends Organism {
             act(grid);
         }
     }
+
+    public void breed(Grid grid) {
+        List<DistanceSquarePair> reachableSquares = grid.getAdjacentSquares(getLocation(), getMoveDistance());
+        Collections.shuffle(reachableSquares);
+
+        if (breedingTime > 0) breedingTime--;
+        if (breedingTime == 0 && hunger >= getMaxHunger()/2) {
+            breedingTime = getMaxBreedingTime();
+            for (DistanceSquarePair pair : reachableSquares) {
+                if (pair.gridSquare.getAnimal() == null) {
+                    addMyType(grid, pair.gridSquare);
+                    break;
+                }
+            }
+        }
+    }
+
     public boolean isOld(){
         return age >= getMaxAge();
     }

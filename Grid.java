@@ -70,6 +70,10 @@ public class Grid {
         return Math.abs(x - i) + Math.abs(y - j);
     }
 
+    private int distance(Location loc1, Location loc2) {
+        return distance(loc1.row, loc1.col, loc2.row, loc2.col);
+    }
+
     @SuppressWarnings("unchecked")
     public List<DistanceSquarePair> getAdjacentSquares(Location loc, int dist) {
         Debug.echo("Get adjacent gridSquares");
@@ -153,6 +157,32 @@ public class Grid {
         }
 
         return ret;
+    }
+
+    public GridSquare getOptimalMoveSquare(Location start, Location target, int distance, boolean closest) {
+        int bestDist;
+        GridSquare bestSquare = null;
+
+        if (closest) bestDist = Integer.MAX_VALUE;
+        else bestDist = -1;
+
+        List<DistanceSquarePair> adjacentSquares = getAdjacentSquares(start, distance);
+        for (DistanceSquarePair pair : adjacentSquares) {
+            int dist = distance(pair.gridSquare.getLocation(), target);
+            if (closest) {
+                if (dist < bestDist) {
+                    bestDist = dist;
+                    bestSquare = pair.gridSquare;
+                }
+            } else {
+                if (dist > bestDist) {
+                    bestDist = dist;
+                    bestSquare = pair.gridSquare;
+                }
+            }
+        }
+
+        return bestSquare;
     }
 
     public GridSquare[][]  getGridSquares()   { return gridSquares;   }
