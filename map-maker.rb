@@ -31,9 +31,7 @@ until ARGV.length == 0
 end
 
 needed = [:name, :plants, :animals, :size]
-if needed.any?{|k| not opts.key? k}
-    die "Missing a needed option"
-end
+help if needed.any?{|k| not opts.key? k}
 
 SIZE = opts[:size].to_i
 NAME = opts[:name]
