@@ -1,6 +1,7 @@
 import java.awt.*;
 import javax.imageio.*;
 import java.io.*;
+import java.net.*;
 import java.util.*;
 import java.util.List;
 
@@ -9,10 +10,24 @@ public class Util {
 
     public static Image loadImage(String filename) {
         try {
-            return ImageIO.read(new File("resources/img/" + filename));
+            return ImageIO.read(Util.class.getResource("resources/img/" + filename));
         }
         catch (Exception e) {
-            System.err.println(e);
+            System.err.println("in Util.loadImage: " + e);
+            return null;
+        }
+    }
+
+    public static URL resource(String filename) {
+        return Util.class.getResource(filename);
+    }
+
+    public static InputStream stream(String filename) {
+        try {
+            return Util.class.getResource(filename).openStream();
+        }
+        catch (IOException e) {
+            System.err.println("in Util.stream: " + e);
             return null;
         }
     }
