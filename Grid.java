@@ -49,6 +49,8 @@ public class Grid {
     }
 
     public void removeAnimal(GridSquare gridSquare) {
+        Animal currentAnimal = gridSquare.getAnimal();
+        if(currentAnimal != null) currentAnimal.setLocation(null);
         gridSquare.setAnimal(null);
     }
     public void removeAnimal(int row, int col) {
