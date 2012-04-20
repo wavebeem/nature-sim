@@ -45,7 +45,6 @@ implements WindowListener {
             while (i --> 0) {
                 widgets.add(new GridWidget(null, this));
             }
-            System.out.println("IMPLEMENT ME");
         }
 
         setBackground(bg);
@@ -58,9 +57,15 @@ implements WindowListener {
             grid.add(widget);
         }
 
+        scroll.getHorizontalScrollBar().setBlockIncrement(3 * 24);
+        scroll.getHorizontalScrollBar().setUnitIncrement (3 * 24);
+        scroll.getVerticalScrollBar()  .setBlockIncrement(3 * 24);
+        scroll.getVerticalScrollBar()  .setUnitIncrement (3 * 24);
+
         add(scroll);
 
         pack();
+        setSize(new Dimension(512, 512));
 
         setVisible(true);
     }

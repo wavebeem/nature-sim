@@ -83,7 +83,6 @@ public class ControlFrame extends JFrame {
                 }
                 String dirname = (String)fileCombo.getSelectedItem();
                 dirname = "resources/maps/" + dirname;
-                System.out.println(new File(dirname, "animals.dat"));
                 theSim = new Simulation(
                     new File(dirname, "animals.dat"),
                     new File(dirname, "terrain.dat"));

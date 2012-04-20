@@ -19,8 +19,6 @@ public class Resources {
                 imageMap.put(hunks[0], Util.loadImage(filename));
             }
         }
-
-        System.out.println(imageMap.keySet());
     }
 
     private static Map<String, Image> imageMap;
