@@ -34,7 +34,7 @@ public class Util {
                 strings[i] = files[i].getName();
             }
 
-            // The results aren't *guaranteed* to be supported,
+            // The results aren't *guaranteed* to be sorted,
             // but they generally seem to be...
             // Better safe than sorry.
             Arrays.sort(strings);
