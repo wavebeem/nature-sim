@@ -118,8 +118,8 @@ public class Simulation {
                         }
 
                         // Note: Plants don't need to know their predators
-                        if      (p.equals("Rabbit")) Rabbit.addPredator(p);
-                        else if (p.equals("Fox"))    Fox.addPredator(p);
+                        if      (p.equals("Rabbit")) Rabbit.addPredator(predator);
+                        else if (p.equals("Fox"))    Fox.addPredator(predator);
                     }
                 }
             }

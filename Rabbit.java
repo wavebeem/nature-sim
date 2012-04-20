@@ -26,9 +26,12 @@ public class Rabbit extends Animal {
         GridSquare mySquare = grid.get(getLocation());
         List<DistanceSquarePair> visibleSquares = grid.getAdjacentSquares(getLocation(), sightDistance);
         List<DistanceSquarePair> predatorSquares = grid.getOrganismSquares(visibleSquares, predators);
-        
+
         if(predatorSquares.size() > 0) {
-            Debug.echo("OH SHIT RUN?");
+            GridSquare predatorSquare = predatorSquares.get(0).gridSquare;
+            GridSquare moveSquare = grid.getOptimalMoveSquare(getLocation(), predatorSquare.getLocation(), moveDistance*2, false);
+            move(grid, moveSquare);
+            return;
         }
         
         Organism bestAdjacentPrey = bestPreyInDistance(grid, prey, moveDistance);
