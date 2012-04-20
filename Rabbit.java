@@ -31,6 +31,8 @@ public class Rabbit extends Animal {
             GridSquare predatorSquare = predatorSquares.get(0).gridSquare;
             GridSquare moveSquare = grid.getOptimalMoveSquare(getLocation(), predatorSquare.getLocation(), moveDistance*2, false);
             move(grid, moveSquare);
+
+            System.out.println("Rabbit predators: " + predators);
             return;
         }
         
