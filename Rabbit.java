@@ -10,7 +10,7 @@ public class Rabbit extends Animal {
 
     private static double healthyHunger;
 
-    private static final int sightDistance = 10;
+    private static final int sightDistance = 6;
     private static final int moveDistance = 2;
     private static double maxHunger;
     private static final int maxAge = 100;
