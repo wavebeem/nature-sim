@@ -5,8 +5,10 @@ import java.util.Collections;
 
 public class Rabbit extends Animal {
     private static int calories;
-    private static final int maxBreedingTime = 5;
+    private static final int maxBreedingTime = 15; // max timesteps before it breeds
     private int breedingTime;
+
+    private static int healthyHunger;
 
     private static final int sightDistance = 10;
     private static final int moveDistance = 2;
@@ -19,7 +21,7 @@ public class Rabbit extends Animal {
     public Rabbit(Location loc){
         Debug.echo("Constructing a new Rabbit object");
         setLocation(loc);
-        hunger = 0;
+        hunger = maxHunger / 4;
         age = 0;
         breedingTime = maxBreedingTime;
     }
@@ -33,13 +35,14 @@ public class Rabbit extends Animal {
         List<DistanceSquarePair> preySquares = grid.getOrganismSquares(visibleSquares, prey);
         List<DistanceSquarePair> emptySquares = grid.getEmptySquares(visibleSquares);
         List<DistanceSquarePair> reachableSquares = grid.getAdjacentSquares(getLocation(), moveDistance);
+        Collections.shuffle(reachableSquares);
 
-        breedingTime--;
-        if (breedingTime == 0) {
+        if (breedingTime > 0) breedingTime--;
+        if (breedingTime == 0 && hunger >= healthyHunger) {
             breedingTime = maxBreedingTime;
             for (DistanceSquarePair pair : reachableSquares) {
-                if (pair.gridsquare.getAnimal() == null) {
-                    grid.addAnimal(new Rabbit(), pair.gridsquare);
+                if (pair.gridSquare.getAnimal() == null) {
+                    grid.addAnimal(new Rabbit(pair.gridSquare.getLocation()), pair.gridSquare);
                     break;
                 }
             }
@@ -53,7 +56,6 @@ public class Rabbit extends Animal {
             eat(myPlant.getEaten());
             return;
         } else {
-            Collections.shuffle(reachableSquares);
             for(DistanceSquarePair pair: reachableSquares){
                 if(emptySquares.contains(pair) && preySquares.contains(pair)){
                     move(grid, pair.gridSquare);
@@ -75,8 +77,9 @@ public class Rabbit extends Animal {
     public static void addPrey(String p)     { prey.add(p);      }
     public static void addPredator(String p) { predators.add(p); }
     public static void setCalories(int c)    { 
-        calories = c;     
+        calories = c;
         maxHunger = c * 10;
+        healthyHunger = maxHunger / 2;
     }
     
     protected int getMaxHunger(){
