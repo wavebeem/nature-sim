@@ -87,20 +87,40 @@ public class Simulation {
                 String line = scanner.nextLine().trim();
                 String[] contents = line.split(":");
 
+                String[] predatorInfo = contents[0].trim().split("\\s*\\(");
+
                 // get name of predator
-                String predator = contents[0].trim();
+                String predator = predatorInfo[0].trim();
+                // get calories value
+                Integer calories = new Integer(predatorInfo[1].trim().replaceAll("\\s*\\)", ""));
+
+                // plant info goes here
+                if (predator.equals("Grass")) {
+                    Grass.setCalories(calories);
+                } else if (predator.equals("Carrot")) {
+                    Carrot.setCalories(calories);
+                }
+
                 // get names of prey
                 ArrayList<String> prey = new ArrayList<String>();
-                String[] preys = contents[1].trim().split("\\s+");
-                for (int i = 0; i < preys.length; i++) {
-                    prey.add(preys[i]);
-                }
-                for (String p : prey) {
-                    if      (predator.equals("Rabbit")) Rabbit.addPrey(p);
-                    else if (predator.equals("Fox"))    Fox.addPrey(p);
-                    // Note: Plants don't need to know their predators
-                    if      (p.equals("Rabbit")) Rabbit.addPredator(p);
-                    else if (p.equals("Fox"))    Fox.addPredator(p);
+                if (contents.length > 1) {
+                    String[] preys = contents[1].trim().split("\\s+");
+                    for (int i = 0; i < preys.length; i++) {
+                        prey.add(preys[i]);
+                    }
+                    for (String p : prey) {
+                        if (predator.equals("Rabbit")) {
+                            Rabbit.addPrey(p);
+                            Rabbit.setCalories(calories);
+                        } else if (predator.equals("Fox")) {
+                            Fox.addPrey(p);
+                            Fox.setCalories(calories);
+                        }
+
+                        // Note: Plants don't need to know their predators
+                        if      (p.equals("Rabbit")) Rabbit.addPredator(p);
+                        else if (p.equals("Fox"))    Fox.addPredator(p);
+                    }
                 }
             }
         } catch (FileNotFoundException e) {
