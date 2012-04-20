@@ -30,6 +30,7 @@ public class Fox extends Animal {
             GridSquare predatorSquare = predatorSquares.get(0).gridSquare;
             GridSquare moveSquare = grid.getOptimalMoveSquare(getLocation(), predatorSquare.getLocation(), moveDistance*2, false);
             move(grid, moveSquare);
+            System.out.println("Fox predators: " + predators);
             return;
         }
         
@@ -43,6 +44,7 @@ public class Fox extends Animal {
             //Move toward bestVisiblePrey?
             GridSquare moveSquare = grid.getOptimalMoveSquare(getLocation(), bestVisiblePrey.getLocation(), moveDistance*2, true);
             move(grid, moveSquare);
+            System.out.println("Fox prey: " + prey);
             return;
         }
         
