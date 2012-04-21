@@ -4,7 +4,6 @@ public class GridSquare {
     private Location location;
 
     public GridSquare(Location loc) {
-        Debug.echo("Making a GridSquare");
         location = loc;
     }
 
@@ -20,8 +19,14 @@ public class GridSquare {
     public Location getLocation() { return location; }
 
     public void setPlant(Plant p)   { plant = p;  }
-    public void setAnimal(Animal a) { animal = a; }
-    
+    public void setAnimal(Animal a) {
+        if(animal != null && a != null){
+            System.out.println("Oh no you aren't..."+location);
+            return;
+        }
+        animal = a; 
+
+    }
     public boolean equals(Object o){
         GridSquare that = (GridSquare)o;
         return this.plant == that.plant && this.animal == that.animal;

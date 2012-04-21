@@ -13,12 +13,15 @@ public class Simulation {
     private int stepNumber;
     private static Map<Character, String> symbolToClassnameMap;
     private static Map<String, Character> classnameToSymbolMap;
+    private static boolean filesParsed = false;
     
     public Simulation(int gridSize) {
         Debug.echo("Constructing a new Simulation object");
-
-        parseSymbolMap();
-        parseFoodWeb();
+        if(!filesParsed){
+            parseSymbolMap();
+            parseFoodWeb();
+            filesParsed = true;
+        }
         grid = new Grid(gridSize);
         stepNumber = 0;
     }
@@ -26,8 +29,11 @@ public class Simulation {
     public Simulation(InputStream animals, InputStream terrain){ 
         Debug.echo("Constructing a new Simulation object");
         
-        parseSymbolMap();
-        parseFoodWeb();
+        if(!filesParsed){
+            parseSymbolMap();
+            parseFoodWeb();
+            filesParsed = true;
+        }
         parseGrid(animals, terrain);
         stepNumber = 0;
     }
@@ -91,7 +97,7 @@ public class Simulation {
                 // get name of predator
                 String predator = predatorInfo[0].trim();
                 // get calories value
-                Integer calories = new Integer(predatorInfo[1].trim().replaceAll("\\s*\\)", ""));
+                Double calories = new Double(predatorInfo[1].trim().replaceAll("\\s*\\)", ""));
 
                 // plant info goes here
                 if (predator.equals("Grass")) {
@@ -117,8 +123,8 @@ public class Simulation {
                         }
 
                         // Note: Plants don't need to know their predators
-                        if      (p.equals("Rabbit")) Rabbit.addPredator(p);
-                        else if (p.equals("Fox"))    Fox.addPredator(p);
+                        if      (p.equals("Rabbit")) Rabbit.addPredator(predator);
+                        else if (p.equals("Fox"))    Fox.addPredator(predator);
                     }
                 }
             }
