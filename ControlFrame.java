@@ -145,7 +145,7 @@ public class ControlFrame extends JFrame {
     extends JButton
     implements ActionListener {
         public StopButton() {
-            super("Stop");
+            super("Close");
             addActionListener(this);
         }
 
