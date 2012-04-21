@@ -19,6 +19,12 @@ public class Grid {
     }
 
     public GridSquare get(int row, int col) {
+        if (row < 0) row = row + getGridSize();
+        if (row > getGridSize()-1) row = row - getGridSize();
+
+        if (col < 0) col = col + getGridSize();
+        if (col > getGridSize()-1) col = col - getGridSize();
+
         return gridSquares[row][col];
     }
 
@@ -93,7 +99,7 @@ public class Grid {
         for (int i = row - dist; i < row + dist; i++) {
             for (int j = col - dist; j < col + dist; j++) {
                 int d = distance(row, col, i, j);
-                if (inBounds(i, j) && d <= dist && d != 0) {
+                if (/*inBounds(i, j) &&*/ d <= dist && d != 0) {
                     ret.add(new DistanceSquarePair(d, get(i, j)));
                 }
             }
