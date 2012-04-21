@@ -8,6 +8,18 @@ import java.util.List;
 public class Util {
     public static final Random random = new Random();
 
+    public static int min(int... args) {
+        if (args.length < 2)
+            throw new RuntimeException("Too few arguments to Util.min");
+
+        int min = args[0];
+        for (int arg: args)
+            if (arg < min)
+                min = arg;
+
+        return min;
+    }
+
     public static Image loadImage(String filename) {
         try {
             return ImageIO.read(Util.class.getResource("resources/img/" + filename));
