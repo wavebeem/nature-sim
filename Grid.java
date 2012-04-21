@@ -79,10 +79,10 @@ public class Grid {
         int alt_x = x - getGridSize();
         int alt_y = y - getGridSize();
 
-        return Math.min(Math.min(distanceHelper(x, y, i, j),
-                                 distanceHelper(alt_x, y, i, j)),
-                        Math.min(distanceHelper(x, alt_y, i, j),
-                                 distanceHelper(alt_x, alt_y, i, j)));
+        return Util.min(distanceHelper(x, y, i, j),
+                        distanceHelper(alt_x, y, i, j),
+                        distanceHelper(x, alt_y, i, j),
+                        distanceHelper(alt_x, alt_y, i, j));
     }
 
     public int distance(Location loc1, Location loc2) {
