@@ -39,7 +39,7 @@ public class ControlFrame extends JFrame {
         loadButton = new LoadButton(this);
         stepButton = new StepButton();
         stopButton = new StopButton();
-        fileCombo  = new JComboBox(Util.ls("resources/maps"));
+        fileCombo  = new JComboBox(Resources.getMaps());
         fileLabel  = new JLabel("Map:");
         shouldGrid = new GridLinesCheckBox();
         runButton = new RunButton();
@@ -82,10 +82,10 @@ public class ControlFrame extends JFrame {
                     stop();
                 }
                 String dirname = (String)fileCombo.getSelectedItem();
-                dirname = "resources/maps/" + dirname;
+                dirname = "resources/maps/" + dirname + "/";
                 theSim = new Simulation(
-                    new File(dirname, "animals.dat"),
-                    new File(dirname, "terrain.dat"));
+                    Util.stream(dirname + "animals.dat"),
+                    Util.stream(dirname + "terrain.dat"));
                 theDetails = new DetailFrame(that,
                     theSim.getGrid().getGridSquares());
             }
@@ -145,7 +145,7 @@ public class ControlFrame extends JFrame {
     extends JButton
     implements ActionListener {
         public StopButton() {
-            super("Stop");
+            super("Close");
             addActionListener(this);
         }
 

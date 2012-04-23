@@ -48,10 +48,13 @@ public abstract class Animal extends Organism {
         if(predatorSquares.size() > 0) {
             GridSquare predatorSquare = predatorSquares.get(0).gridSquare;
             GridSquare moveSquare = grid.getOptimalMoveSquare(getLocation(), predatorSquare.getLocation(), getMoveDistance()*2, false);
-            if(moveSquare != null){
+            if((moveSquare != null) && 
+               (grid.distance(getLocation(), predatorSquare.getLocation()) < grid.distance(moveSquare.getLocation(), predatorSquare.getLocation()))){
                 Debug.echo("Running");
                 move(grid, moveSquare);
                 return;
+            } else {
+                //I'm as far as I'm able to be
             }
         }
         
@@ -59,17 +62,23 @@ public abstract class Animal extends Organism {
             Organism bestAdjacentPrey = bestPreyInDistance(grid, getPrey(), getMoveDistance(), true);
             Organism bestVisiblePrey = bestPreyInDistance(grid, getPrey(), getSightDistance(), true);
             
-            if(bestAdjacentPrey != null && bestAdjacentPrey.getCalories() == bestVisiblePrey.getCalories()) {
-                eat(bestAdjacentPrey, grid);
-                return;
-            } else if (bestVisiblePrey != null) {
+            if (bestVisiblePrey != null && (bestAdjacentPrey == null || bestVisiblePrey.getCalories() > bestAdjacentPrey.getCalories())) {
                 //Move toward bestVisiblePrey?
                 GridSquare moveSquare = grid.getOptimalMoveSquare(getLocation(), bestVisiblePrey.getLocation(), getMoveDistance()*2, true);
-                if(moveSquare != null){
+                if((moveSquare != null) && 
+                   (grid.distance(getLocation(), bestVisiblePrey.getLocation()) > grid.distance(moveSquare.getLocation(), bestVisiblePrey.getLocation()))){
                     Debug.echo("Chasing");
                     move(grid, moveSquare);
                     return;
+                } else { 
+                    //I'm as close as I'm able to be
                 }
+            }
+            if(bestAdjacentPrey != null) {
+                eat(bestAdjacentPrey, grid);
+                return;
+            } else {
+                //No prey in sight
             }
         }
         

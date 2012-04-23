@@ -19,6 +19,12 @@ public class Grid {
     }
 
     public GridSquare get(int row, int col) {
+        if (row < 0) row = row + getGridSize();
+        if (row > getGridSize()-1) row = row - getGridSize();
+
+        if (col < 0) col = col + getGridSize();
+        if (col > getGridSize()-1) col = col - getGridSize();
+
         return gridSquares[row][col];
     }
 
@@ -65,8 +71,18 @@ public class Grid {
             && col >= 0 && col < getGridSize();
     }
 
-    public int distance(int x, int y, int i, int j) {
+    private int distanceHelper(int x, int y, int i, int j) {
         return Math.abs(x - i) + Math.abs(y - j);
+    }
+
+    public int distance(int x, int y, int i, int j) {
+        int alt_x = x - getGridSize();
+        int alt_y = y - getGridSize();
+
+        return Util.min(distanceHelper(x, y, i, j),
+                        distanceHelper(alt_x, y, i, j),
+                        distanceHelper(x, alt_y, i, j),
+                        distanceHelper(alt_x, alt_y, i, j));
     }
 
     public int distance(Location loc1, Location loc2) {
@@ -83,7 +99,7 @@ public class Grid {
         for (int i = row - dist; i < row + dist; i++) {
             for (int j = col - dist; j < col + dist; j++) {
                 int d = distance(row, col, i, j);
-                if (inBounds(i, j) && d <= dist && d != 0) {
+                if (/*inBounds(i, j) &&*/ d <= dist && d != 0) {
                     ret.add(new DistanceSquarePair(d, get(i, j)));
                 }
             }

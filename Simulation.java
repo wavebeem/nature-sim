@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 public class Simulation {
     private Grid grid;
@@ -25,7 +26,7 @@ public class Simulation {
         stepNumber = 0;
     }
 
-    public Simulation(File animals, File terrain){ 
+    public Simulation(InputStream animals, InputStream terrain){ 
         Debug.echo("Constructing a new Simulation object");
         
         if(!filesParsed){
@@ -66,7 +67,7 @@ public class Simulation {
         symbolToClassnameMap = new HashMap<Character, String>();
         classnameToSymbolMap = new HashMap<String, Character>();
         try {
-            Scanner scanner = new Scanner(new File("resources/symbols.dat"));
+            Scanner scanner = new Scanner(Util.stream("resources/symbols.dat"));
             Character symbol;
             String className, line;
             String[] words;
@@ -78,8 +79,6 @@ public class Simulation {
                 symbolToClassnameMap.put(symbol, className);
                 classnameToSymbolMap.put(className, symbol);
             }
-        } catch (FileNotFoundException e) {
-            Debug.echo("SymbolMap: File not found!");
         } catch (Exception e) {
             Debug.echo("SymbolMap: Invalid file format! "+e);
         }
@@ -88,7 +87,7 @@ public class Simulation {
         Debug.echo("Here is where I would parse the food web file");
 
         try {
-            Scanner scanner = new Scanner(new File("resources/foodWeb.dat"));
+            Scanner scanner = new Scanner(Util.stream("resources/foodWeb.dat"));
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine().trim().replaceAll("[^A-Za-z0-9:;#]", " ");
                 if (line.size() == 0 || line.substring(0, 1).equals("#")) {
@@ -141,18 +140,16 @@ public class Simulation {
                     }
                 }
             }
-        } catch (FileNotFoundException e) {
-            Debug.echo("FoodWeb: File not found!");
         } catch (Exception e) {
             Debug.echo("FoodWeb: Invalid file format! "+e);
         }
     }
-    public void parseGrid(File animals, File terrain) {
+    public void parseGrid(InputStream animals, InputStream terrain) {
         parseTerrain(terrain);
         parseAnimals(animals);
         Debug.echo("Parsing grid from file");
     }
-    private void parseAnimals(File animals){
+    private void parseAnimals(InputStream animals){
         try {
             Scanner scanner = new Scanner(animals);
             int gridSize = new Integer(scanner.nextLine());
@@ -186,13 +183,11 @@ public class Simulation {
                 }
                 row++;
             }
-        } catch (FileNotFoundException e) {
-            Debug.echo("Animals: File not found!");
         } catch (Exception e) {
             Debug.echo("Animals: Invalid file format! "+e);
         }
     }
-    private void parseTerrain(File terrain){
+    private void parseTerrain(InputStream terrain){
         try {
             Scanner scanner = new Scanner(terrain);
             int gridSize = new Integer(scanner.nextLine());
@@ -224,8 +219,6 @@ public class Simulation {
                 }
                 row++;
             }
-        } catch (FileNotFoundException e) {
-            Debug.echo("Terrain: File not found!");
         } catch (Exception e) {
             Debug.echo("Terrain: Invalid file format! "+e);
         }
