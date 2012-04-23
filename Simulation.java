@@ -90,7 +90,7 @@ public class Simulation {
             Scanner scanner = new Scanner(new File("resources/foodWeb.dat"));
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine().trim().replaceAll("[^A-Za-z0-9:;#]", " ");
-                if (line.size() == 0 || line.substring(0, 1).equals("#")) {
+                if (line.length() == 0 || line.substring(0, 1).equals("#")) {
                     continue; // do nothing if it's a comment
                 }
 
