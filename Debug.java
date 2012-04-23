@@ -1,7 +1,7 @@
 import java.io.*;
 
 public class Debug {
-    private static boolean DEBUG = true;
+    private static boolean DEBUG = false;
     private static PrintStream out = System.out;
 
     public static void echo(Object... args) {
@@ -16,6 +16,11 @@ public class Debug {
         }
 
         out.println(args[args.length - 1]);
+    }
+
+    public static void print(Object arg) {
+        if (DEBUG)
+            out.print(arg);
     }
 
     public static void printf(String format, Object... args) {
