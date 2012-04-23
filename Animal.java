@@ -23,7 +23,7 @@ public abstract class Animal extends Organism {
 
     public void toggleFocus() {
         if (color == null) {
-            color = Util.alpha(Util.randomColor(), 1.00);
+            color = Util.nextColor();
         }
         else {
             color = null;
