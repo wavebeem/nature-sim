@@ -14,6 +14,8 @@ public abstract class Animal extends Organism {
     protected abstract int getMoveDistance();
     protected abstract ArrayList<String> getPredators();
     protected abstract ArrayList<String> getPrey();
+    protected abstract ArrayList<String> getHidingSpots();
+
     public abstract double getCalories();
     public abstract Image getImage();
     public abstract int getMaxBreedingTime();
@@ -181,5 +183,10 @@ public abstract class Animal extends Organism {
         hunger = getMaxHunger() * 0.75;
         age = 0;
         breedingTime = getMaxBreedingTime();
+    }
+
+    public boolean isHiding(Grid grid) {
+        Plant plant = grid.get(location).getPlant();
+        return plant != null && hidingSpots.contains(plant.getClass().getName());
     }
 }
