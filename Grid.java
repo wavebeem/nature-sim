@@ -19,11 +19,11 @@ public class Grid {
     }
 
     public GridSquare get(int row, int col) {
-        if (row < 0) row = row + getGridSize();
-        if (row > getGridSize()-1) row = row - getGridSize();
+        while (row < 0) row = row + getGridSize();
+        while (row > getGridSize()-1) row = row - getGridSize();
 
-        if (col < 0) col = col + getGridSize();
-        if (col > getGridSize()-1) col = col - getGridSize();
+        while (col < 0) col = col + getGridSize();
+        while (col > getGridSize()-1) col = col - getGridSize();
 
         return gridSquares[row][col];
     }
