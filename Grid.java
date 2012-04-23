@@ -99,8 +99,15 @@ public class Grid {
         for (int i = row - dist; i < row + dist; i++) {
             for (int j = col - dist; j < col + dist; j++) {
                 int d = distance(row, col, i, j);
-                if (/*inBounds(i, j) &&*/ d <= dist && d != 0) {
-                    ret.add(new DistanceSquarePair(d, get(i, j)));
+                GridSquare currentSquare = get(i, j);
+                if (d <= dist && d != 0) {
+
+                    if (currentSquare.getAnimal() == null ||
+                            (currentSquare.getAnimal() != null &&
+                            !currentSquare.getAnimal().isHiding(this))) {
+
+                        ret.add(new DistanceSquarePair(d, currentSquare));
+                    }
                 }
             }
         }
@@ -134,7 +141,8 @@ public class Grid {
         ArrayList<DistanceSquarePair> ret  = new ArrayList<DistanceSquarePair>();
 
         for (DistanceSquarePair s : squares) {
-            if (s.gridSquare.getAnimal() != null) ret.add(s);
+            Animal animal = s.gridSquare.getAnimal();
+            if (animal != null && !animal.isHiding(this)) ret.add(s);
         }
 
         return ret;
