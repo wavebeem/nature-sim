@@ -32,8 +32,15 @@ public class Util {
         }
     }
 
+    public static Color alpha(Color color, double alpha) {
+        int r = color.getRed();
+        int g = color.getGreen();
+        int b = color.getBlue();
+
+        return new Color(r, g, b, (int)(255*alpha));
+    }
     public static Color randomColor() {
-        return Color.getHSBColor(random.nextInt(360) / 360.0f, 0.75f, 0.50f);
+        return Color.getHSBColor(random.nextInt(360) / 360.0f, 0.75f, 0.75f);
     }
     public static int randInt(int maxExclusive){
         return random.nextInt(maxExclusive);

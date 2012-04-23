@@ -1,8 +1,10 @@
 import java.awt.Image;
+import java.awt.Color;
 
 public abstract class Animal extends Organism {
     protected int age;
     protected int hunger;
+    private Color color;
     
     protected abstract int getMaxHunger();
     protected abstract int getMaxAge();
@@ -11,6 +13,18 @@ public abstract class Animal extends Organism {
     public abstract int getCalories();
     public abstract void act(Grid grid);
     public abstract Image getImage();
+
+    public void toggleFocus() {
+        if (color == null) {
+            color = Util.alpha(Util.randomColor(), 1.00);
+        }
+        else {
+            color = null;
+        }
+    }
+    public Color getColor() {
+        return color;
+    }
     
     public void step(Grid grid){
         age++;
