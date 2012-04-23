@@ -17,7 +17,6 @@ public class Fox extends Animal {
     
     public Fox(Location loc){
         init(loc);
-        System.out.println("Fox: Calories:"+calories+" Prey:"+prey+" Predators:"+predators+" Hiding Spots:"+hidingSpots);
     }
 
     public void addMyType(Grid grid, GridSquare square) {
