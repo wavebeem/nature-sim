@@ -8,8 +8,6 @@ public class Grid {
     private Location[] locations;
 
     public Grid(int gridSize) {
-        Debug.echo("Making a grid from specified size");
-
         gridSquares = new GridSquare[gridSize][gridSize];
         locations = new Location[gridSize*gridSize];
         for (int i = 0; i < gridSize; i++) {
@@ -21,6 +19,12 @@ public class Grid {
     }
 
     public GridSquare get(int row, int col) {
+        if (row < 0) row = row + getGridSize();
+        if (row > getGridSize()-1) row = row - getGridSize();
+
+        if (col < 0) col = col + getGridSize();
+        if (col > getGridSize()-1) col = col - getGridSize();
+
         return gridSquares[row][col];
     }
 
@@ -51,7 +55,8 @@ public class Grid {
     }
 
     public void removeAnimal(GridSquare gridSquare) {
-        Debug.echo("Removing animal at " + gridSquare.getLocation());
+        Animal currentAnimal = gridSquare.getAnimal();
+        if(currentAnimal != null) currentAnimal.setLocation(null);
         gridSquare.setAnimal(null);
     }
     public void removeAnimal(int row, int col) {
@@ -66,14 +71,26 @@ public class Grid {
             && col >= 0 && col < getGridSize();
     }
 
-    private int distance(int x, int y, int i, int j) {
+    private int distanceHelper(int x, int y, int i, int j) {
         return Math.abs(x - i) + Math.abs(y - j);
+    }
+
+    public int distance(int x, int y, int i, int j) {
+        int alt_x = x - getGridSize();
+        int alt_y = y - getGridSize();
+
+        return Util.min(distanceHelper(x, y, i, j),
+                        distanceHelper(alt_x, y, i, j),
+                        distanceHelper(x, alt_y, i, j),
+                        distanceHelper(alt_x, alt_y, i, j));
+    }
+
+    public int distance(Location loc1, Location loc2) {
+        return distance(loc1.row, loc1.col, loc2.row, loc2.col);
     }
 
     @SuppressWarnings("unchecked")
     public List<DistanceSquarePair> getAdjacentSquares(Location loc, int dist) {
-        Debug.echo("Get adjacent gridSquares");
-
         ArrayList<DistanceSquarePair> ret = new ArrayList<DistanceSquarePair>();
 
         int row = loc.row;
@@ -82,7 +99,7 @@ public class Grid {
         for (int i = row - dist; i < row + dist; i++) {
             for (int j = col - dist; j < col + dist; j++) {
                 int d = distance(row, col, i, j);
-                if (inBounds(i, j) && d <= dist && d != 0) {
+                if (/*inBounds(i, j) &&*/ d <= dist && d != 0) {
                     ret.add(new DistanceSquarePair(d, get(i, j)));
                 }
             }
@@ -91,9 +108,11 @@ public class Grid {
         return ret;
     }
 
+    public List<DistanceSquarePair> getEmptySquares(Location loc, int distance) {
+        List<DistanceSquarePair> squares = getAdjacentSquares(loc, distance);
+        return getEmptySquares(squares);
+    }
     public List<DistanceSquarePair> getEmptySquares(int row, int col, int distance) {
-        Debug.echo("Get empty locations");
-
         List<DistanceSquarePair> squares = getAdjacentSquares(new Location(row, col), distance);
         return getEmptySquares(squares);
     }
@@ -108,8 +127,6 @@ public class Grid {
     }
 
     public List<DistanceSquarePair> getOccupiedSquares(int row, int col, int distance) {
-        Debug.echo("Get occupied locations");
-
         List<DistanceSquarePair> squares = getAdjacentSquares(new Location(row, col), distance);
         return getOccupiedSquares(squares);
     }
@@ -147,6 +164,32 @@ public class Grid {
         }
 
         return ret;
+    }
+
+    public GridSquare getOptimalMoveSquare(Location start, Location target, int distance, boolean closest) {
+        int bestDist;
+        GridSquare bestSquare = null;
+
+        if (closest) bestDist = Integer.MAX_VALUE;
+        else bestDist = -1;
+
+        List<DistanceSquarePair> emptySquares = getEmptySquares(start, distance);
+        for (DistanceSquarePair pair : emptySquares) {
+            int dist = distance(pair.gridSquare.getLocation(), target);
+            if (closest) {
+                if (dist < bestDist && pair.gridSquare.getAnimal() == null) {
+                    bestDist = dist;
+                    bestSquare = pair.gridSquare;
+                }
+            } else {
+                if (dist > bestDist && pair.gridSquare.getAnimal() == null) {
+                    bestDist = dist;
+                    bestSquare = pair.gridSquare;
+                }
+            }
+        }
+
+        return bestSquare;
     }
 
     public GridSquare[][]  getGridSquares()   { return gridSquares;   }

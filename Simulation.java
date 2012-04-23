@@ -13,12 +13,15 @@ public class Simulation {
     private int stepNumber;
     private static Map<Character, String> symbolToClassnameMap;
     private static Map<String, Character> classnameToSymbolMap;
+    private static boolean filesParsed = false;
     
     public Simulation(int gridSize) {
         Debug.echo("Constructing a new Simulation object");
-
-        parseSymbolMap();
-        parseFoodWeb();
+        if(!filesParsed){
+            parseSymbolMap();
+            parseFoodWeb();
+            filesParsed = true;
+        }
         grid = new Grid(gridSize);
         stepNumber = 0;
     }
@@ -26,8 +29,11 @@ public class Simulation {
     public Simulation(InputStream animals, InputStream terrain){ 
         Debug.echo("Constructing a new Simulation object");
         
-        parseSymbolMap();
-        parseFoodWeb();
+        if(!filesParsed){
+            parseSymbolMap();
+            parseFoodWeb();
+            filesParsed = true;
+        }
         parseGrid(animals, terrain);
         stepNumber = 0;
     }
@@ -81,17 +87,22 @@ public class Simulation {
         Debug.echo("Here is where I would parse the food web file");
 
         try {
-            Scanner scanner = new Scanner(Util.stream("resources/foodWeb.dat"));
+            Scanner scanner = new Scanner(new File("resources/foodWeb.dat"));
             while (scanner.hasNextLine()) {
-                String line = scanner.nextLine().trim();
+                String line = scanner.nextLine().trim().replaceAll("[^A-Za-z0-9:;#]", " ");
+                if (line.length() == 0 || line.substring(0, 1).equals("#")) {
+                    continue; // do nothing if it's a comment
+                }
+
                 String[] contents = line.split(":");
 
-                String[] predatorInfo = contents[0].trim().split("\\s*\\(");
-
                 // get name of predator
-                String predator = predatorInfo[0].trim();
+                String predator = contents[0].trim();
+
+                String[] info = contents[1].split(";");
+
                 // get calories value
-                Integer calories = new Integer(predatorInfo[1].trim().replaceAll("\\s*\\)", ""));
+                Double calories = new Double(info[0].trim().replaceAll("\\s*", ""));
 
                 // plant info goes here
                 if (predator.equals("Grass")) {
@@ -101,12 +112,8 @@ public class Simulation {
                 }
 
                 // get names of prey
-                ArrayList<String> prey = new ArrayList<String>();
-                if (contents.length > 1) {
-                    String[] preys = contents[1].trim().split("\\s+");
-                    for (int i = 0; i < preys.length; i++) {
-                        prey.add(preys[i]);
-                    }
+                if (info.length > 1) {
+                    String[] prey = info[1].trim().split("\\s+");
                     for (String p : prey) {
                         if (predator.equals("Rabbit")) {
                             Rabbit.addPrey(p);
@@ -117,11 +124,24 @@ public class Simulation {
                         }
 
                         // Note: Plants don't need to know their predators
-                        if      (p.equals("Rabbit")) Rabbit.addPredator(p);
-                        else if (p.equals("Fox"))    Fox.addPredator(p);
+                        if      (p.equals("Rabbit")) Rabbit.addPredator(predator);
+                        else if (p.equals("Fox"))    Fox.addPredator(predator);
+                    }
+                }
+
+                if (info.length > 2) {
+                    String[] hidingSpots = info[2].trim().split("\\s+");
+                    for (String h : hidingSpots) {
+                        if (predator.equals("Rabbit")) {
+                            Rabbit.addHidingSpot(h);
+                        } else if (predator.equals("Fox")) {
+                            Fox.addHidingSpot(h);
+                        }
                     }
                 }
             }
+        } catch (FileNotFoundException e) {
+            Debug.echo("FoodWeb: File not found!");
         } catch (Exception e) {
             Debug.echo("FoodWeb: Invalid file format! "+e);
         }
