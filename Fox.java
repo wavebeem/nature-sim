@@ -13,6 +13,7 @@ public class Fox extends Animal {
     
     private static ArrayList<String> prey = new ArrayList<String>();
     private static ArrayList<String> predators = new ArrayList<String>();
+    private static ArrayList<String> hidingSpots = new ArrayList<String>();
     
     public Fox(Location loc){
         init(loc);
@@ -22,9 +23,10 @@ public class Fox extends Animal {
         grid.addAnimal(new Fox(square.getLocation()), square);
     }
 
-    public static void addPrey(String p)     { prey.add(p);      }
-    public static void addPredator(String p) { predators.add(p); }
-    public static void setCalories(double c)    { 
+    public static void addPrey(String p)       { prey.add(p);        }
+    public static void addPredator(String p)   { predators.add(p);   }
+    public static void addHidingSpot(String p) { hidingSpots.add(p); }
+    public static void setCalories(double c)   { 
         calories = c;     
         maxHunger = c * 10;
     }
@@ -38,8 +40,9 @@ public class Fox extends Animal {
     protected int getSightDistance(){ return sightDistance;                 }
     protected int getMoveDistance() { return moveDistance;                  }
     
-    protected ArrayList<String> getPredators() { return predators; }
-    protected ArrayList<String> getPrey() { return prey; }
+    protected ArrayList<String> getPredators()   { return predators;   }
+    protected ArrayList<String> getPrey()        { return prey;        }
+    protected ArrayList<String> getHidingSpots() { return hidingSpots; }
     
     public double getCalories()        { return calories;                      }
     public String toString()        { return "Fox";                         }
