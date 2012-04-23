@@ -30,6 +30,20 @@ public class Util {
         }
     }
 
+    private static Color[] colors = {
+        alpha(colorFromHue(0.00), 0.90),
+        alpha(colorFromHue(0.10), 0.90),
+        alpha(colorFromHue(0.20), 0.90),
+        alpha(colorFromHue(0.50), 0.90),
+        alpha(colorFromHue(0.70), 0.90),
+        alpha(colorFromHue(0.85), 0.90)
+    };
+    private static int colorIndex = 0;
+    public static Color nextColor() {
+        colorIndex %= colors.length;
+        return colors[colorIndex++];
+    }
+
     public static URL resource(String filename) {
         return Util.class.getResource(filename);
     }
@@ -54,13 +68,16 @@ public class Util {
     public static Color randomColor() {
         return Color.getHSBColor(random.nextInt(360) / 360.0f, 0.75f, 0.75f);
     }
+    public static Color colorFromHue(double hue) {
+        return Color.getHSBColor((float)hue, 0.75f, 0.75f);
+    }
     public static int randInt(int maxExclusive){
         return random.nextInt(maxExclusive);
     }
 
     public static void sleep() {
         try {
-            Thread.sleep(50);
+            Thread.sleep(200);
         }
         catch (InterruptedException e) {
             System.err.println("INTERRUPTED WHILE SLEEPING");
