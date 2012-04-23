@@ -42,9 +42,9 @@ public abstract class Animal extends Organism {
             hunger+= getCalories()/4;
             if(isOld() || isStarving()) {
                 if(isOld()){
-                    System.out.println("Animal at "+getLocation()+" died due to old age");
+                    Debug.echo("Animal at "+getLocation()+" died due to old age");
                 } else {
-                    System.out.println("Animal at "+getLocation()+" died due to hunger");
+                    Debug.echo("Animal at "+getLocation()+" died due to hunger");
                 }
                 grid.removeAnimal(getLocation());
             } else {
@@ -135,9 +135,6 @@ public abstract class Animal extends Organism {
         }
     }
     protected void eat(Organism o, Grid grid){
-        if (!((o instanceof Grass) || (o instanceof Carrot))) {
-            System.out.print(toString()+" at location "+getLocation()+" is eating "+o+" at location "+o.getLocation()+" ");
-        }
         if(o instanceof Plant){
             move(grid, o.getLocation());
             ((Plant)o).getEaten();
@@ -147,9 +144,6 @@ public abstract class Animal extends Organism {
             Location newLoc = o.getLocation();
             grid.removeAnimal(newLoc);
             move(grid, newLoc);
-        }
-        if (!((o instanceof Grass) || (o instanceof Carrot))) {
-            System.out.print("Now at location "+getLocation()+".");
         }
     }
     protected void move(Grid grid, Location newLocation){
