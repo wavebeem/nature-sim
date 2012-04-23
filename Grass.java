@@ -11,6 +11,7 @@ public class Grass extends Plant {
         alive = true;
         amount = maxAmount;
         stepsUntilEdible = maxStepsUntilEdible;
+        System.out.println("Grass: Calories:"+calories);
     }
     
     

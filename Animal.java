@@ -195,7 +195,7 @@ public abstract class Animal extends Organism {
     }
 
     public boolean isHiding(Grid grid) {
-        Plant plant = grid.get(location).getPlant();
-        return plant != null && hidingSpots.contains(plant.getClass().getName());
+        Plant plant = grid.get(getLocation()).getPlant();
+        return plant != null && getHidingSpots().contains(plant.getClass().getName());
     }
 }

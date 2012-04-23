@@ -11,6 +11,7 @@ public class Carrot extends Plant {
         alive = true;
         amount = maxAmount;
         stepsUntilEdible = 0;
+        System.out.println("Carrot: Calories:"+calories);
     }
 
     

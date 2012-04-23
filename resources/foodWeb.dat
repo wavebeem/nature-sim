@@ -1,6 +1,6 @@
 # <-- This denotes a comment. Expected Structure is below
 # ANIMAL_NAME: CALORIES; PREY_1 PREY_2; HIDING_SPOT_1 HIDING_SPOT2
-Fox: 15; Rabbit; Log
-Rabbit: 10; Carrot Grass
+Fox: 15; Rabbit
+Rabbit: 10; Carrot Grass; Log
 Carrot: 5
 Grass: 1

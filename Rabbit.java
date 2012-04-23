@@ -18,6 +18,7 @@ public class Rabbit extends Animal {
     
     public Rabbit(Location loc){
         init(loc);
+        System.out.println("Rabbit: Calories:"+calories+" Prey:"+prey+" Predators:"+predators+" Hiding Spots:"+hidingSpots);
     }
 
     public void addMyType(Grid grid, GridSquare square) {
