@@ -228,6 +228,9 @@ public class Simulation {
     public Grid getGrid() {
         return grid;
     }
+    public int getStepNumber() {
+        return stepNumber;
+    }
     public static String symbolToClassname(Character symbol){
         return symbolToClassnameMap.get(symbol);
     }
