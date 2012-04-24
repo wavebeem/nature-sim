@@ -26,7 +26,7 @@ public class ControlFrame extends JFrame {
     private Thread runThread;
 
     public ControlFrame() {
-        super("Nature Sim Control Frame");
+        super("Nature Sim");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         setLocationByPlatform(true);
@@ -118,6 +118,7 @@ public class ControlFrame extends JFrame {
             public void run() {
                 while (isRunning()) {
                     step();
+                    theDetails.setTitle("Step number: " + theSim.getStepNumber());
                     Util.sleep();
                 }
             }
