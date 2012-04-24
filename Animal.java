@@ -23,7 +23,7 @@ public abstract class Animal extends Organism {
 
     public void toggleFocus() {
         if (color == null) {
-            color = Util.alpha(Util.randomColor(), 1.00);
+            color = Util.nextColor();
         }
         else {
             color = null;
@@ -135,6 +135,9 @@ public abstract class Animal extends Organism {
         }
     }
     protected void eat(Organism o, Grid grid){
+        if (!((o instanceof Grass) || (o instanceof Carrot))) {
+            Debug.print(toString()+" at location "+getLocation()+" is eating "+o+" at location "+o.getLocation()+" ");
+        }
         if(o instanceof Plant){
             move(grid, o.getLocation());
             ((Plant)o).getEaten();
@@ -144,6 +147,9 @@ public abstract class Animal extends Organism {
             Location newLoc = o.getLocation();
             grid.removeAnimal(newLoc);
             move(grid, newLoc);
+        }
+        if (!((o instanceof Grass) || (o instanceof Carrot))) {
+            Debug.print("Now at location "+getLocation()+".\n");
         }
     }
     protected void move(Grid grid, Location newLocation){
