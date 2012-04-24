@@ -118,7 +118,6 @@ public class ControlFrame extends JFrame {
             public void run() {
                 while (isRunning()) {
                     step();
-                    theDetails.setTitle("Step number: " + theSim.getStepNumber());
                     Util.sleep();
                 }
             }
@@ -178,6 +177,7 @@ public class ControlFrame extends JFrame {
     private void step() {
         if (theSim != null && theDetails != null) {
             Debug.echo(">>> ControlFrame: STEPPING");
+            theDetails.setTitle("Step number: " + theSim.getStepNumber());
             theSim.step();
             theDetails.repaint();
         }
