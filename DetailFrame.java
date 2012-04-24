@@ -16,7 +16,7 @@ implements WindowListener {
     private boolean gridLines = true;
     private JScrollPane scroll;
     public DetailFrame(ControlFrame controlFrame, GridSquare[][] g) {
-        super("Nature Sim Detail View");
+        super("Nature Sim");
         this.controlFrame = controlFrame;
 
         setLocationByPlatform(true);
