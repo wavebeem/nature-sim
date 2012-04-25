@@ -21,6 +21,10 @@ public abstract class Animal extends Organism {
     public abstract double getCalories();
     public abstract Image getImage();
 
+    public int getFleeDistance(){
+        return getMoveDistance()*2;
+    }
+    
     public void toggleFocus() {
         if (color == null) {
             color = Util.nextColor();
@@ -62,7 +66,29 @@ public abstract class Animal extends Organism {
 
         if(predatorSquares.size() > 0) {
             GridSquare predatorSquare = predatorSquares.get(0).gridSquare;
-            GridSquare moveSquare = grid.getOptimalMoveSquare(getLocation(), predatorSquare.getLocation(), getMoveDistance()*2, false);
+            
+            //Hide
+            if(hungerPercent() <= 75) {
+                if(isHiding(grid)) return;
+                GridSquare hidingSquare = grid.getOptimalHidingSquare(getLocation(), predatorSquare.getLocation(), getSightDistance(), getHidingSpots());
+                if (hidingSquare != null) {
+                    if (grid.distance(getLocation(), hidingSquare.getLocation()) <= getFleeDistance()) {
+                        Debug.echo("Hiding");
+                        move(grid, hidingSquare);
+                        return;
+                    } else {
+                        GridSquare moveSquare = grid.getOptimalChaseSquare(getLocation(), hidingSquare.getLocation(), getMoveDistance());
+                        if (moveSquare != null) {
+                            Debug.echo("Running towards Hiding Spot");
+                            move(grid, moveSquare);
+                            return;
+                        }
+                    }
+                }
+            }
+            
+            //Run Away
+            GridSquare moveSquare = grid.getOptimalFleeSquare(getLocation(), predatorSquare.getLocation(), getFleeDistance());
             if((moveSquare != null) &&
                (grid.distance(getLocation(), predatorSquare.getLocation()) < grid.distance(moveSquare.getLocation(), predatorSquare.getLocation()))){
                 Debug.echo("Running");
@@ -73,13 +99,13 @@ public abstract class Animal extends Organism {
             }
         }
 
-        if (hunger > getMaxHunger()/4) {
+        if (hungerPercent() > 25) {
             Organism bestAdjacentPrey = bestPreyInDistance(grid, getPrey(), getMoveDistance(), true);
             Organism bestVisiblePrey = bestPreyInDistance(grid, getPrey(), getSightDistance(), true);
 
             if (bestVisiblePrey != null && (bestAdjacentPrey == null || bestVisiblePrey.getCalories() > bestAdjacentPrey.getCalories())) {
                 //Move toward bestVisiblePrey?
-                GridSquare moveSquare = grid.getOptimalMoveSquare(getLocation(), bestVisiblePrey.getLocation(), getMoveDistance()*2, true);
+                GridSquare moveSquare = grid.getOptimalChaseSquare(getLocation(), bestVisiblePrey.getLocation(), getFleeDistance());
                 if((moveSquare != null) &&
                    (grid.distance(getLocation(), bestVisiblePrey.getLocation()) > grid.distance(moveSquare.getLocation(), bestVisiblePrey.getLocation()))){
                     Debug.echo("Chasing");
@@ -107,7 +133,7 @@ public abstract class Animal extends Organism {
         List<DistanceSquarePair> emptySquares = grid.getEmptySquares(getLocation(), getMoveDistance());
         Collections.shuffle(emptySquares);
         if (breedingTime > 0) breedingTime--;
-        if (breedingTime == 0 && hunger <= getMaxHunger()/2) {
+        if (breedingTime == 0 && hungerPercent() <= 50) {
             if (emptySquares.size() > 0){
                 Debug.echo("Breeding!");
                 addMyType(grid, emptySquares.get(0).gridSquare);
@@ -124,7 +150,10 @@ public abstract class Animal extends Organism {
     public boolean isStarving(){
         return hunger >= getMaxHunger();
     }
-
+    private double hungerPercent(){
+        return (hunger / getMaxHunger())*100;
+    }
+    
     private void addHungerFromMovement(int distance){
         hunger += (getCalories()/50)*distance;
     }
@@ -204,7 +233,7 @@ public abstract class Animal extends Organism {
 
     protected void init(Location loc) {
         setLocation(loc);
-        hunger = getMaxHunger() * 0.75;
+        hunger = getMaxHunger() * 0.50;
         age = 0;
         breedingTime = getMaxBreedingTime();
     }
