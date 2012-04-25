@@ -2,6 +2,7 @@ import java.awt.Image;
 
 public class Log extends Plant {
     public Log(Location loc) {
+        Debug.echo("Creating a log at location "+loc);
         setLocation(loc);
         alive = false;
         amount = 0;
@@ -24,7 +25,7 @@ public class Log extends Plant {
     }
 
     public Image getImage() {
-        return null;
+        return Resources.imageByName("Log");
     }
 
     public String toString() {
