@@ -28,7 +28,7 @@ public class Fox extends Animal {
     public static void addHidingSpot(String p) { hidingSpots.add(p); }
     public static void setCalories(double c)   { 
         calories = c;     
-        maxHunger = c * 10;
+        maxHunger = c * 25;
     }
 
     public int getMaxBreedingTime() {
