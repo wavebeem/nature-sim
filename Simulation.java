@@ -87,7 +87,7 @@ public class Simulation {
         Debug.echo("Here is where I would parse the food web file");
 
         try {
-            Scanner scanner = new Scanner(new File("resources/foodWeb.dat"));
+            Scanner scanner = new Scanner(Util.stream("resources/foodWeb.dat"));
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine().trim().replaceAll("[^A-Za-z0-9:;#]", " ");
                 if (line.length() == 0 || line.substring(0, 1).equals("#")) {
@@ -140,8 +140,6 @@ public class Simulation {
                     }
                 }
             }
-        } catch (FileNotFoundException e) {
-            Debug.echo("FoodWeb: File not found!");
         } catch (Exception e) {
             Debug.echo("FoodWeb: Invalid file format! "+e);
         }
@@ -212,6 +210,8 @@ public class Simulation {
                             current = new Grass(loc);
                         } else if (className.equals("Carrot")) {
                             current = new Carrot(loc);
+                        } else if (className.equals("Log")) {
+                            current = new Log(loc);
                         } else {
                             current = null;
                         }
