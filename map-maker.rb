@@ -93,7 +93,7 @@ open PREFIX.join("terrain.dat"), "w" do |f|
 
     SIZE.times do
         SIZE.times do
-            f.print plants.pop
+            f.print(plants.pop || "_")
         end
         f.puts
     end
@@ -104,7 +104,7 @@ open PREFIX.join("animals.dat"), "w" do |f|
 
     SIZE.times do
         SIZE.times do
-            f.print animals.pop
+            f.print(animals.pop || "_")
         end
         f.puts
     end
