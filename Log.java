@@ -1,7 +1,7 @@
 import java.awt.Image;
 
 public class Log extends Plant {
-    public Log {
+    public Log(Location loc) {
         setLocation(loc);
         alive = false;
         amount = 0;
