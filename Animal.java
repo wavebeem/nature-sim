@@ -24,6 +24,9 @@ public abstract class Animal extends Organism {
     public int getFleeDistance(){
         return getMoveDistance()*2;
     }
+    protected double getHungerIncrement(){
+        return getCalories()/4;
+    }
     
     public void toggleFocus() {
         if (color == null) {
@@ -43,7 +46,7 @@ public abstract class Animal extends Organism {
     public void step(Grid grid){
         if(getLocation() != null) {
             age++;
-            hunger+= getCalories()/4;
+            hunger+= getHungerIncrement();
             if(isOld() || isStarving()) {
                 if(isOld()){
                     Debug.echo("Animal at "+getLocation()+" died due to old age");
@@ -64,6 +67,7 @@ public abstract class Animal extends Organism {
         List<DistanceSquarePair> visibleSquares = grid.getAdjacentSquares(getLocation(), getSightDistance());
         List<DistanceSquarePair> predatorSquares = grid.getOrganismSquares(visibleSquares, getPredators());
 
+        //Check for Predators
         if(predatorSquares.size() > 0) {
             GridSquare predatorSquare = predatorSquares.get(0).gridSquare;
             
@@ -98,36 +102,49 @@ public abstract class Animal extends Organism {
                 //I'm as far as I'm able to be
             }
         }
-
+        
+        //Check for Prey
         if (hungerPercent() > 25) {
-            Organism bestAdjacentPrey = bestPreyInDistance(grid, getPrey(), getMoveDistance(), true);
-            Organism bestVisiblePrey = bestPreyInDistance(grid, getPrey(), getSightDistance(), true);
-
-            if (bestVisiblePrey != null && (bestAdjacentPrey == null || bestVisiblePrey.getCalories() > bestAdjacentPrey.getCalories())) {
-                //Move toward bestVisiblePrey?
-                GridSquare moveSquare = grid.getOptimalChaseSquare(getLocation(), bestVisiblePrey.getLocation(), getFleeDistance());
-                if((moveSquare != null) &&
-                   (grid.distance(getLocation(), bestVisiblePrey.getLocation()) > grid.distance(moveSquare.getLocation(), bestVisiblePrey.getLocation()))){
-                    Debug.echo("Chasing");
-                    move(grid, moveSquare);
+            Organism bestAdjacentPrey = bestPreyInDistance(grid, getMoveDistance(), true);
+            Organism bestVisiblePrey = bestPreyInDistance(grid, getSightDistance(), true);
+            
+            if(bestVisiblePrey != null && sustainsMe(bestVisiblePrey)){
+                //If bestVisiblePrey is better than adjacentPrey
+                if (bestAdjacentPrey == null || bestVisiblePrey.getCalories() > bestAdjacentPrey.getCalories()) {
+                    //Move toward bestVisiblePrey?
+                    GridSquare moveSquare = grid.getOptimalChaseSquare(getLocation(), bestVisiblePrey.getLocation(), getFleeDistance());
+                    if((moveSquare != null) &&
+                       (grid.distance(getLocation(), bestVisiblePrey.getLocation()) > grid.distance(moveSquare.getLocation(), bestVisiblePrey.getLocation()))){
+                        Debug.echo("Chasing");
+                        move(grid, moveSquare);
+                        return;
+                    } else {
+                        //I'm as close as I'm able to be
+                    }
+                }
+                //If bestAdjacentPrey exists (which means it is == bestVisiblePrey)
+                if(bestAdjacentPrey != null) {
+                    eat(bestAdjacentPrey, grid);
                     return;
-                } else {
-                    //I'm as close as I'm able to be
                 }
             }
-            if(bestAdjacentPrey != null) {
-                eat(bestAdjacentPrey, grid);
+            
+            //Eat something, as far away (but still adjacent) as possible. (So I can see more land)
+            Organism wanderOrganism = bestPreyInDistance(grid, getMoveDistance(), false);
+            if (wanderOrganism != null) {
+                eat(wanderOrganism, grid);
                 return;
-            } else {
-                //No prey in sight
             }
         }
 
-        //No prey in sight or not hungry. Wander?
+        //No prey in sight or not hungry. Wander!
         List<DistanceSquarePair> emptyReachableSquares = grid.getEmptySquares(getLocation(), getMoveDistance());
         if (emptyReachableSquares.size() > 0) {
             move(grid, emptyReachableSquares.get(Util.randInt(emptyReachableSquares.size())).gridSquare);
         }
+    }
+    protected boolean sustainsMe(Organism o){
+        return o.getCalories() >= getHungerIncrement();
     }
     public boolean breed(Grid grid) {
         List<DistanceSquarePair> emptySquares = grid.getEmptySquares(getLocation(), getMoveDistance());
@@ -191,7 +208,8 @@ public abstract class Animal extends Organism {
         move(grid, newGridSquare.getLocation());
     }
 
-    protected Organism bestPreyInDistance(Grid grid, ArrayList<String> prey, int distance, boolean closest){
+    protected Organism bestPreyInDistance(Grid grid, int distance, boolean closest){
+        ArrayList<String> prey = getPrey();
         GridSquare mySquare = grid.get(getLocation());
 
         Organism bestAdjacentPrey = null;
