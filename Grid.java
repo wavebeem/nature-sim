@@ -173,7 +173,6 @@ public class Grid {
 
         return ret;
     }
-
     public GridSquare getOptimalChaseSquare(Location start, Location target, int distance) {
         List<DistanceSquarePair> emptySquares = getEmptySquares(start, distance);
         return getSquareClosestToLocation(emptySquares, target);
