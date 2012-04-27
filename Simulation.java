@@ -109,6 +109,8 @@ public class Simulation {
                     Grass.setCalories(calories);
                 } else if (predator.equals("Clover")) {
                     Clover.setCalories(calories);
+                } else if (predator.equals("Berry")) {
+                    Berry.setCalories(calories);
                 }
 
                 // get names of prey
@@ -121,11 +123,19 @@ public class Simulation {
                         } else if (predator.equals("Fox")) {
                             Fox.addPrey(p);
                             Fox.setCalories(calories);
-                        }
+                        } else if (predator.equals("Mouse")) {
+                            Mouse.addPrey(p);
+                            Mouse.setCalories(calories);
+                        } else if (predator.equals("Wolf")) {
+                            Wolf.addPrey(p);
+                            Wolf.setCalories(calories);
+                        } 
 
                         // Note: Plants don't need to know their predators
                         if      (p.equals("Rabbit")) Rabbit.addPredator(predator);
                         else if (p.equals("Fox"))    Fox.addPredator(predator);
+                        else if (p.equals("Mouse"))  Mouse.addPredator(predator);
+                        else if (p.equals("Wolf"))   Wolf.addPredator(predator);
                     }
                 }
 
@@ -136,6 +146,10 @@ public class Simulation {
                             Rabbit.addHidingSpot(h);
                         } else if (predator.equals("Fox")) {
                             Fox.addHidingSpot(h);
+                        } else if (predator.equals("Mouse")) {
+                            Mouse.addHidingSpot(h);
+                        } else if (predator.equals("Wolf")) {
+                            Wolf.addHidingSpot(h);
                         }
                     }
                 }
@@ -174,6 +188,10 @@ public class Simulation {
                             current = new Rabbit(loc);
                         } else if (className.equals("Fox")) {
                             current = new Fox(loc);
+                        } else if (className.equals("Mouse")) {
+                            current = new Mouse(loc);
+                        } else if (className.equals("Wolf")) {
+                            current = new Wolf(loc);
                         } else {
                             current = null;
                         }
@@ -212,6 +230,8 @@ public class Simulation {
                             current = new Clover(loc);
                         } else if (className.equals("Log")) {
                             current = new Log(loc);
+                        } else if (className.equals("Berry")) {
+                            current = new Berry(loc);
                         } else {
                             current = null;
                         }

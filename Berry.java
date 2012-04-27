@@ -1,12 +1,12 @@
 import java.awt.Image;
 
-public class Clover extends Plant {
+public class Berry extends Plant {
     private static double calories;
 
     private static int maxAmount = 25;
     private static final int maxStepsUntilEdible = 50;
     
-    public Clover(Location loc){
+    public Berry(Location loc){
         setLocation(loc);
         alive = true;
         amount = maxAmount;

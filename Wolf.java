@@ -15,7 +15,7 @@ public class Wolf extends Animal {
     private static ArrayList<String> predators = new ArrayList<String>();
     private static ArrayList<String> hidingSpots = new ArrayList<String>();
     
-    public Fox(Location loc){
+    public Wolf(Location loc){
         init(loc);
     }
 
