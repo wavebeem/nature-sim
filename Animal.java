@@ -164,7 +164,7 @@ public abstract class Animal extends Organism {
         }
     }
     protected void eat(Organism o, Grid grid){
-        if (!((o instanceof Grass) || (o instanceof Carrot))) {
+        if (!(o instanceof Plant)) {
             Debug.print(toString()+" at location "+getLocation()+" is eating "+o+" at location "+o.getLocation()+" ");
         }
         if(o instanceof Plant){
@@ -177,7 +177,7 @@ public abstract class Animal extends Organism {
             grid.removeAnimal(newLoc);
             move(grid, newLoc);
         }
-        if (!((o instanceof Grass) || (o instanceof Carrot))) {
+        if (!(o instanceof Plant)) {
             Debug.print("Now at location "+getLocation()+".\n");
         }
     }

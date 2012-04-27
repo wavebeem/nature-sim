@@ -107,8 +107,8 @@ public class Simulation {
                 // plant info goes here
                 if (predator.equals("Grass")) {
                     Grass.setCalories(calories);
-                } else if (predator.equals("Carrot")) {
-                    Carrot.setCalories(calories);
+                } else if (predator.equals("Clover")) {
+                    Clover.setCalories(calories);
                 }
 
                 // get names of prey
@@ -208,8 +208,8 @@ public class Simulation {
                         // IF MORE PLANTS ARE ADDED, ADD THEM HERE (IN AN ELSE IF)
                         if (className.equals("Grass")) {
                             current = new Grass(loc);
-                        } else if (className.equals("Carrot")) {
-                            current = new Carrot(loc);
+                        } else if (className.equals("Clover")) {
+                            current = new Clover(loc);
                         } else if (className.equals("Log")) {
                             current = new Log(loc);
                         } else {

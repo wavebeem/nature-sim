@@ -1,12 +1,12 @@
 import java.awt.Image;
 
-public class Carrot extends Plant {
+public class Clover extends Plant {
     private static double calories;
 
     private static int maxAmount = 25;
     private static final int maxStepsUntilEdible = 50;
     
-    public Carrot(Location loc){
+    public Clover(Location loc){
         setLocation(loc);
         alive = true;
         amount = maxAmount;
@@ -21,10 +21,10 @@ public class Carrot extends Plant {
     protected int getMaxAmount()           { return maxAmount;           }
     protected int getMaxStepsUntilEdible() { return maxStepsUntilEdible; }
     public double getCalories()               { return calories;            }
-    public String toString() { return "Carrot"; }
+    public String toString() { return "Clover"; }
     public Image getImage(){
         if(isAlive()){
-            return Resources.imageByName("Carrot");
+            return Resources.imageByName("Clover");
         } else {
             return null;
         }
