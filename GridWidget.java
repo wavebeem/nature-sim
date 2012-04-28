@@ -44,6 +44,7 @@ implements MouseListener {
             ? Resources.dirtImage
             : plant.getImage(),
             0, 0, w, h, null);
+        g.drawImage(Resources.dimmer, 0, 0, w, h, null);
         if (animal != null && animal.getColor() != null) {
             g.setColor(animal.getColor());
             g.fillRect(0, 0, w, h);

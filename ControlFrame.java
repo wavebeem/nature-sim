@@ -25,6 +25,7 @@ public class ControlFrame extends JFrame {
     private boolean threadShouldRun = false;
     private Thread runThread;
 
+    @SuppressWarnings("unchecked")
     public ControlFrame() {
         super("Nature Sim");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
