@@ -198,6 +198,7 @@ public class ControlFrame extends JFrame {
         if (theSim != null && theDetails != null) {
             Debug.echo(">>> ControlFrame: STEPPING");
             theDetails.setTitle("Step number: " + theSim.getStepNumber());
+            TextFrame.update(Stats.getStats());
             theSim.step();
             theDetails.repaint();
         }
