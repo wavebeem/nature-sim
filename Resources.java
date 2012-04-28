@@ -9,6 +9,7 @@ import java.util.List;
 public class Resources {
     public static Image dirtImage;
     public static Image overlay;
+    public static Image dimmer;
 
     public static void load() {
         try {
@@ -24,6 +25,7 @@ public class Resources {
     private static void unsafeLoad() throws IOException {
         dirtImage = Util.loadImage("Dirt.png");
         overlay   = Util.loadImage("overlay.png");
+        dimmer    = Util.loadImage("dimmer.png");
         imageMap = new HashMap<String, Image>();
         mapList  = new ArrayList<String>();
 

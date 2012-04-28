@@ -17,6 +17,7 @@ public class ControlFrame extends JFrame {
     private JLabel fileLabel;
     private JButton stepButton;
     private JButton loadButton;
+    private JButton statsButton;
     private JComboBox fileCombo;
     private JCheckBox shouldGrid;
     private JButton runButton;
@@ -25,6 +26,7 @@ public class ControlFrame extends JFrame {
     private boolean threadShouldRun = false;
     private Thread runThread;
 
+    @SuppressWarnings("unchecked")
     public ControlFrame() {
         super("Nature Sim");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -41,12 +43,13 @@ public class ControlFrame extends JFrame {
         final int SPEED_VAL = 200;
         delaySlider = new JSlider(SPEED_MIN, SPEED_MAX, SPEED_VAL);
 
-        loadButton = new LoadButton(this);
-        stepButton = new StepButton();
-        fileCombo  = new JComboBox(Resources.getMaps());
-        fileLabel  = new JLabel("Map:");
-        shouldGrid = new GridLinesCheckBox();
-        runButton = new RunButton();
+        loadButton  = new LoadButton(this);
+        stepButton  = new StepButton();
+        statsButton = new StatsButton();
+        fileCombo   = new JComboBox(Resources.getMaps());
+        fileLabel   = new JLabel("Map:");
+        shouldGrid  = new GridLinesCheckBox();
+        runButton   = new RunButton();
 
         delaySlider.setMajorTickSpacing(0);
         delaySlider.setMinorTickSpacing((SPEED_MAX - SPEED_MIN)/10);
@@ -70,6 +73,7 @@ public class ControlFrame extends JFrame {
         toolbar.add(loadButton);
         toolbar.add(runButton);
         toolbar.add(stepButton);
+        toolbar.add(statsButton);
 
         add(mapBar);
         add(midBar);
@@ -77,6 +81,7 @@ public class ControlFrame extends JFrame {
 
         pack();
         setMinimumSize(getSize());
+        setResizable(false);
 
         setVisible(true);
     }
@@ -123,6 +128,19 @@ public class ControlFrame extends JFrame {
             else if (isRunning()) {
                 tellRunThreadToFinish();
             }
+        }
+    }
+
+    private class StatsButton
+    extends JButton
+    implements ActionListener {
+        public StatsButton() {
+            super("Stats");
+            addActionListener(this);
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            new TextFrame(Stats.getStats());
         }
     }
 
