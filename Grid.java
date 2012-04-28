@@ -96,8 +96,8 @@ public class Grid {
         int row = loc.row;
         int col = loc.col;
 
-        for (int i = row - dist; i < row + dist; i++) {
-            for (int j = col - dist; j < col + dist; j++) {
+        for (int i = row - dist; i <= row + dist; i++) {
+            for (int j = col - dist; j <= col + dist; j++) {
                 int d = distance(row, col, i, j);
                 GridSquare currentSquare = get(i, j);
                 if (d <= dist && d != 0) {
@@ -173,17 +173,51 @@ public class Grid {
 
         return ret;
     }
+    public GridSquare getOptimalChaseSquare(Location start, Location target, int distance) {
+        List<DistanceSquarePair> emptySquares = getEmptySquares(start, distance);
+        return getSquareClosestToLocation(emptySquares, target);
+    }
+    public GridSquare getOptimalFleeSquare(Location start, Location target, int distance) {
+        List<DistanceSquarePair> emptySquares = getEmptySquares(start, distance);
+        return getSquareFurthestFromLocation(emptySquares, target);
+    }
+    public GridSquare getOptimalHidingSquare(Location start, Location target, int distance, ArrayList<String> hidingSpots) {
+        List<DistanceSquarePair> emptySquares = getEmptySquares(start, distance);
+        List<DistanceSquarePair> hidingSquares = getOrganismSquares(emptySquares, hidingSpots);
+        return getSquareClosestToStartFurtherFromTarget(hidingSquares, start, target);
+    }
+    private GridSquare getSquareClosestToStartFurtherFromTarget(List<DistanceSquarePair> squares, Location start, Location target){
+        int bestDistFromStart;
+        int distanceStartToTarget = distance(start, target);
+        GridSquare bestSquare = null;
 
-    public GridSquare getOptimalMoveSquare(Location start, Location target, int distance, boolean closest) {
+        bestDistFromStart = Integer.MAX_VALUE;
+        
+        for (DistanceSquarePair pair : squares) {
+            int dist = distance(pair.gridSquare.getLocation(), start);
+            if (dist < bestDistFromStart && pair.gridSquare.getAnimal() == null && distance(pair.gridSquare.getLocation(), target) >= distanceStartToTarget) {
+                bestDistFromStart = dist;
+                bestSquare = pair.gridSquare;
+            }
+        }
+
+        return bestSquare;
+    }
+    private GridSquare getSquareClosestToLocation(List<DistanceSquarePair> squares, Location loc) {
+        return getOptimalSquareHelper(squares, loc, true);
+    }
+    private GridSquare getSquareFurthestFromLocation(List<DistanceSquarePair> squares, Location loc) {
+        return getOptimalSquareHelper(squares, loc, false);
+    }
+    private GridSquare getOptimalSquareHelper(List<DistanceSquarePair> squares, Location loc, boolean closest){
         int bestDist;
         GridSquare bestSquare = null;
 
         if (closest) bestDist = Integer.MAX_VALUE;
         else bestDist = -1;
-
-        List<DistanceSquarePair> emptySquares = getEmptySquares(start, distance);
-        for (DistanceSquarePair pair : emptySquares) {
-            int dist = distance(pair.gridSquare.getLocation(), target);
+        
+        for (DistanceSquarePair pair : squares) {
+            int dist = distance(pair.gridSquare.getLocation(), loc);
             if (closest) {
                 if (dist < bestDist && pair.gridSquare.getAnimal() == null) {
                     bestDist = dist;

@@ -3,25 +3,25 @@ import java.util.List;
 import java.awt.Image;
 import java.util.Collections;
 
-public class Rabbit extends Animal {
+public class Mouse extends Animal {
     private static double calories;
     private static final int maxBreedingTime = 10; // max timesteps before it breeds
 
-    private static final int sightDistance = 6;
-    private static final int moveDistance = 2;
+    private static final int sightDistance = 4;
+    private static final int moveDistance = 1;
     private static double maxHunger;
-    private static final int maxAge = 100;
+    private static final int maxAge = 70;
     
     private static ArrayList<String> prey = new ArrayList<String>();
     private static ArrayList<String> predators = new ArrayList<String>();
     private static ArrayList<String> hidingSpots = new ArrayList<String>();
     
-    public Rabbit(Location loc){
+    public Mouse(Location loc){
         init(loc);
     }
 
     public void addMyType(Grid grid, GridSquare square) {
-        grid.addAnimal(new Rabbit(square.getLocation()), square);
+        grid.addAnimal(new Mouse(square.getLocation()), square);
     }
 
     public static void addPrey(String p)       { prey.add(p);        }
@@ -56,7 +56,8 @@ public class Rabbit extends Animal {
     protected ArrayList<String> getPrey()        { return prey;        }
     protected ArrayList<String> getHidingSpots() { return hidingSpots; }
     
-    public double getCalories()     { return calories;                          }
-    public String toString()        { return "Rabbit";                          }
-    public Image getImage()         { return Resources.imageByName("Rabbit");   }
+    public double getCalories()     { return calories;                       }
+    public String toString()        { return "Mouse";                        }
+    public Image getImage()         { return Resources.imageByName("Mouse"); }
 }
+

@@ -87,7 +87,7 @@ public class Simulation {
         Debug.echo("Here is where I would parse the food web file");
 
         try {
-            Scanner scanner = new Scanner(new File("resources/foodWeb.dat"));
+            Scanner scanner = new Scanner(Util.stream("resources/foodWeb.dat"));
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine().trim().replaceAll("[^A-Za-z0-9:;#]", " ");
                 if (line.length() == 0 || line.substring(0, 1).equals("#")) {
@@ -107,8 +107,10 @@ public class Simulation {
                 // plant info goes here
                 if (predator.equals("Grass")) {
                     Grass.setCalories(calories);
-                } else if (predator.equals("Carrot")) {
-                    Carrot.setCalories(calories);
+                } else if (predator.equals("Clover")) {
+                    Clover.setCalories(calories);
+                } else if (predator.equals("Berry")) {
+                    Berry.setCalories(calories);
                 }
 
                 // get names of prey
@@ -121,11 +123,19 @@ public class Simulation {
                         } else if (predator.equals("Fox")) {
                             Fox.addPrey(p);
                             Fox.setCalories(calories);
-                        }
+                        } else if (predator.equals("Mouse")) {
+                            Mouse.addPrey(p);
+                            Mouse.setCalories(calories);
+                        } else if (predator.equals("Wolf")) {
+                            Wolf.addPrey(p);
+                            Wolf.setCalories(calories);
+                        } 
 
                         // Note: Plants don't need to know their predators
                         if      (p.equals("Rabbit")) Rabbit.addPredator(predator);
                         else if (p.equals("Fox"))    Fox.addPredator(predator);
+                        else if (p.equals("Mouse"))  Mouse.addPredator(predator);
+                        else if (p.equals("Wolf"))   Wolf.addPredator(predator);
                     }
                 }
 
@@ -136,12 +146,14 @@ public class Simulation {
                             Rabbit.addHidingSpot(h);
                         } else if (predator.equals("Fox")) {
                             Fox.addHidingSpot(h);
+                        } else if (predator.equals("Mouse")) {
+                            Mouse.addHidingSpot(h);
+                        } else if (predator.equals("Wolf")) {
+                            Wolf.addHidingSpot(h);
                         }
                     }
                 }
             }
-        } catch (FileNotFoundException e) {
-            Debug.echo("FoodWeb: File not found!");
         } catch (Exception e) {
             Debug.echo("FoodWeb: Invalid file format! "+e);
         }
@@ -176,6 +188,10 @@ public class Simulation {
                             current = new Rabbit(loc);
                         } else if (className.equals("Fox")) {
                             current = new Fox(loc);
+                        } else if (className.equals("Mouse")) {
+                            current = new Mouse(loc);
+                        } else if (className.equals("Wolf")) {
+                            current = new Wolf(loc);
                         } else {
                             current = null;
                         }
@@ -210,8 +226,12 @@ public class Simulation {
                         // IF MORE PLANTS ARE ADDED, ADD THEM HERE (IN AN ELSE IF)
                         if (className.equals("Grass")) {
                             current = new Grass(loc);
-                        } else if (className.equals("Carrot")) {
-                            current = new Carrot(loc);
+                        } else if (className.equals("Clover")) {
+                            current = new Clover(loc);
+                        } else if (className.equals("Log")) {
+                            current = new Log(loc);
+                        } else if (className.equals("Berry")) {
+                            current = new Berry(loc);
                         } else {
                             current = null;
                         }
