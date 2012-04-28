@@ -15,4 +15,7 @@ public class DistanceSquarePair implements Comparable{
         DistanceSquarePair that = (DistanceSquarePair)o;
         return this.distance.compareTo(that.distance);
     }
+    public String toString(){
+        return "Distance: "+distance+" Loc: "+gridSquare.getLocation();
+    }
 }
