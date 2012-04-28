@@ -47,38 +47,38 @@ animals = []
 tot = 0
 opts[:plants].split(COMMA).each do |pair|
     k, v = pair.split(EQUALS)
-    num = [0, v.to_i].max
+    num = [0, v.to_f].max
     tot += num
 
     die "Learn to add" if tot > 100
 
     PLANTS[k] = num
 end
-PLANTS["_"] = 100 - tot
+PLANTS["_"] = 100 - tot.to_i
 
 tot = 0
 opts[:animals].split(COMMA).each do |pair|
     k, v = pair.split(EQUALS)
-    num = [0, v.to_i].max
+    num = [0, v.to_f].max
     tot += num
 
     die "Learn to add" if tot > 100
 
     ANIMALS[k] = num
 end
-ANIMALS["_"] = 100 - tot
+ANIMALS["_"] = 100 - tot.to_i
 
 PLANTS.each do |k, v|
     mult = v/100.0
     num = POPULATION * mult
-    chars = [k] * num
+    chars = [k] * num.to_i
     plants += chars
 end
 
 ANIMALS.each do |k, v|
     mult = v/100.0
     num = POPULATION * mult
-    chars = [k] * num
+    chars = [k] * num.to_i
     animals += chars
 end
 
