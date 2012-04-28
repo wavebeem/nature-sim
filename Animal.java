@@ -110,7 +110,9 @@ public abstract class Animal extends Organism {
             
             if(bestVisiblePrey != null && sustainsMe(bestVisiblePrey)){
                 //If bestVisiblePrey is better than adjacentPrey
-                if (bestAdjacentPrey == null || bestVisiblePrey.getCalories() > bestAdjacentPrey.getCalories()) {
+                if (bestAdjacentPrey == null || 
+                    !(hungerPercent() > 75 && sustainsMe(bestAdjacentPrey)) ||
+                    bestVisiblePrey.getCalories() > bestAdjacentPrey.getCalories()) {
                     //Move toward bestVisiblePrey?
                     GridSquare moveSquare = grid.getOptimalChaseSquare(getLocation(), bestVisiblePrey.getLocation(), getFleeDistance());
                     if((moveSquare != null) &&
