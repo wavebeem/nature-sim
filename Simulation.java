@@ -196,6 +196,7 @@ public class Simulation {
                             current = null;
                         }
                         grid.addAnimal(current, loc);
+                        Stats.increaseCount(current);
                     }
                     col++;
                 }
