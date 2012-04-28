@@ -121,13 +121,17 @@ public class ControlFrame extends JFrame {
         }
 
         public void actionPerformed(ActionEvent e) {
-            Debug.echo("RUN?!?!");
-            if (theSim != null && theDetails != null && !isRunning()) {
-                startRun();
-            }
-            else if (isRunning()) {
-                tellRunThreadToFinish();
-            }
+            runPause();
+        }
+    }
+
+    protected void runPause() {
+        Debug.echo("RUN?!?!");
+        if (theSim != null && theDetails != null && !isRunning()) {
+            startRun();
+        }
+        else if (isRunning()) {
+            tellRunThreadToFinish();
         }
     }
 
@@ -194,7 +198,7 @@ public class ControlFrame extends JFrame {
         }
     }
 
-    private void step() {
+    protected void step() {
         if (theSim != null && theDetails != null) {
             Debug.echo(">>> ControlFrame: STEPPING");
             theDetails.setTitle("Step number: " + theSim.getStepNumber());

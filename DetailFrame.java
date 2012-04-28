@@ -5,7 +5,7 @@ import java.util.*;
 
 public class DetailFrame
 extends JFrame
-implements WindowListener {
+implements WindowListener, KeyListener {
     private ArrayList<GridWidget> widgets;
     private static final int DEFAULT_SIZE = 16;
     private JPanel grid;
@@ -23,6 +23,7 @@ implements WindowListener {
 
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(this);
+        addKeyListener(this);
 
         widgets = new ArrayList<GridWidget>();
 
@@ -90,4 +91,16 @@ implements WindowListener {
     public void windowIconified   (WindowEvent e) {}
     public void windowClosed      (WindowEvent e) {}
     public void windowOpened      (WindowEvent e) {}
+
+    public void keyTyped   (KeyEvent e) {}
+    public void keyPressed (KeyEvent e) {}
+    public void keyReleased(KeyEvent e) {
+        int code = e.getKeyCode();
+        if (code == KeyEvent.VK_ENTER) {
+            controlFrame.runPause();
+        }
+        else if (code == KeyEvent.VK_SPACE) {
+            controlFrame.step();
+        }
+    }
 }
