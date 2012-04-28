@@ -130,6 +130,7 @@ public abstract class Animal extends Organism {
             }
             
             //Eat something, as far away (but still adjacent) as possible. (So I can see more land)
+            
             Organism wanderOrganism = bestPreyInDistance(grid, getMoveDistance(), false);
             if (wanderOrganism != null) {
                 eat(wanderOrganism, grid);
@@ -138,6 +139,7 @@ public abstract class Animal extends Organism {
         }
 
         //No prey in sight or not hungry. Wander!
+        
         List<DistanceSquarePair> emptyReachableSquares = grid.getEmptySquares(getLocation(), getMoveDistance());
         if (emptyReachableSquares.size() > 0) {
             move(grid, emptyReachableSquares.get(Util.randInt(emptyReachableSquares.size())).gridSquare);
@@ -213,9 +215,14 @@ public abstract class Animal extends Organism {
         GridSquare mySquare = grid.get(getLocation());
 
         Organism bestAdjacentPrey = null;
+        int bestDist;
+        
+        if (closest) bestDist = Integer.MAX_VALUE;
+        else bestDist = -1;
 
         if (mySquare.getPlant() != null && mySquare.getPlant().isAlive() && prey.contains(mySquare.getPlant().getClass().getName())){
             bestAdjacentPrey = mySquare.getPlant();
+            bestDist = 0;
         }
 
         List<DistanceSquarePair> reachableSquares = grid.getAdjacentSquares(getLocation(), distance);
@@ -223,21 +230,24 @@ public abstract class Animal extends Organism {
         List<DistanceSquarePair> emptySquares = grid.getEmptySquares(preySquares);
 
         Organism temp;
+        Collections.shuffle(preySquares);
         for(DistanceSquarePair pair: preySquares){
             if(emptySquares.contains(pair)){
                 temp = pair.gridSquare.getPlant();
-                if (bestAdjacentPrey == null ||
-                    temp.getCalories() > bestAdjacentPrey.getCalories() ||
-                    (!closest && temp.getCalories() == bestAdjacentPrey.getCalories())){
-
+                if ((bestAdjacentPrey == null ||
+                    temp.getCalories() > bestAdjacentPrey.getCalories()) ||
+                    ((temp.getCalories() == bestAdjacentPrey.getCalories()) && 
+                     ((closest && pair.distance < bestDist) || (!closest && pair.distance > bestDist)))) {
+                    
                     bestAdjacentPrey = temp;
                 }
             } else {
                 temp = pair.gridSquare.getAnimal();
                 if (prey.contains(temp.getClass().getName())) {
-                    if (bestAdjacentPrey == null ||
-                        temp.getCalories() > bestAdjacentPrey.getCalories() ||
-                        (!closest && temp.getCalories() == bestAdjacentPrey.getCalories())){
+                    if ((bestAdjacentPrey == null ||
+                        temp.getCalories() > bestAdjacentPrey.getCalories()) ||
+                        ((temp.getCalories() == bestAdjacentPrey.getCalories()) && 
+                         ((closest && pair.distance < bestDist) || (!closest && pair.distance > bestDist)))){
 
                         bestAdjacentPrey = temp;
                     }
