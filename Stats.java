@@ -144,9 +144,24 @@ public class Stats {
     }
 
     public static String getStats() {
-        return organismCounts() + 
-               "\n" + deathTypeCounts() +
-               "\n" + averageAges();
+        String oc = organismCounts();
+        String dt = deathTypeCounts();
+        String aa = averageAges();
+
+        String ret = "";
+
+        if (!oc.equals("")) {
+            ret += "Current animal counts:\n-------------------------\n" + organismCounts() + "\n"; 
+        }
+
+        if (!dt.equals("")) {
+            ret += "Death type counts:\n-------------------------\n" + deathTypeCounts() + "\n";
+        }
+
+        if (!aa.equals("")) {
+            ret += "Average ages at time of death:\n-------------------------\n" + averageAges() + "\n";
+        }
+        return ret;
     }
 
     public static void resetStats() {
