@@ -75,12 +75,16 @@ public class Util {
         return random.nextInt(maxExclusive);
     }
 
-    public static void sleep() {
+    public static void sleep(long delay) {
         try {
-            Thread.sleep(200);
+            Thread.sleep(delay);
         }
         catch (InterruptedException e) {
             System.err.println("INTERRUPTED WHILE SLEEPING");
         }
+    }
+
+    public static void sleep() {
+        sleep(200);
     }
 }
