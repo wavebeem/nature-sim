@@ -43,19 +43,21 @@ public abstract class Animal extends Organism {
     public abstract int getMaxBreedingTime();
     public abstract void addMyType(Grid grid, GridSquare square);
 
-    public void step(Grid grid){
+    public void step(Grid grid) {
         if(getLocation() != null) {
-            age++;
-            hunger+= getHungerIncrement();
-            if(isOld() || isStarving()) {
-                if(isOld()){
+            hunger += getHungerIncrement();
+            if (isOld() || isStarving()) {
+                if (isOld()) {
                     Debug.echo("Animal at "+getLocation()+" died due to old age");
+                    Stats.recordDeath(this, Stats.OLD_AGE);
                 } else {
-                    Debug.echo("Animal at "+getLocation()+" died due to hunger");
+                    Debug.echo("Animal at "+getLocation()+" died due to starvation");
+                    Stats.recordDeath(this, Stats.STARVATION);
                 }
                 grid.removeAnimal(getLocation());
             } else {
-                if (!breed(grid)){
+                age++;
+                if (!breed(grid)) {
                     act(grid);
                 }
             }
@@ -156,6 +158,7 @@ public abstract class Animal extends Organism {
             if (emptySquares.size() > 0){
                 Debug.echo("Breeding!");
                 addMyType(grid, emptySquares.get(0).gridSquare);
+                Stats.increaseCount(this);
                 breedingTime = getMaxBreedingTime();
                 return true;
             }
@@ -194,6 +197,7 @@ public abstract class Animal extends Organism {
             eat(o.getCalories());
             Location newLoc = o.getLocation();
             grid.removeAnimal(newLoc);
+            Stats.recordDeath(o, Stats.EATEN);
             move(grid, newLoc);
         }
         if (!(o instanceof Plant)) {
@@ -270,4 +274,6 @@ public abstract class Animal extends Organism {
         Plant plant = grid.get(getLocation()).getPlant();
         return plant != null && getHidingSpots().contains(plant.getClass().getName());
     }
+
+    public Integer getAge() { return age; }
 }

@@ -17,6 +17,7 @@ public class Simulation {
     
     public Simulation(int gridSize) {
         Debug.echo("Constructing a new Simulation object");
+        Stats.resetStats();
         if(!filesParsed){
             parseSymbolMap();
             parseFoodWeb();
@@ -28,7 +29,7 @@ public class Simulation {
 
     public Simulation(InputStream animals, InputStream terrain){ 
         Debug.echo("Constructing a new Simulation object");
-        
+        Stats.resetStats();
         if(!filesParsed){
             parseSymbolMap();
             parseFoodWeb();
@@ -196,6 +197,7 @@ public class Simulation {
                             current = null;
                         }
                         grid.addAnimal(current, loc);
+                        Stats.increaseCount(current);
                     }
                     col++;
                 }
