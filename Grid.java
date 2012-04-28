@@ -96,8 +96,8 @@ public class Grid {
         int row = loc.row;
         int col = loc.col;
 
-        for (int i = row - dist; i < row + dist; i++) {
-            for (int j = col - dist; j < col + dist; j++) {
+        for (int i = row - dist; i <= row + dist; i++) {
+            for (int j = col - dist; j <= col + dist; j++) {
                 int d = distance(row, col, i, j);
                 GridSquare currentSquare = get(i, j);
                 if (d <= dist && d != 0) {
