@@ -5,7 +5,7 @@ import java.util.Collections;
 
 public class Mouse extends Animal {
     private static double calories;
-    private static final int maxBreedingTime = 10; // max timesteps before it breeds
+    private static final int maxBreedingTime = 20; // max timesteps before it breeds
 
     private static final int sightDistance = 4;
     private static final int moveDistance = 1;
