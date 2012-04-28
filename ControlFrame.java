@@ -15,12 +15,12 @@ public class ControlFrame extends JFrame {
     private JPanel toolbar;
 
     private JLabel fileLabel;
-    private JButton stopButton;
     private JButton stepButton;
     private JButton loadButton;
     private JComboBox fileCombo;
     private JCheckBox shouldGrid;
     private JButton runButton;
+    private JSlider delaySlider;
 
     private boolean threadShouldRun = false;
     private Thread runThread;
@@ -36,13 +36,23 @@ public class ControlFrame extends JFrame {
         toolbar = new JPanel();
         mapBar  = new JPanel();
 
+        final int SPEED_MIN =  10;
+        final int SPEED_MAX = 500;
+        final int SPEED_VAL = 200;
+        delaySlider = new JSlider(SPEED_MIN, SPEED_MAX, SPEED_VAL);
+
         loadButton = new LoadButton(this);
         stepButton = new StepButton();
-        stopButton = new StopButton();
         fileCombo  = new JComboBox(Resources.getMaps());
         fileLabel  = new JLabel("Map:");
         shouldGrid = new GridLinesCheckBox();
         runButton = new RunButton();
+
+        delaySlider.setMajorTickSpacing(0);
+        delaySlider.setMinorTickSpacing((SPEED_MAX - SPEED_MIN)/10);
+        delaySlider.setPaintTicks(true);
+        delaySlider.setSnapToTicks(true);
+        delaySlider.setInverted(true);
 
         shouldGrid.setSelected(true);
 
@@ -52,12 +62,17 @@ public class ControlFrame extends JFrame {
         mapBar.add(fileCombo);
         mapBar.add(shouldGrid);
 
+        final JPanel midBar = new JPanel();
+        midBar.add(new JLabel("Slow"));
+        midBar.add(delaySlider);
+        midBar.add(new JLabel("Fast"));
+
         toolbar.add(loadButton);
         toolbar.add(runButton);
         toolbar.add(stepButton);
-        toolbar.add(stopButton);
 
         add(mapBar);
+        add(midBar);
         add(toolbar);
 
         pack();
@@ -118,7 +133,7 @@ public class ControlFrame extends JFrame {
             public void run() {
                 while (isRunning()) {
                     step();
-                    Util.sleep();
+                    Util.sleep(delaySlider.getValue());
                 }
             }
         };
@@ -139,19 +154,6 @@ public class ControlFrame extends JFrame {
         catch (InterruptedException e) {
         }
         runThread = null;
-    }
-
-    private class StopButton
-    extends JButton
-    implements ActionListener {
-        public StopButton() {
-            super("Close");
-            addActionListener(this);
-        }
-
-        public void actionPerformed(ActionEvent e) {
-            stop();
-        }
     }
 
     protected void stop() {
@@ -187,7 +189,7 @@ public class ControlFrame extends JFrame {
     extends JCheckBox
     implements ChangeListener {
         public GridLinesCheckBox() {
-            super("Grid lines?");
+            super("Show grid lines");
             addChangeListener(this);
         }
 
