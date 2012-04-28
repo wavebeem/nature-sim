@@ -9,7 +9,7 @@ public class TextFrame extends JFrame {
         super("Stats");
 
         // Kill last window
-        if (that != null)
+        if (exists())
             that.dispose();
 
         that = this;
@@ -19,18 +19,22 @@ public class TextFrame extends JFrame {
         final JScrollPane scrollPane = new JScrollPane(textArea);
         textArea.setEditable(false);
         textArea.setText(txt);
-        add(textArea);
+        add(scrollPane);
         setMinimumSize(new Dimension(200, 150));
         pack();
         setVisible(true);
     }
 
     public static void update(String txt) {
-        if (that != null)
-            that.update(txt);
+        if (exists())
+            that.setText(txt);
     }
 
-    public void update(String txt) {
+    public static boolean exists() {
+        return that != null;
+    }
+
+    public void setText(String txt) {
         textArea.setText(txt);
     }
 }
