@@ -16,7 +16,7 @@ public abstract class Animal extends Organism {
     protected abstract int getMoveDistance();
     protected abstract ArrayList<String> getPredators();
     protected abstract ArrayList<String> getPrey();
-    protected abstract ArrayList<String> getCompetitor();
+    protected abstract ArrayList<String> getCompetitors();
     protected abstract ArrayList<String> getHidingSpots();
 
     public abstract double getCalories();
