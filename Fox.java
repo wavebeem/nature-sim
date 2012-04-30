@@ -5,11 +5,11 @@ import java.util.Collections;
 
 public class Fox extends Animal {
     private static double calories;
-    private static final int maxBreedingTime = 10; 
+    private static final int maxBreedingTime = 7; 
     private static final int sightDistance = 8;
     private static final int moveDistance = 3;
     private static double maxHunger;
-    private static final int maxAge = 100;
+    private static final int maxAge = 40;
     
     private static ArrayList<String> prey = new ArrayList<String>();
     private static ArrayList<String> predators = new ArrayList<String>();
@@ -35,10 +35,10 @@ public class Fox extends Animal {
         return maxBreedingTime;
     }
 
-    protected double getMaxHunger()    { return maxHunger;                     }
-    protected int getMaxAge()       { return maxAge;                        }
-    protected int getSightDistance(){ return sightDistance;                 }
-    protected int getMoveDistance() { return moveDistance;                  }
+    protected double getMaxHunger() { return maxHunger;     }
+    protected int getMaxAge()       { return maxAge;        }
+    protected int getSightDistance(){ return sightDistance; }
+    protected int getMoveDistance() { return moveDistance;  }
     
     protected ArrayList<String> getPredators()   { return predators;   }
     protected ArrayList<String> getPrey()        { return prey;        }

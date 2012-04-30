@@ -9,7 +9,7 @@ public class Bear extends Animal {
     private static final int sightDistance = 10;
     private static final int moveDistance = 2;
     private static double maxHunger;
-    private static final int maxAge = 100;
+    private static final int maxAge = 250;
     
     private static ArrayList<String> prey = new ArrayList<String>();
     private static ArrayList<String> predators = new ArrayList<String>();

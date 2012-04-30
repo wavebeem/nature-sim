@@ -5,12 +5,12 @@ import java.util.Collections;
 
 public class Mouse extends Animal {
     private static double calories;
-    private static final int maxBreedingTime = 20; // max timesteps before it breeds
+    private static final int maxBreedingTime = 5; // max timesteps before it breeds
 
     private static final int sightDistance = 4;
     private static final int moveDistance = 1;
     private static double maxHunger;
-    private static final int maxAge = 70;
+    private static final int maxAge = 20;
     
     private static ArrayList<String> prey = new ArrayList<String>();
     private static ArrayList<String> predators = new ArrayList<String>();
