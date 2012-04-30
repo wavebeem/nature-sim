@@ -15,6 +15,7 @@ public class Mouse extends Animal {
     private static ArrayList<String> prey = new ArrayList<String>();
     private static ArrayList<String> predators = new ArrayList<String>();
     private static ArrayList<String> hidingSpots = new ArrayList<String>();
+    private static ArrayList<String> competitors = new ArrayList<String>();
     
     public Mouse(Location loc){
         init(loc);
@@ -27,6 +28,7 @@ public class Mouse extends Animal {
     public static void addPrey(String p)       { prey.add(p);        }
     public static void addPredator(String p)   { predators.add(p);   }
     public static void addHidingSpot(String p) { hidingSpots.add(p); }
+    public static void addCompetitor(String p) { competitors.add(p); }
     public static void setCalories(double c)   { 
         calories = c;
         maxHunger = c * 25;
@@ -55,6 +57,7 @@ public class Mouse extends Animal {
     protected ArrayList<String> getPredators()   { return predators;   }
     protected ArrayList<String> getPrey()        { return prey;        }
     protected ArrayList<String> getHidingSpots() { return hidingSpots; }
+    protected ArrayList<String> getCompetitors() { return competitors; }
     
     public double getCalories()     { return calories;                       }
     public String toString()        { return "Mouse";                        }
