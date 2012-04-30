@@ -5,12 +5,12 @@ import java.util.Collections;
 
 public class Rabbit extends Animal {
     private static double calories;
-    private static final int maxBreedingTime = 10; // max timesteps before it breeds
+    private static final int maxBreedingTime = 5; // max timesteps before it breeds
 
     private static final int sightDistance = 6;
     private static final int moveDistance = 2;
     private static double maxHunger;
-    private static final int maxAge = 100;
+    private static final int maxAge = 30;
     
     private static ArrayList<String> prey = new ArrayList<String>();
     private static ArrayList<String> predators = new ArrayList<String>();

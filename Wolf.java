@@ -5,11 +5,11 @@ import java.util.Collections;
 
 public class Wolf extends Animal {
     private static double calories;
-    private static final int maxBreedingTime = 20; 
+    private static final int maxBreedingTime = 15; 
     private static final int sightDistance = 8;
     private static final int moveDistance = 3;
     private static double maxHunger;
-    private static final int maxAge = 100;
+    private static final int maxAge = 130;
     
     private static ArrayList<String> prey = new ArrayList<String>();
     private static ArrayList<String> predators = new ArrayList<String>();
