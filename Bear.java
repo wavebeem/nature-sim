@@ -3,11 +3,11 @@ import java.util.List;
 import java.awt.Image;
 import java.util.Collections;
 
-public class Wolf extends Animal {
+public class Bear extends Animal {
     private static double calories;
     private static final int maxBreedingTime = 20; 
-    private static final int sightDistance = 8;
-    private static final int moveDistance = 3;
+    private static final int sightDistance = 10;
+    private static final int moveDistance = 2;
     private static double maxHunger;
     private static final int maxAge = 100;
     
@@ -15,7 +15,7 @@ public class Wolf extends Animal {
     private static ArrayList<String> predators = new ArrayList<String>();
     private static ArrayList<String> hidingSpots = new ArrayList<String>();
     
-    public Wolf(Location loc){
+    public Bear(Location loc){
         init(loc);
     }
 
@@ -45,7 +45,7 @@ public class Wolf extends Animal {
     protected ArrayList<String> getHidingSpots() { return hidingSpots; }
     
     public double getCalories()     { return calories;                      }
-    public String toString()        { return "Wolf";                        }
-    public Image getImage()         { return Resources.imageByName("Wolf"); }
+    public String toString()        { return "Bear";                        }
+    public Image getImage()         { return Resources.imageByName("Bear"); }
 }
 
