@@ -7,7 +7,7 @@ public class Bear extends Animal {
     private static double calories;
     private static final int maxBreedingTime = 20; 
     private static final int sightDistance = 10;
-    private static final int moveDistance = 2;
+    private static final int moveDistance = 3;
     private static double maxHunger;
     private static final int maxAge = 250;
     
