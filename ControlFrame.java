@@ -194,8 +194,13 @@ public class ControlFrame extends JFrame {
         }
 
         public void actionPerformed(ActionEvent e) {
-            step();
+            stopAndStep();
         }
+    }
+
+    protected void stopAndStep() {
+        tellRunThreadToFinish();
+        step();
     }
 
     protected void step() {
