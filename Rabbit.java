@@ -5,7 +5,7 @@ import java.util.Collections;
 
 public class Rabbit extends Animal {
     private static double calories;
-    private static final int maxBreedingTime = 5; // max timesteps before it breeds
+    private static final int maxBreedingTime = 6; // max timesteps before it breeds
 
     private static final int sightDistance = 6;
     private static final int moveDistance = 2;
@@ -25,8 +25,22 @@ public class Rabbit extends Animal {
         grid.addAnimal(new Rabbit(square.getLocation()), square);
     }
 
-    public static void addPrey(String p)       { prey.add(p);        }
-    public static void addPredator(String p)   { predators.add(p);   }
+    public static void addPrey(String p) {
+        if (predators.contains(p)) {
+            predators.remove(p);
+            competitors.add(p);
+        } else {
+            prey.add(p); 
+        }  
+    }
+    public static void addPredator(String p) {
+        if (prey.contains(p)) {
+            prey.remove(p);
+            competitors.add(p);
+        } else {
+            predators.add(p); 
+        }  
+    }
     public static void addHidingSpot(String p) { hidingSpots.add(p); }
     public static void addCompetitor(String p) { competitors.add(p); }
     public static void setCalories(double c)   { 

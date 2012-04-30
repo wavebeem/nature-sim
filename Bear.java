@@ -5,9 +5,9 @@ import java.util.Collections;
 
 public class Bear extends Animal {
     private static double calories;
-    private static final int maxBreedingTime = 20; 
+    private static final int maxBreedingTime = 15; 
     private static final int sightDistance = 10;
-    private static final int moveDistance = 2;
+    private static final int moveDistance = 3;
     private static double maxHunger;
     private static final int maxAge = 250;
     
@@ -21,11 +21,25 @@ public class Bear extends Animal {
     }
 
     public void addMyType(Grid grid, GridSquare square) {
-        grid.addAnimal(new Fox(square.getLocation()), square);
+        grid.addAnimal(new Bear(square.getLocation()), square);
     }
 
-    public static void addPrey(String p)       { prey.add(p);        }
-    public static void addPredator(String p)   { predators.add(p);   }
+    public static void addPrey(String p) {
+        if (predators.contains(p)) {
+            predators.remove(p);
+            competitors.add(p);
+        } else {
+            prey.add(p); 
+        }  
+    }
+    public static void addPredator(String p) {
+        if (prey.contains(p)) {
+            prey.remove(p);
+            competitors.add(p);
+        } else {
+            predators.add(p); 
+        }  
+    }
     public static void addHidingSpot(String p) { hidingSpots.add(p); }
     public static void addCompetitor(String p) { competitors.add(p); }
     public static void setCalories(double c)   { 

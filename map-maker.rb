@@ -7,7 +7,7 @@ EXAMPLE USAGE:
 
 ./map-maker.rb \
   --name "Cool Map" \
-  --plants "G=4,C=6" \
+  --plants "g=4,c=6" \
   --animals "R=40,F=60" \
   --size 25
 DOC
