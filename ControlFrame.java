@@ -205,10 +205,10 @@ public class ControlFrame extends JFrame {
 
     protected void step() {
         if (theSim != null && theDetails != null) {
+            theSim.step();
             Debug.echo(">>> ControlFrame: STEPPING");
             theDetails.setTitle("Step number: " + theSim.getStepNumber());
             TextFrame.update(Stats.getStats());
-            theSim.step();
             theDetails.repaint();
         }
     }
