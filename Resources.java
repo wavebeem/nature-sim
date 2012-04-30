@@ -80,6 +80,8 @@ public class Resources {
     public static String[] getMaps() {
         //System.err.println(mapList);
         String[] results = new String[mapList.size()];
-        return mapList.toArray(results);
+        results = mapList.toArray(results);
+        Arrays.sort(results);
+        return results;
     }
 }
