@@ -100,7 +100,7 @@ implements WindowListener, KeyListener {
             controlFrame.runPause();
         }
         else if (code == KeyEvent.VK_SPACE) {
-            controlFrame.step();
+            controlFrame.stopAndStep();
         }
     }
 }
