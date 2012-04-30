@@ -1,10 +1,10 @@
 # <-- This denotes a comment. Expected Structure is below
 # ANIMAL_NAME: CALORIES; PREY_1 PREY_2; HIDING_SPOT_1 HIDING_SPOT2
-Bear: 40; Wolf Fox Rabbit Mouse Berry
-Wolf: 30; Bear Fox Rabbit Mouse Berry
-Fox: 15; Rabbit Mouse Berry Grass; Log
-Rabbit: 10; Berry Clover Grass; Log
-Mouse: 8; Clover Berry; Log
+Bear: 25; Wolf Fox Rabbit Mouse Berry
+Wolf: 20; Bear Fox Rabbit Mouse Berry
+Fox: 17; Rabbit Mouse Berry Grass; Log
+Rabbit: 10; Clover Grass; Log
+Mouse: 10; Clover Berry; Log
 Clover: 5
 Berry: 5
-Grass: 2
+Grass: 4

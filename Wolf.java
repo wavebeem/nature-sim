@@ -21,7 +21,7 @@ public class Wolf extends Animal {
     }
 
     public void addMyType(Grid grid, GridSquare square) {
-        grid.addAnimal(new Fox(square.getLocation()), square);
+        grid.addAnimal(new Wolf(square.getLocation()), square);
     }
 
     public static void addPrey(String p) {
