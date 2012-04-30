@@ -15,7 +15,7 @@ public class Main {
         }
 
         Resources.load();
-        new WelcomeFrame();
         new ControlFrame();
+        new WelcomeFrame();
     }
 }
