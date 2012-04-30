@@ -25,8 +25,22 @@ public class Mouse extends Animal {
         grid.addAnimal(new Mouse(square.getLocation()), square);
     }
 
-    public static void addPrey(String p)       { prey.add(p);        }
-    public static void addPredator(String p)   { predators.add(p);   }
+    public static void addPrey(String p) {
+        if (predators.contains(p)) {
+            predators.remove(p);
+            competitors.add(p);
+        } else {
+            prey.add(p); 
+        }  
+    }
+    public static void addPredator(String p) {
+        if (prey.contains(p)) {
+            prey.remove(p);
+            competitors.add(p);
+        } else {
+            predators.add(p); 
+        }  
+    }
     public static void addHidingSpot(String p) { hidingSpots.add(p); }
     public static void addCompetitor(String p) { competitors.add(p); }
     public static void setCalories(double c)   { 
