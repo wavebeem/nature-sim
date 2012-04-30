@@ -5,7 +5,7 @@ import java.util.Collections;
 
 public class Rabbit extends Animal {
     private static double calories;
-    private static final int maxBreedingTime = 5; // max timesteps before it breeds
+    private static final int maxBreedingTime = 6; // max timesteps before it breeds
 
     private static final int sightDistance = 6;
     private static final int moveDistance = 2;
