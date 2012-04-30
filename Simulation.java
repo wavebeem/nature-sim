@@ -130,6 +130,9 @@ public class Simulation {
                         } else if (predator.equals("Wolf")) {
                             Wolf.addPrey(p);
                             Wolf.setCalories(calories);
+                        } else if (predator.equals("Bear")) {
+                            Bear.addPrey(p);
+                            Bear.setCalories(calories);
                         } 
 
                         // Note: Plants don't need to know their predators
@@ -137,6 +140,7 @@ public class Simulation {
                         else if (p.equals("Fox"))    Fox.addPredator(predator);
                         else if (p.equals("Mouse"))  Mouse.addPredator(predator);
                         else if (p.equals("Wolf"))   Wolf.addPredator(predator);
+                        else if (p.equals("Bear"))   Bear.addPredator(predator);
                     }
                 }
 
@@ -151,6 +155,8 @@ public class Simulation {
                             Mouse.addHidingSpot(h);
                         } else if (predator.equals("Wolf")) {
                             Wolf.addHidingSpot(h);
+                        } else if (predator.equals("Bear")) {
+                            Bear.addHidingSpot(h);
                         }
                     }
                 }
@@ -193,6 +199,8 @@ public class Simulation {
                             current = new Mouse(loc);
                         } else if (className.equals("Wolf")) {
                             current = new Wolf(loc);
+                        } else if (className.equals("Bear")) {
+                            current = new Bear(loc);
                         } else {
                             current = null;
                         }
